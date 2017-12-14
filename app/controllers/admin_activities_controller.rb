@@ -41,7 +41,21 @@ class AdminActivitiesController < ApplicationController
     end
   end
 
-  def session_activities   
+  def setregstatus
+    status = params[:status].to_i
+     Util.update(2, status: status)
+  end
+
+  def setsession
+    session_val = params[:input]
+    val1 = session_val.to_i+1
+    value = "#{session_val}/#{val1.to_s}"
+    Util.update(3, value: value)
+
+  end
+
+  def session_activities 
+    @session_val = Util.find_by(id: 3).value.to_s
     respond_to do |format|
       format.js
       format.html{render layout:false}

@@ -2,8 +2,10 @@
             <div class="col-d-6 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel custom-height">
-                        <div class="panel-heading">2012/2013</div>
-                        <div><input type="text"/><input type="text"/></div>
+                        <div class="panel-heading">SESSION</div>
+                        <div id="set_session">
+                            <input id="input1" type="text" class="fixed-lenght" style="text-align: right;" /><input id="seperator" type="text" value="/" disabled="true" /><input id="input2" class="fixed-lenght" type="text"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -11,7 +13,10 @@
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel">
                         <div class="panel-heading">COURSE REGISTRATION STATUS</div>
-                            <div><input type="radio" name="reg_stat"/>ACTIVATE<input type="radio" name="reg_stat"/>DEACTIVATE</div>
+                        <div id="reg_stat">
+                            <input id="1" type="radio" name="reg_stat" checked="" />ACTIVATE
+                            <input id="0" type="radio" name="reg_stat" checked="checked" />DEACTIVATE
+                        </div>
                     </div>
                 </div>
             </div>

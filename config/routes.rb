@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   post '/delete_course', to: 'courses#delete'
 
   #routes for admin activities
+  post '/setregstatus', to: 'admin_activities#setregstatus'
+  post '/setsession', to: 'admin_activities#setsession'
   post '/query_code', to: 'admin_activities#checkcode'
   get '/admin_index', to: 'admin_activities#index'
   get '/admin_dashboard', to: 'admin_activities#dashboard'

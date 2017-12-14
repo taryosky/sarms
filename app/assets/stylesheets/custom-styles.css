@@ -11,6 +11,22 @@ http://creativecommons.org/licenses/by/3.0/
 body {
     font-family: 'Open Sans', sans-serif;
 }
+#set_session{
+  border: 1px solid black;
+  text-align: left;
+  width: 20%;
+  display: inline-block;
+}
+#seperator{
+  width: 6px !important;
+}
+#seperator:disabled{
+  background-color: white;
+}
+#set_session > input{
+  border : 0px;
+  width: 46%;
+}
 #time_table_head  > tr > th, #courses_body > tr > th[rowspan="5"]{
   font-size: 95%;
 }
