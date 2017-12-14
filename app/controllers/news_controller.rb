@@ -16,9 +16,7 @@ class NewsController < ApplicationController
 				upload_news_image(@image, @news.id)
 			end
 		end
-		respond_to do|format|
-			format.js
-		end
+	redirect_to "/admin_news"
 	end
 	
 	def preview
@@ -77,9 +75,7 @@ class NewsController < ApplicationController
 		@news.destroy
 		@news = News.all
 		
-		respond_to do|format|
-			format.js
-		end
+		
 	end
 
 	def search
@@ -127,7 +123,9 @@ class NewsController < ApplicationController
 		img = news.news_image.path
 		if !img.blank?
 			file = Rails.root.join("public/news/"+img)
-			File::delete(file)
+			if file
+				File::delete(file)
+			end
 		end
 	end
 	

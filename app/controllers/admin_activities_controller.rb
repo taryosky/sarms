@@ -41,7 +41,7 @@ class AdminActivitiesController < ApplicationController
     end
   end
 
-  def session_activities
+  def session_activities   
     respond_to do |format|
       format.js
       format.html{render layout:false}

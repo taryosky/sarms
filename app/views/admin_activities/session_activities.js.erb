@@ -1,13 +1,15 @@
 var json_data;
+var str = "hello string";
 	var ajaxR = get_time_table();
 	 ajaxR.done(function(data){
 	 	json_data = data;
 	 });
 
-$("#page-inner").html("<%= j render 'session_activities'%>");
+$("#page-inner").html("<%= j render 'session_activities' %>");
 $(".table_input").each(function(index){
 	$(this).attr("maxlength","14");
 });
+
 focusImplementation();
 
  //THIS IS THE END OF THE "focusout" function
@@ -26,6 +28,7 @@ $(".week_days > div").click(function(){
 	$(".table_input").each(function(index){$(this).attr("maxlength","14");});
 	focusImplementation();
 });
+$(".week_days > div[id='monday']").trigger('click');
 
 function genTableData(div){
 	var json_data;
@@ -130,7 +133,6 @@ function checkcode(query, value, element, day, period, row){
 						
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	
 		            	if(data){
 		                  	element.css("border","0px");
 		                  	set_time_table(value, day, period, row);

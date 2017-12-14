@@ -11,9 +11,22 @@ http://creativecommons.org/licenses/by/3.0/
 body {
     font-family: 'Open Sans', sans-serif;
 }
+#time_table_head  > tr > th, #courses_body > tr > th[rowspan="5"]{
+  font-size: 95%;
+}
+#courses_body > tr > th[rowspan="5"]{
+  width: 100px;
+  text-align: center;
+}
+#time-table-div{
+  height: 350px;
+}
 
  #wrapper {
     width: 100%;
+}
+#time_table{
+  border: 1px solid;
 }
 
 #page-wrapper {

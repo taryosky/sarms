@@ -1,4 +1,4 @@
-                <div class="row">
+        <div class="row">
             <div class="col-d-6 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel custom-height">
@@ -11,10 +11,73 @@
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel">
                         <div class="panel-heading">COURSE REGISTRATION STATUS</div>
-                        <div><input type="radio" name="reg_stat"/>ACTIVATE<input type="radio" name="reg_stat"/>DEACTIVATE</div>
+                            <div><input type="radio" name="reg_stat"/>ACTIVATE<input type="radio" name="reg_stat"/>DEACTIVATE</div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="time-table-div" class="panel panel-default">
+                    <div class="panel-heading week_days">
+                        <div id="monday">mon</div>
+                        <div id="tuesday">tue</div>
+                        <div id="wednesday">wed</div>
+                        <div id="thusday">thu</div>
+                        <div id="friday">fri</div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="table_for_courses" class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead id="time_table_head">
+                                    <tr>
+                                        <th></th>
+                                        <th>8 : 00am - 10 : 00am</th>
+                                        <th>10 : 00am - 12 : 00am</th>
+                                        <th>12 : 00pm - 2 : 00pm</th>
+                                        <th>2 : 00pm - 4 : 00pm</th>
+                                        <th>4 : 00pm - 6 : 00pm</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="courses_body">
+                                     <tr >
+                                        <td style="border: 0px"></td>
+                                        <td style="border: 0px"></td>
+                                        <td style="border: 0px"></td>
+                                        <td style="border: 0px"></td>
+                                        <td style="border: 0px"></td>
+                                    </tr>                                
+                                    <tr>
+                                        <th rowspan="5">monday</th>
+                                        <td><input class = "table_input"></td>
+                                        <td><input class = "table_input"></td>
+                                        <td><input class = "table_input"></td>
+                                        <td><input class = "table_input"></td>
+                                        <td><input class = "table_input"></td>
+                                    </tr>
+                                     
+                                </tbody>
+                            </table>
+                        </div>                               
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
+            
             
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-d-12">
@@ -46,35 +109,5 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="panel panel-default">
-                <div class="panel-body">
-                    <div  class="week_days">
-                        <h4>TIME TABLE</h4>
-                        <div id="monday">MON</div><div id="tuesday">TUE</div><div id="wednesday">WED</div><div id="thusday">THUS</div><div id="friday">FRI</div>
-                    </div>
-                    <div class="table_for_courses" class="table-responsive">
-                    	<table class="table table-striped table-bordered table-hover" id="courses_table">
-                    		<tbody id="courses_body">
-                    			<tr>
-                    				<th>DAYS/TIME</th>
-                    				<th>8AM - 10AM</th>
-                    				<th>10AM - 12PM</th>
-                    				<th>12PM - 2PM</th>
-                    				<th>2PM - 4PM</th>
-                    				<th>4PM - 6PM</th>
-                    			</tr>
-                                <tr id = "row_append">
-                                </tr>
-                    			
-                    			</tbody>
-                    	</table>
-                        <div class="week_days">
-                            <div di="print_time_table">print</div>
-                            <div id="view_time_table">view</div>
-                            <div id="view_time_table">update</div>
-                        </div>
-                    </div>                               
                 </div>
             </div>
