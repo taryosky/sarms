@@ -92,9 +92,7 @@ class NewsController < ApplicationController
 		@newss.destroy
 		@news = News.all.reverse
 		
-		respond_to do|format|
-			format.js
-		end
+		
 	end
 
 	def search
@@ -142,7 +140,9 @@ class NewsController < ApplicationController
 		img = news.news_image.path
 		if !img.blank?
 			file = Rails.root.join("public/news/"+img)
-			File::delete(file)
+			if file
+				File::delete(file)
+			end
 		end
 	end
 	
