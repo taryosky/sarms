@@ -13,7 +13,7 @@ $("#close-alert, #close-alerts").click(function(){
 
 function generateCoursesTable(){
 		<% @courses = Course.all %>
-		return '<table class="table table-striped table-bordered table-hover" id="courses"><tr><th>S/N</th><th>Course Code</th><th>Course Title</th><th>Units</th><th>Level</th><th>Semester</th><th>Allocated Lecturer</th></tr><% @counter = 1 %><% @courses.each do|course| %><tr class="course_details" id="<%= course.id %>"><td><%= @counter %></td><td><%= course.ccode %></td><td><%= course.ctitle %></td><td> <%=course.units %></td><td><%= course.level %></td><td><%= course.semester %></td><td><%= !course.lecturers.empty? ? "#{course.lecturers.first.sname} #{course.lecturers.first.fname}" : "No Lecturer" %></td></tr><% @counter +=1 %><% end %></table>';
+		return '<table class="table table-striped table-bordered table-hover" id="courses"><tr><th>S/N</th><th>Course Code</th><th>Course Title</th><th>Units</th><th>Level</th><th>Semester</th><th>Allocated Lecturer</th></tr><% @counter = 1 %><% @courses.each do|course| %><tr class="course_details" id="<%= course.id %>"><td><%= @counter %></td><td><%= course.ccode %></td><td><%= course.ctitle %></td><td> <%=course.units %></td><td><%= course.level %></td><td><%= course.semester==0? "First Semester" : "Second Semester" %></td><td><%= !course.lecturers.empty? ? "#{course.lecturers.first.title} #{course.lecturers.first.sname} #{course.lecturers.first.fname}" : "No Lecturer" %></td></tr><% @counter +=1 %><% end %></table>';
 }
 
 function trig_course_edit(){

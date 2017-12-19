@@ -9,6 +9,14 @@ $("tr[id=<%= @student.id %>]").fadeOut(500, function(){
 
 trig_student_edit();
 
+	var student_level1 = "<%= @student.level %>"
+	if (student_level1 <= 500){
+		$("#"+student_level1+"-level-tab-title").click();
+	}
+	else{
+		$("#spillover-tab-title").click();
+	}
+
 function generateTables(){
 	$("#table_for_students").html(generate100LevelStudentsTable());
 	$("#table_for_students").append(generate200LevelStudentsTable());

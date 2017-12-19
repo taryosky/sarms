@@ -2,6 +2,8 @@ class ResultsController < ApplicationController
 	include ResultsHelper
 	include StudentsHelper
 	include LecturersHelper
+	
+	before_action :require_login 	#require_login method is defined in application_helper.rb
 
 	def upload_results
 

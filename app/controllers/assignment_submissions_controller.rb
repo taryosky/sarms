@@ -1,4 +1,8 @@
 class AssignmentSubmissionsController < ApplicationController
+	
+	before_action :require_login 				#require_login method is defined in application_helper.rb
+	before_action :require_student_login		#require_student_login is definded in login_sessions_helper.rb
+
 	### NEXT PHASE IS TO ADD THE ASSIGNMENT COURSES IN A FORM LIKE FORM SO THAT A SELECTION OPTION WOULD BE MADE POSIBLE
 	def index
 		assignlist

@@ -1,24 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'courses/index'
-
-  get 'courses/show'
-
-  get 'courses/edit'
-
-  get 'courses/delete'
-
-  get 'courses/update'
-
-  get 'courses/create'
-
-  get 'admin_activities/course'
-
-  get 'admin_activities/lecturer'
-
-  get 'admin_activities/student'
-
-  get 'admin_activities/session_activities'
   
   #routes for news
   post '/create_news', to: 'news#create'
@@ -27,14 +7,14 @@ Rails.application.routes.draw do
   post '/update_news', to: 'news#update'
   post '/preview_news', to: 'news#preview'
   
-	
-  
   #routes for lecturers 
   post '/create_lecturer', to: 'lecturers#create'
   post 'delete_lecturer', to: 'lecturers#delete'
   post '/edit_lecturer', to: 'lecturers#update'
   post '/search_lecturer', to: 'lecturers#search'
   get '/print_lecturer_password', to: 'lecturers#print_passwords'
+  post '/lecturer_info_update', to: 'lecturers#update_lecturer_info'
+  get '/lecturer_update', to: 'lecturers#update_info'
   
   #routes for students
   post '/create_student', to: 'students#create'
@@ -42,6 +22,9 @@ Rails.application.routes.draw do
   post '/delete_student', to: 'students#delete'
   post '/search_student', to: 'students#search'
   get '/print_student_password', to: 'students#print_passwords'
+  post '/student_info_update', to: 'students#update_student_info'
+  get '/student_update', to: 'students#update_info'
+  get '/student_notifications', to: 'studentsessions#notification'
 
   #routes for courses
   post '/search_course', to: 'courses#search'
@@ -78,9 +61,11 @@ Rails.application.routes.draw do
   #routes for creating user details
   get '/login_details', to: 'create_user_login_details#new'
   post '/login_details', to: 'create_user_login_details#create'
+  
   #routes for users login
   get '/user_login', to: 'login_sessions#new'
   post '/user_login', to: 'login_sessions#create'
+  get '/logout', to: 'login_sessions#destroy'
 
   #routes for admin login
   #get '/admin_index', to: 'adminsessions#index'
@@ -100,7 +85,7 @@ Rails.application.routes.draw do
 
 
   get '/visit_library', to: 'lectureractivities#library'
-  get '/lecturer_notification', to: 'lecturersessions#notification'
+  get '/lecturer_notifications', to: 'lecturersessions#notification'
   get '/lecture_timetable', to: 'lectureractivities#timetable'
   post '/upload', to: 'lectureractivities#upload'
 

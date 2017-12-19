@@ -1,13 +1,68 @@
 class AdminActivitiesController < ApplicationController
+
+  before_action :require_login 			#require_login method is defined in application_helper.rb
+  before_action :require_admin_login		#require_admin_login is definded in login_sessions_helper.rb
+
+  
   
   def index
+	@course_ids = Array.new
+	@lecturer_ids = Array.new
+	CourseAllocation.all.each do|alloc|
+		@course_ids.push alloc.course_id
+		@lecturer_ids.push alloc.lecturer_id
+	end
+	
+	file = File.open( Rails.root.join('log', "login.log"), 'r')
+	@title_signin = file.readlines.first.chop
+	file = File.open( Rails.root.join('log', "login.log"), 'r')
+	d = file.readlines[3].to_s.split(" ")
+	date = d[1].split("-")
+	time = d[2].split(":")
+	@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+	file.close
+	
+	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+	@title_create = file.readlines.first.chop
+	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+	d = file.readlines[2].to_s.split(" ")
+	date = d[1].split("-")
+	time = d[2].split(":")
+	@time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+	file.close
+	
   end
 
    def dashboard
-    respond_to do|format|
-        format.html{render layout:false}
-        format.js
-    end
+	    @course_ids = Array.new
+		@lecturer_ids = Array.new
+		CourseAllocation.all.each do|alloc|
+			@course_ids.push alloc.course_id
+			@lecturer_ids.push alloc.lecturer_id
+		end
+		
+		file = File.open( Rails.root.join('log', "login.log"), 'r')
+		@title_signin = file.readlines.first.chop
+		file = File.open( Rails.root.join('log', "login.log"), 'r')
+		d = file.readlines[3].to_s.split(" ")
+		date = d[1].split("-")
+		time = d[2].split(":")
+		@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+		file.close
+		
+		file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+		@title_create = file.readlines.first.chop
+		file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+		d = file.readlines[2].to_s.split(" ")
+		date = d[1].split("-")
+		time = d[2].split(":")
+		@time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+		file.close
+		
+		respond_to do|format|
+			format.html{render layout:false}
+			format.js
+		end
    end
 
   def course
@@ -49,7 +104,7 @@ class AdminActivitiesController < ApplicationController
   end
 
   def news
-	@news = News.all
+	@news = News.all.reverse
 	respond_to do|format|
 		format.js
     end

@@ -1,6 +1,12 @@
 module StudentsessionsHelper
 
 	def login_stud(student)
+		if session[:lecturer_id]
+			session.delete(:lecturer_id)
+		end
+		if session[:admin_id]
+			session.delete(:admin_id)
+		end
 		session[:student_id] = student.id
 	end
 

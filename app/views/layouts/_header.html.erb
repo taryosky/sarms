@@ -14,7 +14,7 @@
         <header>
             <div class="col-d-12 col-t-12 no-padding">
                 <!--<img src="ndu_logo.png" id="logo"  alt="NDU LOGO" /> -->
-                <%= image_tag "ndu_logo.png", alt: "NDU Logo", title: "NDU Logo", class: "img-widt", id: "logo" %>
+                <%= image_tag "", alt: "NDU Logo", title: "NDU Logo", class: "img-widt", id: "logo" %>
                 <div id="head">
                     DEPARTMENT OF ELECTRICAL/ELECTRONICS ENGINEERING<br/>
                     NIGER DELTA UNIVERSITY<br/>
@@ -73,9 +73,9 @@
                 <ul class="ul-menu-right" id="main-nav-right-ul">
                     <li class="li-menu-item-hor">My Profile</li>
                     <%if lect_logged_in? %>
-                        <li class="li-menu-item-hor"><%= link_to 'Log Out', lecturer_logout_path, method: :delete, class:'smenu' %></li>
+                        <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
                     <% elsif stud_logged_in? %>
-                        <li class="li-menu-item-hor"><%= link_to 'Log Out', student_logout_path, method: :delete, class:'smenu' %></li>
+                        <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
                     <% end %>
                 </ul>
                 <% else %>

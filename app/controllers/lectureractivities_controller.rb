@@ -1,4 +1,7 @@
 class LectureractivitiesController < ApplicationController
+	
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+
 
 	def submit
 	end

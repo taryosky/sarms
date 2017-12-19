@@ -1,21 +1,24 @@
 class RegistrationsController < ApplicationController
 
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+	before_action :require_student_login		#require_admin_login is defined in login_sessions_helper.rb
+
+
 	def index
 		
 	end
 
 	def new
-
+		@counter = 1
 		student = current_student
 		@course_ids = []
-		@level = student_level(student)
 
 		#DELETE THIS INSTANCE VARIABLES NOT BEEN USED
 		@fscc = Course.where(id: @course_ids).where(semester: 1)
 		@sscc = Course.where(id: @course_ids).where(semester: 2)
 
-		@first_semester_courses = Course.where(level: @level).where(semester: 1)
-		@second_semester_courses = Course.where(level: @level).where(semester: 2)
+		@first_semester_courses = Course.where(level: student.level).where(semester: 0)
+		@second_semester_courses = Course.where(level: student.level).where(semester: 1)
 	end
 
 	def create
@@ -54,7 +57,7 @@ class RegistrationsController < ApplicationController
 
 			end
 		end
-		redirect_to student_notification_path
+		redirect_to student_notifications_path
 	end
 
 	def edit

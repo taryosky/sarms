@@ -1,17 +1,23 @@
-<% if @student.errors.any? %>
-    $("#create_success").html("");
-    $("#create_error").html("");
-    $("#create_success").css("display", "none");
-    $("#create_error").html('<% @student.errors.full_messages.each do|msg| %><div><%= @counter; msg %></div><% end %>');
-    $("#create_error").css('background-color', 'rgba(225,10,10,0.5)');
-    $("#create_error").css("display", "block");
-<% elsif @student_other_names.errors.any? %>
-    $("#create_success").html("");
-    $("#create_error").html("");
-    $("#create_success").css("display", "none");
-    $("#create_error").append('<% @student_other_names.errors.full_messages.each do|msg| %><div><%= @counter; msg %></div><% end %>');
-    $("#create_error").css('background-color', 'rgba(225,10,10,0.5)');
-    $("#create_error").css("display", "block");
+var form_rows = $('div[id^="student-fields"]');
+	for(i=0; i<form_rows.length; i++){
+		$("#new-student-error"+i).html("");
+	}
+
+<% if !@invalid_students.empty? %>
+	var inval_students = new Array();
+	var no_of_inv_fields = new Array();
+	<% @invalid_students.each do|key, value| %>
+		inval_students["<%= key %>"] = "<%= value.join(",") %>";
+		no_of_inv_fields["<%= key %>"] = "<%= value.join(",") %>".split(",").length
+	<% end %>
+	for(i=0; i<form_rows.length; i++){
+		var id=form_rows[i].id;
+		var num = id.slice(id.length-1);
+		if(inval_students[i] != null){
+			$("#new-student-error"+i).html(inval_students[i]+" "+ (no_of_inv_fields[i]>1 ? "are":"is")+" not correctly filled for this student");
+			$("#new-student-error"+i).css("display", "block");
+		}
+	}
 <% else %>
     $("#create_error").html("");
     $("#create_success").html("");
@@ -20,7 +26,7 @@
     $("#create_success").css('background-color', 'rgba(10,225,10,0.5)');
     $("#create_success").css("display", "block");
 	$("#create_cont").css("display", "none");
-	$("#alert-body").text("Student Information Successfully Created");
+	$("#alert-body").text("<%= @student_matno.size %> Student(s) Successfully Created");
 	$("#alert-modal").css("display", "block");
 <% end %>
 

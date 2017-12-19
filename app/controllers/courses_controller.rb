@@ -1,8 +1,12 @@
 class CoursesController < ApplicationController
 
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+	before_action :require_admin_login			#require_admin_login is defined in login_sessions_helper.rb
+
+
   def search
 	@param = params[:search][:course]
-	@search_courses = Course.where("ccode LIKE ? OR ctitle LIKE ?", "%"+@param+"%", "%"+@param+"%");
+	@search_courses = Course.where("ccode LIKE ? OR ctitle LIKE ? OR level LIKE ?", "%"+@param+"%", "%"+@param+"%", "%"+@param+"%");
 	respond_to do|format|
 		format.js
 	end
@@ -81,6 +85,10 @@ class CoursesController < ApplicationController
 		@courses.each do|key, value|
 			value.save
 		end
+		#Update the login log file
+			file = File.open( Rails.root.join('log', "create_new.log"), 'a')
+			file.syswrite("\t\t#{@courses.size} Course(s) Created\n=====================================\nDate/time: #{Time.now}\n\n\n")
+			file.close
 	end
 	
 	

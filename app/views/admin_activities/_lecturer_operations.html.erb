@@ -5,48 +5,66 @@
 </div>
 
 <!--CREATE OPERATIONS -->
-<div class="row">
-    <div id="create_cont" class="my-modal">
-        <div id ="create_lecturer_option" class="lecturer_option" data-class="disply">
-            <!-- form for lecturer creation-->
-            <div class = "row">
-                <div class = "col-t-2 col-d-2"></div>
-                    <div class = "col-t-8 col-d-8 modal-content zoom-in">
-						<span id="cancel_create_lect" class="cancel_button" data-class="cancel_ref" data-ref = "create_cont">&times;</span>
-                        <h4>CREATE NEW LECTURER</h4>
-                            <div id="create_error" data-class="notice" class = "create_error msg"></div>
-                            <%= form_for :create_lecturer, url:create_lecturer_path, remote:true, html:{id:"create_lecturer_form"} do|f| %>
-                            <%= f.label "Staff ID",  id: 'create_staff_id' %>
-                            <%= f.text_field :staff_id, id: 'create_staff_id_field' %><br/>
-                            <%= f.label "Surname",  id: 'create_sname' %>
-                            <%= f.text_field :sname,  id: 'create_sname_field' %><br/>
-                            <%= f.label :"First Name",  id: 'create_fname' %>
-                            <%= f.text_field :fname,  id: 'create_fname_field' %><br/>
-                            <%= f.label :"Other Names",  id: 'create_other_names' %>
-                            <%= f.text_field :othernames,  id: 'create_other_names_field' %><br/>
-                            <%= f.label :sex,  id: 'create_sex' %>
-                            <%= f.text_field :sex,  id: 'create_sex_field' %><br/>
-                            <%= f.label :nationality,  id: 'create_nationality' %>
-                            <%= f.text_field :nationality,  id: 'create_nationality_field' %><br/>
-                            <%= f.label :"State Of Origin",  id: 'create_state_of_origin' %>
-                            <%= f.text_field :state_of_origin,  id: 'create_state_of_origin_field' %><br/>
-                            <%= f.label :"LGA",  id: 'create_lga' %>
-                            <%= f.text_field :lga,  id: 'create_lga_field' %><br/>
-                            <%= f.label :religion,  id: 'create_religion' %>
-                            <%= f.text_field :religion,  id: 'create_religion_field' %><br/>
-                            <%= f.label :email,  id: 'create_email' %>
-                            <%= f.text_field :email,  id: 'create_email_field' %><br/>
-                            <%= f.label :phone,  id: 'create_phone' %>
-                            <%= f.text_field :phone,  id: 'create_phone_field' %><br/>
-                            <%= f.submit :create, id: 'create_lecturer' %><div id="cancel_create_lect_form" class="button" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
-                        <% end %>
+<div class="row">	
+	
+	<div id="create_cont" class="my-modal">		
+		  <div id = "create_modal" class="my-modal-content">
+        <div class="my-modal-header">
+         <span id="cancel_create_lect" class="cancel_button" data-class="cancel_ref" data-ref = "create_cont">&times;</span>
+          <h2>New Lecturer</h2>
+        </div>
+        <div id = "create_modal_body" class="my-modal-body">
+        <div id = "find_course_option" class="course_option" data-class="display">
+           <div class = "row">
+                    <div class = "col-t-12 col-d-12">
+                            <div class="handle white_bg">
+								<div id="create_error" data-class="notice" class = "create_error msg"></div>
+								<%= form_for :create_student, url:create_lecturer_path, remote:true, html:{id:"create_lecturer_form"} do|f| %>
+								<div id="lecturer-fields0" class="fields_div">
+									<span id="new-lecturer-error0" class='error'></span>
+									<%= f.label "Title:",  id: 'create_mat_no' %>
+									<%= fields_for :title do|ft| %>
+										<%= ft.select :title0, ["Prof.", "Dr.", "Ast. Lect."], html:{class: 'modal_inputs'} %>
+									<% end %>
+									
+									<%= f.label "Staff ID",  id: 'create_staff_id' %>
+									<%= fields_for :staff_id do|fi| %>
+										<%= fi.text_field :staff_id0,  id: 'create_staff_id_field', class:"modal_inputs", size:"15" %>
+									<% end %>
+									
+									<%= f.label "Surname:",  id: 'create_sname' %>
+									<%= fields_for :sname do|fs| %>
+										<%= fs.text_field :sname0,  id: 'create_sname_field', class:"modal_inputs", size:"15" %>
+									<% end %>
+									
+									<%= f.label :"First Name:",  id: 'create_fname' %>
+									<%= fields_for :fname do|ff| %>
+										<%= ff.text_field :fname0,  id: 'create_fname_field', class:"modal_inputs", size:"15" %>
+									<% end %>
+									
+									<%= f.label :"Other Names:",  id: 'create_other_names' %>
+									<%= fields_for :othernames do|fo| %>
+										<%= fo.text_field :othernames0,  id: 'create_other_names_field', class:"modal_inputs", size:"15" %>
+									<% end %>
+									
+									<div id="addrow" class="custom_button", data-row="new_row", onclick="addNewLecturerRow()">+</div><div id="remrow" class="custom_button", data-row="del_row">-</div>
+								</div>
+								<div id="append">
+								</div>
+								<%= f.submit :create, id: 'create_student' %><div id="cancel_create_lect_form" class="button" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
+								<% end %>
+                            </div>
                     </div>
-                <div class = "col-t-2 col-d-2"></div>
+            </div>
             </div>
         </div>
+      </div>
     </div>
 	
-    <!--END OF CREATE OPERATIONS -->
+	
+	
+	
+	
 
     <!--EDIT OPERATIONS -->
 	

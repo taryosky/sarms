@@ -1,23 +1,35 @@
 class NewsController < ApplicationController
-	 skip_before_action :verify_authenticity_token
+	
+	before_action :require_login, only:[:create, :update, :delete]		#require_login method is defined in application_helper.rb
+	before_action :require_admin_login, only:[:create, :update, :delete]		#require_admin_login is definded in login_sessions_helper.rb
+	
+	skip_before_action :verify_authenticity_token
 	def update
 		@id = params[:edit_news][:id]
 		@heading = params[:edit_news][:heading]
 		@body = params[:edit_news][:content]
 		@image = params[:edit_news][:image]
 		
-		@news = News.find_by(id: @id)
-		@news_image = @news.news_image
-		@news.title = @heading
-		@news.content = @body
+		@newss = News.find_by(id: @id)
+		@news_image = @newss.news_image
+		@newss.title = @heading
+		@newss.content = @body
 		
-		if @news.save
+		if @newss.save
 			if !@image.blank?
-				upload_news_image(@image, @news.id)
+				upload_news_image(@image, @newss.id)
 			end
 		end
-		respond_to do|format|
-			format.js
+		
+		@news = News.all.reverse
+		
+		
+		if @image
+			redirect_to(news_path(@newss.enc_id), target: "_blank")
+		else
+			respond_to do|format|
+				format.js
+			end
 		end
 	end
 	
@@ -29,7 +41,7 @@ class NewsController < ApplicationController
 	
 	#Important method
 	def create
-		@news = News.new();
+		@newss = News.new();
 		last_news = News.last()
 		
 		if last_news == nil
@@ -38,19 +50,22 @@ class NewsController < ApplicationController
 			last_id = last_news.id
 			current_news_id = last_id.to_i + 1
 		end
-		@news.title = params[:create_news][:heading]
-		@news.content = params[:create_news][:content]
+		@newss.title = params[:create_news][:heading]
+		@newss.content = params[:create_news][:content]
 		@news_image = params[:create_news][:image]
-		@news.enc_id = Digest::MD5::hexdigest(current_news_id.to_s)
-		@news.year = Time.now.year
-		
-		if @news.save && @news_image
-			upload_news_image(@news_image, @news.id)
+		@newss.enc_id = Digest::MD5::hexdigest(current_news_id.to_s)
+		@newss.year = Time.now.year		
+		if @newss.save && @news_image
+			upload_news_image(@news_image, @newss.id)
 		end
-		
-		respond_to do|format|
-			format.js
+		if @news_image
+			redirect_to(news_path(@newss.enc_id), target: "_blank")
+		else
+			respond_to do|format|
+				format.js
+			end
 		end
+		@news = News.all.reverse
 	end
 	
 	#important method
@@ -70,12 +85,12 @@ class NewsController < ApplicationController
 
 	def delete
 		@news_id = params[:edit_news][:id]
-		@news = News.find_by(id: @news_id)
-			if @news.news_image
+		@newss = News.find_by(id: @news_id)
+			if @newss.news_image
 				delete_news_image @news_id
 			end
-		@news.destroy
-		@news = News.all
+		@newss.destroy
+		@news = News.all.reverse
 		
 		respond_to do|format|
 			format.js
@@ -84,8 +99,8 @@ class NewsController < ApplicationController
 
 	def search
 		@query = params[:search][:news]
-		@searched_news = News.where("title LIKE ? OR content LIKE ?", "%"+@query+"%", "%"+@query+"%")
-		@news = News.all
+		@searched_news = News.where("title LIKE ? OR content LIKE ?", "%"+@query+"%", "%"+@query+"%").reverse
+		@news = News.all.reverse
 	end
 
 	#Important method

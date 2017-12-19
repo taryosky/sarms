@@ -1,4 +1,8 @@
 class AdminsessionsController < ApplicationController
+
+	before_action :require_login 			#require_login method is defined in login_sessions_helper.rb
+	#before_action :require_admin_login 		#require_admin_login is definded in login_sessions_helper.rb
+	
 	def index
 	end
 

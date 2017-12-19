@@ -1,5 +1,9 @@
 class AssignmentsController < ApplicationController
-# na wa
+	
+	before_action :require_login 				#require_login method is defined in application_helper.rb
+	before_action :require_lecturer_login		#require_admin_login is defined in login_sessions_helper.rb
+
+	
 	def index
 		lecturer = current_lecturer
 		if(lecturer.nil?)
@@ -26,9 +30,6 @@ class AssignmentsController < ApplicationController
 	end
 
 	def create
-		
-		
-		
 		file_path = path
 		#Assignment.create()
 		redirect_to assignments_path
