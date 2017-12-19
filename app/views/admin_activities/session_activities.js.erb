@@ -1,33 +1,73 @@
-var json_data;
-	var ajaxR = get_time_table();
-	 ajaxR.done(function(data){
-	 	json_data = data;
-	 });
+$("#page-inner").html("<%= j render 'session_activities' %>");
 
-$("#page-inner").html("<%= j render 'session_activities'%>");
-$(".table_input").each(function(index){
+set_input_field();
+focus_implementation();
+validata_session_field();
+set_timetable();
+init();
+set_reg_status();
+
+
+function init(){
+	<% temp = @session_val.split('/') %>
+	$("#input1").val("<%= temp[0]%>");
+	$("#input2").val("<%= temp[1]%>");
+}
+
+function set_reg_status(){
+	$("#reg_stat > input").change(function(){
+		var status = $(this).attr("id");
+		$.ajax({
+			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+			url: '/setregstatus',
+			type: 'POST',
+			data: {"status": status},
+			error: function(data, status, xhr){
+				alert("An error occured");
+			},
+			success: function (data, status, xhr) {}// success callback function
+		});
+	});
+}
+
+function set_timetable(){
+	$(".week_days > div").click(function(){
+		var append_elem = document.getElementsByTagName("tr");
+		var div = $(this);
+
+		var str_append = create_time_table(div);
+		
+		for(var i=append_elem.length-2; i>=1; i--){
+			append_elem.item(i).nextElementSibling.remove();
+		}
+
+		var append_elem = $("#courses_body").append(str_append);
+		set_input_field();
+		focus_implementation();
+	});
+	$(".week_days > div[id='monday']").trigger('click');
+}
+
+function set_input_field(){
+	$(".table_input").each(function(index){
 	$(this).attr("maxlength","14");
-});
-focusImplementation();
+	});
+}
 
- //THIS IS THE END OF THE "focusout" function
+function set_session(input){
+	$.ajax({
+			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+			url: '/setsession',
+			type: 'POST',
+			data: {"input": input},
+			error: function(data, status, xhr){
+				alert("An error occured");
+			},
+			success: function (data, status, xhr) {}// success callback function
+	});
+}
 
-$(".week_days > div").click(function(){
-	var append_elem = document.getElementsByTagName("tr");
-	var div = $(this);
-
-	var str_append = genTableData(div);
-	
-	for(var i=append_elem.length-2; i>=1; i--){
-		append_elem.item(i).nextElementSibling.remove();
-	}
-
-	var append_elem = $("#courses_body").append(str_append);
-	$(".table_input").each(function(index){$(this).attr("maxlength","14");});
-	focusImplementation();
-});
-
-function genTableData(div){
+function create_time_table(div){
 	var json_data;
 	var ajaxR = get_time_table();
 	 ajaxR.done(function(data){
@@ -60,35 +100,56 @@ function genTableData(div){
 	return return_string;
 }
 
+function validata_session_field(){
+	$("#seperator").attr("disabled","true");
+	$("input.fixed-lenght").attr("maxlength","4");
 
-function focusImplementation(){
-	//var time_table_json = returnJSONData();
+	$("input.fixed-lenght").focusout(function(){
+		var elem = $(this);
+		var id = elem.attr("id");
+		var val = elem.val().trim();
+		var val1 = parseInt(val);
+		var input1 = $("#input1");
+		var input2 = $("#input2")
+		if (isNaN(val1)||val1==0){
+			input1.val("");
+			input2.val("");
+		}else{
+
+			if(id=="input1"){
+				input2.val(parseInt(val)+1);
+			}else if(id =="input2"){
+				input1.val(parseInt(val)-1);
+			}else{
+
+			}
+			set_session(input1.val());
+		}
+	});
+}
+
+function focus_implementation(){
+
 	$(".table_input").focusout(function() {
+		var value = $(this).val();
+		var query = $.trim(value);
+		var element = $(this);
+		var elem_id = element.attr("id");
+		var day = elem_id.substr(0,3);
+		var array = elem_id.split('_');
 
-	var value = $(this).val();
-	var query = $.trim(value);
-	var element = $(this);
-	var elem_id = element.attr("id");
-	var day = elem_id.substr(0,3);
-	var array = elem_id.split('_');
+		var period = array[1];
+		var row = array[2];
 
-	var period = array[1];
-	var row = array[2];
-
-	
 		var query = query.substr(0,6);
 		checkcode(query, value, element, day, period, row);
+  	});
 	
-		//set_time_table(day, period, row);
-	 //THIS IS THE END OF THE "if" STATEMENT
-
-  });
-	
-$(".table_input").focusin(function() {
-	var $elem = $(this);
-	$elem.css("border","0px")
-	var $elem_val = $elem.val();
-});	
+	$(".table_input").focusin(function() {
+		var $elem = $(this);
+		$elem.css("border","0px")
+		var $elem_val = $elem.val();
+	});	
 }
 
 function set_time_table(value, day, period, row){
@@ -130,7 +191,6 @@ function checkcode(query, value, element, day, period, row){
 						
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	
 		            	if(data){
 		                  	element.css("border","0px");
 		                  	set_time_table(value, day, period, row);
@@ -142,5 +202,4 @@ function checkcode(query, value, element, day, period, row){
 	    		}
 	    	);
 	}
-	
-}//THIS IS THE END OF THE ".ajax()" function
+}
