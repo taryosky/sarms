@@ -1,5 +1,5 @@
-        <div class="row">
-            <div class="col-d-6 col-md-6">
+        <div class="row disp_false">
+            <div class="col-d-6 col-md-6 disp_false">
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel custom-height">
                         <div class="panel-heading">SESSION</div>
@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-d-6 col-md-6">
+            <div class="col-d-6 col-md-6 disp_false">
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel">
                         <div class="panel-heading">COURSE REGISTRATION STATUS</div>
@@ -20,8 +20,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12 disp_false">
                 <div id="time-table-div" class="panel panel-default">
                     <div class="panel-heading week_days">
                         <div id="monday">mon</div>
@@ -32,9 +31,9 @@
                     </div>
                     <div class="panel-body">
                         <div id="table_for_courses" class="table-responsive">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered">
                                 <thead id="time_table_head">
-                                    <tr>
+                                    <tr class="custom">
                                         <th></th>
                                         <th>8 : 00am - 10 : 00am</th>
                                         <th>10 : 00am - 12 : 00am</th>
@@ -44,14 +43,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="courses_body">
-                                     <tr >
+                                     <tr class="custom">
                                         <td style="border: 0px"></td>
                                         <td style="border: 0px"></td>
                                         <td style="border: 0px"></td>
                                         <td style="border: 0px"></td>
                                         <td style="border: 0px"></td>
-                                    </tr>                                
-                                    <tr>
+                                    </tr> 
+                                    <tr class="custom">
                                         <th rowspan="5">monday</th>
                                         <td><input class = "table_input"></td>
                                         <td><input class = "table_input"></td>
@@ -59,60 +58,78 @@
                                         <td><input class = "table_input"></td>
                                         <td><input class = "table_input"></td>
                                     </tr>
-                                     
+                                    <%for i in (0..3)%>
+                                        <tr class="custom">
+                                            <td><input class = "table_input"></td>
+                                            <td><input class = "table_input"></td>
+                                            <td><input class = "table_input"></td>
+                                            <td><input class = "table_input"></td>
+                                            <td><input class = "table_input"></td>
+                                        </tr>
+                                    <%end%>                              
                                 </tbody>
                             </table>
+
+                            <div id="time-table-activs">
+                                <div id="view">view</div>
+                                <div id="print">print</div>
+                            </div>
                         </div>                               
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-           
-            
-            
                 <div class="row">
-                    <div class="col-md-4 col-sm-12 col-d-12">
+                    <div class="col-md-4 col-sm-12 col-d-12 disp_false">
                     </div>
-                    <div class="col-md-4 col-sm-12 col-d-12">
-                        <div class="panel panel-default">
+                    <div class="col-md-4 col-sm-12 col-d-12 disp_false">
+                        <div class="panel panel-default" style="text-align: center">
                             <div class="panel-heading">
                                 Course Allocation
                             </div>
-                            <div class="panel-body">
-                                <div class="list-group">
-
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">7 minutes ago</span>
-                                        <i class="fa fa-fw fa-comment"></i> Lecturer signed in
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">16 minutes ago</span>
-                                        <i class="fa fa-fw fa-truck"></i> New Lecturer created
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <span class="badge">36 minutes ago</span>
-                                        <i class="fa fa-fw fa-globe"></i> New Student created
-                                    </a>
+                            <div>
+                                <div class="week_days">
+                                    <div id="monday">100</div>
+                                    <div id="tuesday">200</div>
+                                    <div id="wednesday">300</div>
+                                    <div id="thusday">400</div>
+                                    <div id="friday">500</div>
                                 </div>
-                                <div class="text-right">
-                                    <a href="#">More Tasks <i class="fa fa-arrow-circle-right"></i></a>
+                                <div id="aloc_ops">
+                                    <div id="avai_courses" class="block_disp">
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span><br/>
+                                        <span>EEE2002</span>
+                                    </div>
+                                    <div id="symbols" class="block_disp">
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>                       
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>
+                                        <span>< = ></span><br/>
+                                    </div>
+                                    <div id="lecturers" class="block_disp">
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
+                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200'%>                                                             
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div id="modal">
             </div>

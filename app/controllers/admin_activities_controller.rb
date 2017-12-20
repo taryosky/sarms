@@ -51,10 +51,14 @@ class AdminActivitiesController < ApplicationController
     val1 = session_val.to_i+1
     value = "#{session_val}/#{val1.to_s}"
     Util.update(3, value: value)
-
   end
 
-  def session_activities 
+  def session_activities
+    @courses = Course.all
+    path = "#{Rails.root}/public/time_table/time_table.json"
+    file = File.new(path, 'r')
+    @data = File.read(file)
+    @json_data = JSON.parse(@data)
     @session_val = Util.find_by(id: 3).value.to_s
     respond_to do |format|
       format.js
@@ -105,10 +109,17 @@ class AdminActivitiesController < ApplicationController
   def get_time_table
     path = "#{Rails.root}/public/time_table/time_table.json"
     file = File.new(path, 'r')
-    data = File.read(file)
+    @data = File.read(file)
+    @json_data = JSON.parse(@data)
     file.close
     respond_to do |format|
-      format.json{render json: data}
+      format.js
+      format.json{render json: @data}
     end
   end 
+
+  def alloc_lect
+    
+  end
 end
+

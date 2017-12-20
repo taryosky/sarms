@@ -122,7 +122,7 @@ Rails.application.routes.draw do
 
   #routes for time table
   post'/settimetable', to: 'admin_activities#set_time_table'
-  get'/gettimetable', to: 'admin_activities#get_time_table'
+  post'/gettimetable', to: 'admin_activities#get_time_table'
 
 
   resources :admins

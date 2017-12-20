@@ -1,4 +1,5 @@
 $("#page-inner").html("<%= j render 'session_activities' %>");
+$("div#modal").html("<%= j render 'time_table', locals: {'data': @data} %>");
 
 set_input_field();
 focus_implementation();
@@ -6,7 +7,25 @@ validata_session_field();
 set_timetable();
 init();
 set_reg_status();
+view_time_table();
 
+function view_time_table(){
+	$("div#view").click(function(){
+		$.ajax({
+			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+			url: '/gettimetable.js',
+			type: 'POST',
+			data: {"status": status},
+			error: function(data, status, xhr){
+				alert("An error occured");
+			},
+			success: function (data, status, xhr) {
+
+			}// success callback function
+		});
+	});
+	
+}
 
 function init(){
 	<% temp = @session_val.split('/') %>
@@ -32,7 +51,7 @@ function set_reg_status(){
 
 function set_timetable(){
 	$(".week_days > div").click(function(){
-		var append_elem = document.getElementsByTagName("tr");
+		var append_elem = document.getElementsByClassName("custom");
 		var div = $(this);
 
 		var str_append = create_time_table(div);
@@ -78,7 +97,7 @@ function create_time_table(div){
 	var return_string = "";
 	var row_count = -1;
 	for(var tr=0; tr<5; tr++){
-		return_string += "<tr>";
+		return_string += "<tr class=\"custom\">";
 		row_count+=1;
 		var temp;
 		if(tr==0){
@@ -86,13 +105,13 @@ function create_time_table(div){
 			for(var td=1; td<=5; td++){
 				var temp = json_data[query_name][td][tr];
 				
-				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\" "+temp+"\" type=\"text\" /></td>";
+				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\""+temp+"\" type=\"text\" /></td>";
 			}
 		}else{
 			for(var td=1; td<=5; td++){
 				var temp = json_data[query_name][td][tr].toString();
 				
-				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\" "+temp+"\" type=\"text\" /></td>";
+				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\""+temp+"\" type=\"text\" /></td>";
 			}
 		}
 		return_string += "</tr>";
@@ -132,7 +151,8 @@ function focus_implementation(){
 
 	$(".table_input").focusout(function() {
 		var value = $(this).val();
-		var query = $.trim(value);
+		var query = $.trim(value).toUpperCase();
+		$(this).val(query.toUpperCase());
 		var element = $(this);
 		var elem_id = element.attr("id");
 		var day = elem_id.substr(0,3);
@@ -142,7 +162,7 @@ function focus_implementation(){
 		var row = array[2];
 
 		var query = query.substr(0,6);
-		checkcode(query, value, element, day, period, row);
+		checkcode(query, element, day, period, row);
   	});
 	
 	$(".table_input").focusin(function() {
@@ -172,13 +192,13 @@ function get_time_table(){
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 			url: '/gettimetable.json',
 			async:false,
-			type: 'GET'
+			type: 'POST'
 	});
 }
 
-function checkcode(query, value, element, day, period, row){
+function checkcode(query, element, day, period, row){
 	if(query==""){
-		set_time_table(value, day, period, row);
+		set_time_table(query, day, period, row);
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -193,7 +213,7 @@ function checkcode(query, value, element, day, period, row){
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data){
 		                  	element.css("border","0px");
-		                  	set_time_table(value, day, period, row);
+		                  	set_time_table(query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid red");	                  	

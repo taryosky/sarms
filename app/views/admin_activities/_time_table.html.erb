@@ -1,0 +1,49 @@
+<div id="edit_cont1" class="my-modal">		
+		  <div id = "edit_modal" class="my-modal-content">
+        <div class="my-modal-header">
+         <span id="cancel_edit_lect" class="cancel_button" data-class="cancel_ref" data-ref = "edit_cont1">&times;</span>
+          <h2>TIME TABLE</h2>
+        </div>
+        <div id = "edit_modal_body" class="my-modal-body">
+        <div id = "find_course_option" class="course_option" data-class="display">
+           <div class = "row">
+                    <div class = "col-t-12 col-d-12">
+                            <div id="time_table_bg" class="handle white_bg ttable_pad">
+                            	<table class="table table-bordered">
+                                <thead id="time_table_head" class="center_data ttable_head">
+                                    <tr>
+                                        <th>8 : 00am - 10 : 00am</th>
+                                        <th>10 : 00am - 12 : 00am</th>
+                                        <th>12 : 00pm - 2 : 00pm</th>
+                                        <th>2 : 00pm - 4 : 00pm</th>
+                                        <th>4 : 00pm - 6 : 00pm</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="courses_body" class="center_data">
+                            <% @json_data.keys.each do |day| %>
+                            	<tr>
+	                            	<th rowspan="5"><%=day%></th>
+                             		<% for j in (1..5) %>
+                             			<td><%= @json_data["#{day}"][j.to_s][0] %></td>
+                             		<% end %>
+                             	</tr>
+                         		<% for i in (1..4) %>
+	                         		<tr>
+	                             		<% for j in (1..5) %>
+	                             			<td><%= @json_data["#{day}"][j.to_s][i] %></td>
+	                             		<% end %>
+	                             	</tr>
+                             	<% end %>
+	                        <% end %>
+	                         </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <div class = "col-2"></div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+   
