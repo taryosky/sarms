@@ -34,8 +34,9 @@
                             <% if !@first_semester_courses.nil? %>
                                 <% @first_semester_courses.each do|course| %>
                             <tr>
-                               <td class="sn table-cell">1</td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.first_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="first_semester" /></td>
+                               <td class="sn table-cell"><%= @counter %></td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.first_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="first_semester" /></td>
                             </tr>
+								<% @counter = @counter+1 %>
                                 <% end %>
                             <% end %>
 
@@ -59,11 +60,13 @@
                             </tr>
                                 <% end %>
                             <% end %>
+								<% @counter = 1 %>
                             <% if !@second_semester_courses.nil? %>
                                 <% @second_semester_courses.each do|course| %>
                             <tr>
-                               <td class="sn table-cell">1</td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.second_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="second_semester" /></td>
+                               <td class="sn table-cell"><%= @counter %></td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.second_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="second_semester" /></td>
                             </tr>
+								<% @counter = @counter+1 %>
                                 <% end %>
                             <% end %>
 

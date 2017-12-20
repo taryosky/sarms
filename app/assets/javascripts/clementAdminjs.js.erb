@@ -21,6 +21,9 @@ $(document).ready(function(){
 			$("#course_lecturer0").css("display", "inline-block");
          }
      });
+	 
+	 $("a[href='#']").click(function(e){e.preventDefault();
+	 });
 
 	 
 	$("#edit_course_button").click(function(event){
@@ -57,10 +60,14 @@ $(document).ready(function(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function createUser(){
+	count_rows = 1;
+	rows = 1;
 	$("input[type=text]").each(function(){$(this).val("")});
 	$("#create_cont").css("display", "block");
 	$(":text").removeAttr("disabled");
 	$("#edit_error, #create_error").text("");
+	$(".extra-fields").each(function(){$(this).remove()});
+	$(".error").each(function(){$(this).css("display","none")});
 	
 }
 

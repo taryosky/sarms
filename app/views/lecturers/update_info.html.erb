@@ -1,0 +1,115 @@
+<% if @activation == 0 %>
+	<div class="row">
+		<div class="col-t-3 col-d-3"></div>
+		<div class="col-t-6 col-d-6">
+			Welcome, First, you need to update you profile.
+			<div class="error-msg">
+				<% if @lecturer.errors.any? %>
+					<% @lecturer.errors.full_messages.each do|error| %>
+						<div> <%= error %> </div>
+					<% end %>
+				<% end %>
+			</div>
+			<%= form_for :edit_lecturer, url: lecturer_info_update_path do|f| %>
+				<fieldset>
+				<%= f.label "Matric. No:", class:"info-label" %>
+				<%= f.text_field :staff_id, value: "#{current_lecturer.staff_id}", class: "info-field", id: "info-staff_id-field" %><br/>
+				
+				<%= f.label "Surname:", class:"info-label" %>
+				<%= f.text_field :sname, value: "#{current_lecturer.sname}", class: "info-field", id: "info-sname-field" %><br/>
+				
+				<%= f.label "First Name:", class:"info-label" %>
+				<%= f.text_field :fname, value: "#{current_lecturer.fname}", class: "info-field", id: "info-fname-field" %><br/>
+				
+				<%= f.label "Other Names:", class:"info-label" %>
+				<%= f.text_field :othernames, value: "#{current_lecturer.lecturer_othername.othernames if current_lecturer.lecturer_othername}", class: "info-field", id: "info-oname-field" %><br/>
+				
+				<%= f.label "Sex:", class:"info-label" %><%= f.label :male %><%= f.radio_button :sex, :male %><%= f.label :female %><%= f.radio_button :sex, :female %><br/>
+				
+				
+				<%= f.label "L.G.A:", class:"info-label" %>
+				<%= f.text_field :lga, class: "info-field", id: "info-lga-field" %><br/>
+				
+				<%= f.label "State Of Origin:", class:"info-label" %>
+				<%= f.text_field :state_of_origin, class: "info-field", id: "info-soo-field" %><br/>
+				
+				<%= f.label "Nationality:", class:"info-label" %>
+				<%= f.text_field :nationality, class: "info-field", id: "info-nationality-field" %><br/>
+				
+				<%= f.label "Religion:", class:"info-label" %>
+				<%= f.text_field :religion, class: "info-field", id: "info-religion-field" %><br/>
+				
+				<%= f.label "Email:", class:"info-label" %>
+				<%= f.email_field :email, class: "info-field", id: "info-email-field" %><br/>
+				
+				<%= f.label "Phone:", class:"info-label" %>
+				<%= f.text_field :phone, class: "info-field", id: "info-phone-field" %><br/>
+				
+				<%= f.submit :update %>
+				</fieldset>
+			<% end %>
+		</div>
+		<div class="col-t-3 col-d-3"></div>
+	</div>
+<% elsif @activation == 1 %>
+	<div class="row">
+		<div class="col-t-3 col-d-3"></div>
+		<div class="col-t-6 col-d-6">
+			Upload Your Passport
+			<% if flash[:success] %>
+				<div class="m sucess"><%= flash[:success] %> </div>
+			<% end %>
+			<% if flash[:error] %>
+				<div class="mcess"><%= flash[:error] %> </div>
+			<% end %>
+			<div class="error-msg">
+				<% if @lecturer.errors.any? %>
+					<% @lecturer.errors.full_messages.each do|error| %>
+						<div> <%= error %> </div>
+					<% end %>
+				<% end %>
+			</div>
+			<%= form_for :lecturer_passport, url: lecturer_info_update_path, multipart:true do|f| %>
+				<%= image_tag "" %>
+				
+				<%= f.label "Passport:", class:"info-label" %>
+				<%= f.file_field :passport, class: "info-field", id: "info-pass-field" %><br/>
+				
+				<%= f.submit :Upload %>
+			<% end %>
+		</div>
+		<div class="col-t-3 col-d-3"></div>
+	</div>
+<% else %>
+	<div class="row">
+		<div class="col-t-3 col-d-3"></div>
+		<div class="col-t-6 col-d-6">
+			You Need to change you Password
+			<% if flash[:success] %>
+				<div class="mess"><%= flash[:success] %> </div>
+			<% end %>
+			<% if flash[:error] %>
+				<div class="mg "><%= flash[:error] %> </div>
+			<% end %>
+			<div class="error-msg">
+				<% if @lecturer.errors.any? %>
+					<% @lecturer.errors.full_messages.each do|error| %>
+						<div> <%= error %> </div>
+					<% end %>
+				<% end %>
+			</div>
+			<%= form_for :lecturer_password, url: lecturer_info_update_path, multipart:true do|f| %>
+				<%= f.label "Password:", class:"info-label" %>
+				<%= f.password_field :password, class: "info-field", id: "info-password-field" %><br/>
+				
+				<%= f.label "Confirm Password:", class:"info-label" %>
+				<%= f.password_field :password_c, class: "info-field", id: "info-password-field" %><br/>
+				
+				<%= f.submit :Save %>
+			<% end %>
+		</div>
+		<div class="col-t-3 col-d-3"></div>
+	</div>
+<% end %>
+
+<div><%= @activation %></div>

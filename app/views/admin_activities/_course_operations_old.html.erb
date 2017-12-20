@@ -46,7 +46,7 @@
 
 								<%= f.label "Semester : ",  id: 'create_semester', class:"modal_label" %>
 								<%= fields_for :semester do|fs| %>
-									<%= fs.radio_button :semester0, "0",  class: 'modal_inputs' %><%= f.label "first", class: "status modal_label" %>
+									<%= fs.radio_button :semester0, "0",  checked:true, class: 'modal_inputs' %><%= f.label "first", class: "status modal_label" %>
 									<%= fs.radio_button :semester0, "1", class: 'modal_inputs' %><%= f.label "second", class: "status modal_label" %><div id="addrow" class="custom_button", data-row="new_row", onclick="add()">+</div><div id="remrow" class="custom_button", data-row="del_row">-</div><br/>
 								<% end %>
 							</div>

@@ -12,9 +12,9 @@ $("#edit_news_form_fields").click(function(){
 	$(this).css("display", "none");
 	$("#edit_news_button").css("display","inline-block");
 	$(":text").removeAttr("disabled");
+	$("#edit_news_content_field").removeAttr("disabled");
 	$("#cancel_edit_lect_form").text("Cancel");
 	$("#delete_news_form_fields").css("display","none");
-	
 });
 
 $("#search_news").keyup(function(){

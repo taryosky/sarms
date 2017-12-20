@@ -1,17 +1,23 @@
-<% if @lecturer.errors.any? %>
-    $("#create_success").html("");
-    $("#create_error").html("");
-    $("#create_success").css("display", "none");
-    $("#create_error").html('<% @lecturer.errors.full_messages.each do|msg| %><div><%= @counter; msg %></div><% end %>');
-    $("#create_error").css('background-color', 'rgba(225,10,10,0.5)');
-    $("#create_error").css("display", "block");
-<% elsif @lecturer_other_names.errors.any? %>
-    $("#create_success").html("");
-    $("#create_error").html("");
-    $("#create_success").css("display", "none");
-    $("#create_error").append('<% @lecturer_other_names.errors.full_messages.each do|msg| %><div><%= @counter; msg %></div><% end %>');
-    $("#create_error").css('background-color', 'rgba(225,10,10,0.5)');
-    $("#create_error").css("display", "block");
+var form_rows = $('div[id^="lecturer-fields"]');
+	for(i=0; i<form_rows.length; i++){
+		$("#new-lecturer-error"+i).html("");
+	}
+
+<% if !@invalid_lecturers.empty? %>
+	var inval_lecturers = new Array();
+	var no_of_inv_fields = new Array();
+	<% @invalid_lecturers.each do|key, value| %>
+		inval_lecturers["<%= key %>"] = "<%= value.join(",") %>";
+		no_of_inv_fields["<%= key %>"] = "<%= value.join(",") %>".split(",").length
+	<% end %>
+	for(i=0; i<form_rows.length; i++){
+		var id=form_rows[i].id;
+		var num = id.slice(id.length-1);
+		if(inval_lecturers[i] != null){
+			$("#new-lecturer-error"+i).html(inval_lecturers[i]+" "+ (no_of_inv_fields[i]>1 ? "are":"is")+" not correctly filled for this lecturer");
+			$("#new-lecturer-error"+i).css("display", "block");
+		}
+	}
 <% else %>
     $("#create_error").html("");
     $("#create_success").html("");
@@ -20,9 +26,11 @@
     $("#create_success").css('background-color', 'rgba(10,225,10,0.5)');
     $("#create_success").css("display", "block");
 	$("#create_cont").css("display", "none");
-	$("#alert-body").text("Lecturer Information Successfully Created");
+	$("#alert-body").text("<%= @lecturer_title.size %> Lecturer(s) Successfully Created");
 	$("#alert-modal").css("display", "block");
 <% end %>
+
+
 
 $("#table_for_lecturers").html(generateLecturersTable1());
 trig_lecturer_edit1();
@@ -37,7 +45,7 @@ $("#close-alert, #close-alerts").click(function(){
 
 function generateLecturersTable1(){
 	<% @lecturers = Lecturer.all %>
-	return '<table class="table table-striped table-bordered table-hover" id="lectrers"><tr><th>S/N</th><th>Staff Id</th><th>Name</th><th>Sex</th><th>Nationality</th><th>State of Origin</th><th>L.G.A</th><th>E-mail</th><th>Phone Number</th></tr><% @counter = 1 %><% @lecturers.each do|lecturer| %><tr class="lecturer_details" id="<%= lecturer.id %>"><td><%= @counter %></td><td><%= lecturer.staff_id %></td><td><%= lecturer.sname %> <%=lecturer.fname %> <%= lecturer.lecturer_othername.othernames if lecturer.lecturer_othername %></td><td><%= lecturer.sex %></td><td><%= lecturer.nationality %></td><td><%= lecturer.state_of_origin %></td><td><%= lecturer.lga %></td><td><%= lecturer.email %></td><td><%= lecturer.phone %></td></tr><% @counter +=1 %><% end %></table>';
+	return '<table class="table table-striped table-bordered table-hover" id="lectrers"><tr><th>S/N</th><th>Staff Id</th><th>Name</th><th>Sex</th><th>Nationality</th><th>State of Origin</th><th>L.G.A</th><th>E-mail</th><th>Phone Number</th></tr><% @counter = 1 %><% @lecturers.each do|lecturer| %><tr class="lecturer_details" id="<%= lecturer.id %>"><td><%= @counter %></td><td><%= lecturer.staff_id %></td><td><%= lecturer.title %> <%= lecturer.sname %> <%=lecturer.fname %> <%= lecturer.lecturer_othername.othernames if lecturer.lecturer_othername %></td><td><%= lecturer.sex %></td><td><%= lecturer.nationality %></td><td><%= lecturer.state_of_origin %></td><td><%= lecturer.lga %></td><td><%= lecturer.email %></td><td><%= lecturer.phone %></td></tr><% @counter +=1 %><% end %></table>';
 }
 
 

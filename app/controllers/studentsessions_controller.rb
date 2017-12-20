@@ -1,11 +1,14 @@
 class StudentsessionsController < ApplicationController
+
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+	before_action :require_student_login				#require_admin_login is defined in login_sessions_helper.rb
+
 	
 	def new
 		
 	end
 
 	def create
-
 		student = Student.find_by(matno: params[:studentsession][:matno].downcase)
 		if student #&& student.authenticate(params[:studentsession][:password])
 			login_stud(student)
@@ -23,6 +26,5 @@ class StudentsessionsController < ApplicationController
 	end
 
 	def notification
-		
 	end
 end

@@ -60,13 +60,14 @@ ActiveRecord::Schema.define(version: 20171124071827) do
   end
 
   create_table "lecturers", force: :cascade do |t|
+    t.string  "title"
     t.string  "staff_id",        null: false
     t.string  "sname",           null: false
     t.string  "fname",           null: false
-    t.integer "sex",             null: false
-    t.string  "state_of_origin", null: false
-    t.string  "lga",             null: false
-    t.string  "nationality",     null: false
+    t.integer "sex"
+    t.string  "state_of_origin"
+    t.string  "lga"
+    t.string  "nationality"
     t.string  "religion"
     t.string  "phone"
     t.string  "email"
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(version: 20171124071827) do
     t.index ["fname"], name: "index_lecturers_on_fname"
     t.index ["sname"], name: "index_lecturers_on_sname"
     t.index ["staff_id"], name: "index_lecturers_on_staff_id"
+    t.index ["title"], name: "index_lecturers_on_title"
   end
 
   create_table "login_details", force: :cascade do |t|
@@ -127,13 +129,13 @@ ActiveRecord::Schema.define(version: 20171124071827) do
     t.string  "matno",                         null: false
     t.string  "sname",                         null: false
     t.string  "fname",                         null: false
-    t.string  "state_of_origin",               null: false
-    t.string  "lga",                           null: false
-    t.string  "nationality",                   null: false
+    t.string  "state_of_origin"
+    t.string  "lga"
+    t.string  "nationality"
     t.string  "religion"
     t.string  "phone"
     t.string  "email"
-    t.integer "sex",                           null: false
+    t.integer "sex"
     t.integer "level",           default: 100, null: false
     t.binary  "passport"
     t.index ["fname"], name: "index_students_on_fname"

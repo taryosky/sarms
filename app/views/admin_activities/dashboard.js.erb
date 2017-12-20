@@ -1,0 +1,16 @@
+$("#page-inner").html("<%= j render "dashboard" %>");
+
+	var totalstudents = "<%= Student.all.size %>";
+	var level100students = "<%= Student.where("level = ?", "100").size %>"
+	var level200students = "<%= Student.where("level = ?", "200").size %>"
+	var level300students = "<%= Student.where("level = ?", "300").size %>"
+	var level400students = "<%= Student.where("level = ?", "400").size %>"
+	var level500students = "<%= Student.where("level = ?", "500").size %>"
+	var spilloverstudents = "<%= Student.where("level > ?", "500").size %>"
+	
+	$("#spillover-bar").css("height", ""+spilloverstudents/totalstudents*100+"%");
+ 	$("#100-level-bar").css("height", ""+level100students/totalstudents*100+"%");
+	$("#200-level-bar").css("height", ""+level200students/totalstudents*100+"%");
+	$("#300-level-bar").css("height", ""+level300students/totalstudents*100+"%");
+	$("#400-level-bar").css("height", ""+level400students/totalstudents*100+"%");
+	$("#500-level-bar").css("height", ""+level500students/totalstudents*100+"%");

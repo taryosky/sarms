@@ -1,9 +1,11 @@
 class CreateUserLoginDetailsController < ApplicationController
+	
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+
 	def new
 	end
 
 	def create
-
 		user_id = params[:login_details][:user_id].to_i
 		user_type = params[:login_details][:user_status].to_i
 		user_activation_status = params[:login_details][:user_activation_status].to_i

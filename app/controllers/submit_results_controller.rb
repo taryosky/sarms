@@ -1,4 +1,7 @@
 class SubmitResultsController < ApplicationController
+
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+	
     def index
         @courses = current_lecturer.courses
         @counter = 1;

@@ -1,5 +1,9 @@
 class AdminsController < ApplicationController
 
+	before_action :require_login 	#require_login method is defined in application_helper.rb
+	before_action :require_admin_login, only:[:create, :update, :delete]		#require_admin_login is definded in login_sessions_helper.rb
+
+
   def new
   end
 
