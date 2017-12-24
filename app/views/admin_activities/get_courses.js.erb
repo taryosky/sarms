@@ -1,0 +1,52 @@
+$("#alloc_contents").html("<%= j render 'insert_course_allocs' %>");
+course_alloc_handler();
+remove_lect();
+
+
+
+function course_alloc_handler(){
+	$(".course_alloc").change(function(){
+		var elem = $(this);
+		var level = elem.attr("data-level");
+		var course = elem.attr("data-aloc");
+		var lecturer = elem.val();
+		$.ajax(
+				{	
+					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+					url: '/alloc_course',
+					type: 'POST',
+					data: {"ccode": course, "lecturer": lecturer, "level": level},
+					error: function (data, status, xhr){
+					},
+		            success: function (data, status, xhr) {// success callback function
+		            }
+	    		}
+	    	);
+	});
+}
+
+function remove_lect(){
+	$(".remove_opt").click(function(){
+		var opt_elem = $(this);
+		var opt_val = opt_elem.val();
+		var parent = opt_elem.parent();
+		var course_id = parent.attr("data-aloc");
+		var level = parent.attr("data-level");
+		opt_elem.hide();
+
+		$.ajax(
+				{	
+					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+					url: '/remove_lect',
+					type: 'POST',
+					data: {"lect_name" : opt_val, "course_id" : course_id, "level" : level},
+					error: function (data, status, xhr){
+						
+					},
+		            success: function (data, status, xhr) {// success callback function
+		            	
+		            }
+	    		}
+	    	);
+	});
+}

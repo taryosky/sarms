@@ -1,0 +1,8 @@
+$("div#modal").html("<%= j render 'get_allocated_courses' %>");
+$("#edit_cont1").css("display","block");
+var elem2 = $("#edit_cont1");
+var elem = $("div#edit_cont1.my-modal");
+elem.click(function(event){
+	if(event.target.id=="edit_cont1")
+	elem2.css("display","none");
+});

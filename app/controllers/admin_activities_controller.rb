@@ -14,7 +14,7 @@ class AdminActivitiesController < ApplicationController
 	end
 	
 	file = File.open( Rails.root.join('log', "login.log"), 'r')
-	@title_signin = file.readlines.first.chop
+	@title_signin = file.readlines.first
 	file = File.open( Rails.root.join('log', "login.log"), 'r')
 	d = file.readlines[3].to_s.split(" ")
 	date = d[1].split("-")
@@ -22,14 +22,19 @@ class AdminActivitiesController < ApplicationController
 	@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
 	file.close
 	
-	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
-	@title_create = file.readlines.first.chop
-	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
-	d = file.readlines[2].to_s.split(" ")
-	date = d[1].split("-")
-	time = d[2].split(":")
-	@time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
-	file.close
+  if File::zero?( Rails.root.join('log', "create_new.log"))
+    @title_create = "No creation activity has been done"
+    @time_create = Time.now
+  else
+  	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+  	@title_create = file.readlines.first.chop
+  	file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+  	d = file.readlines[2].to_s.split(" ")
+  	date = d[1].split("-")
+  	time = d[2].split(":")
+  	@time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+  	file.close
+  end
 	
   end
 
@@ -50,14 +55,19 @@ class AdminActivitiesController < ApplicationController
 		@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
 		file.close
 		
-		file = File.open( Rails.root.join('log', "create_new.log"), 'r')
-		@title_create = file.readlines.first.chop
-		file = File.open( Rails.root.join('log', "create_new.log"), 'r')
-		d = file.readlines[2].to_s.split(" ")
-		date = d[1].split("-")
-		time = d[2].split(":")
-		@time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
-		file.close
+  if File::zero?( Rails.root.join('log', "create_new.log"))
+    @title_create = "No creation activity has been done"
+    @time_create = Time.now
+  else
+    file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+    @title_create = file.readlines.first.chop
+    file = File.open( Rails.root.join('log', "create_new.log"), 'r')
+    d = file.readlines[2].to_s.split(" ")
+    date = d[1].split("-")
+    time = d[2].split(":")
+    @time_create = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+    file.close
+  end
 		
 		respond_to do|format|
 			format.html{render layout:false}
@@ -68,7 +78,7 @@ class AdminActivitiesController < ApplicationController
   def course
     @count = 0;
     @course = Course.all
-	@lecturer = Lecturer.all
+	  @lecturer = Lecturer.all
     respond_to do|format|
         format.html{render layout:false}
         format.js
@@ -76,20 +86,20 @@ class AdminActivitiesController < ApplicationController
   end
 
  def lecturer
-	@counter = 1
-	@lecturers = Lecturer.all
+	 @counter = 1
+	 @lecturers = Lecturer.all
     respond_to do|format|
 		format.js
     end
   end
 
   def student
-	@counter = 1
-	@_100_level_students = Student.where('level == ?', 100)
-	@_200_level_students = Student.where('level == ?', 200)
-	@_300_level_students = Student.where('level == ?', 300)
-	@_400_level_students = Student.where('level == ?', 400)
-	@_500_level_students = Student.where('level == ?', 500)
+  	@counter = 1
+  	@_100_level_students = Student.where('level == ?', 100)
+  	@_200_level_students = Student.where('level == ?', 200)
+  	@_300_level_students = Student.where('level == ?', 300)
+  	@_400_level_students = Student.where('level == ?', 400)
+  	@_500_level_students = Student.where('level == ?', 500)
 	
     respond_to do|format|
 		format.js
@@ -98,27 +108,41 @@ class AdminActivitiesController < ApplicationController
 
   def setregstatus
     status = params[:status].to_i
-     Util.update(2, status: status)
+    util_id = Util.find_by(name: 'registration').id
+    Util.update(util_id, value: status)
   end
 
   def setsession
     session_val = params[:input]
     val1 = session_val.to_i+1
     value = "#{session_val}/#{val1.to_s}"
-    Util.update(3, value: value)
+    util_id = Util.find_by(name: 'session').id
+    Util.update(util_id, value: value)
   end
 
   def session_activities
-    @courses = Course.all
+    @level = "100"
+
+    @alloc_courses = CourseAllocation.all
+    
+    session_val = Util.find_by(name: 'session').value.to_s
+    @temp = session_val.split('/')
+
+    @reg_stat = Util.find_by(name: "registration").value.to_i
+
+    @lecturer = Lecturer.all
+    @courses = Course.where(level: '100')
+
     path = "#{Rails.root}/public/time_table/time_table.json"
     file = File.new(path, 'r')
     @data = File.read(file)
     @json_data = JSON.parse(@data)
-    @session_val = Util.find_by(id: 3).value.to_s
+
     respond_to do |format|
       format.js
       format.html{render layout:false}
     end
+
   end
 
   def news
@@ -173,8 +197,82 @@ class AdminActivitiesController < ApplicationController
     end
   end 
 
-  def alloc_lect
-    
+  def get_allocated_courses
+
+    @courses = Course.all
+    @alloc_courses = CourseAllocation.all
+    @lecturer = Lecturer.all
+    respond_to do |format|
+      format.js
+    end
+
+  end
+
+  def alloc_course
+
+    @alloc_courses = CourseAllocation.all
+    @courses = Course.all
+    @level = params[:level]
+    @level_courses = Course.where(level: @level)
+    @lecturer = Lecturer.all
+
+    ccode = params[:ccode]
+    lect = params[:lecturer]
+    lect_details = lect.split(" ")
+
+    if lect_details.length==4
+      title = "#{lect_details[0]} #{lect_details[1]}"
+      lecturer = Lecturer.where(["title = ? and sname = ? and fname = ?", title, lect_details[2], lect_details[3]]) 
+      lecturer_id = lecturer.first.id
+    else
+      lecturer = Lecturer.where(["title = ? and sname = ? and fname = ?", lect_details[0], lect_details[1], lect_details[2]])
+      lecturer_id = lecturer.first.id
+    end
+
+    course_id = Course.find_by(id: ccode).id
+    if !CourseAllocation.where(lecturer_id: lecturer_id, course_id: course_id).first
+       CourseAllocation.create(lecturer_id: lecturer_id, course_id: course_id)     
+    end
+    render "get_courses.js"
+  end
+
+  def get_courses
+
+    @alloc_courses = CourseAllocation.all
+    @courses = Course.all
+    @level = params[:data]
+    @level_courses = Course.where(level: @level)
+    @lecturer = Lecturer.all
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def remove_lect
+    lect_name = params[:lect_name]
+    course_id = params[:course_id]
+
+    @alloc_courses = CourseAllocation.all
+    @courses = Course.all
+    @level = params[:level]
+    @level_courses = Course.where(level: @level)
+    @lecturer = Lecturer.all
+
+    lect_details = lect_name.split(" ")
+
+    if lect_details.length==4
+      title = "#{lect_details[0]} #{lect_details[1]}"
+      lecturer = Lecturer.where(["title = ? and sname = ? and fname = ?", title, lect_details[2], lect_details[3]]) 
+      lecturer_id = lecturer.first.id
+    else
+      lecturer = Lecturer.where(["title = ? and sname = ? and fname = ?", lect_details[0], lect_details[1], lect_details[2]])
+      lecturer_id = lecturer.first.id
+    end
+    course_allocation = CourseAllocation.where(["lecturer_id = ? and course_id = ?", lecturer_id, course_id])
+    if course_allocation
+      course_allocation.first.destroy!
+    end
+    render "get_courses.js"
   end
 end
-

@@ -4,7 +4,7 @@
                     <div class="panel-body easypiechart-panel custom-height">
                         <div class="panel-heading">SESSION</div>
                         <div id="set_session">
-                            <input id="input1" type="text" class="fixed-lenght" style="text-align: right;" /><input id="seperator" type="text" value="/" disabled="true" /><input id="input2" class="fixed-lenght" type="text"/>
+                            <input id="input1" type="text" value=<%= @temp[0]%> class="fixed-lenght" style="text-align: right;" /><input id="seperator" type="text" value="/" disabled="true" /><input id="input2" class="fixed-lenght" type="text" value= <%= @temp[1]%> />
                         </div>
                     </div>
                 </div>
@@ -14,8 +14,13 @@
                     <div class="panel-body easypiechart-panel">
                         <div class="panel-heading">COURSE REGISTRATION STATUS</div>
                         <div id="reg_stat">
-                            <input id="1" type="radio" name="reg_stat" checked="" />ACTIVATE
-                            <input id="0" type="radio" name="reg_stat" checked="checked" />DEACTIVATE
+                            <% if @reg_stat==1 %>
+                            <input id="1" type="radio" name="reg_stat" checked />ACTIVATE
+                            <input id="0" type="radio" name="reg_stat"/>DEACTIVATE
+                            <%else%>
+                            <input id="1" type="radio" name="reg_stat"/>ACTIVATE
+                            <input id="0" type="radio" name="reg_stat" checked/>DEACTIVATE
+                            <%end%>
                         </div>
                     </div>
                 </div>
@@ -71,7 +76,7 @@
                             </table>
 
                             <div id="time-table-activs">
-                                <div id="view">view</div>
+                                <div id="tt_view">view</div>
                                 <div id="print">print</div>
                             </div>
                         </div>                               
@@ -82,50 +87,80 @@
                     <div class="col-md-4 col-sm-12 col-d-12 disp_false">
                     </div>
                     <div class="col-md-4 col-sm-12 col-d-12 disp_false">
-                        <div class="panel panel-default" style="text-align: center">
+                        <div class="panel panel-default" style="text-align: center; min-height: 600px">
                             <div class="panel-heading">
                                 Course Allocation
                             </div>
-                            <div>
-                                <div class="week_days">
-                                    <div id="monday">100</div>
-                                    <div id="tuesday">200</div>
-                                    <div id="wednesday">300</div>
-                                    <div id="thusday">400</div>
-                                    <div id="friday">500</div>
+                            <div id = "alloc_tab">
+                                <div class="levels">
+                                    <div id="100">100</div>
+                                    <div id="200">200</div>
+                                    <div id="300">300</div>
+                                    <div id="400">400</div>
+                                    <div id="500">500</div>
                                 </div>
-                                <div id="aloc_ops">
-                                    <div id="avai_courses" class="block_disp">
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span><br/>
-                                        <span>EEE2002</span>
-                                    </div>
-                                    <div id="symbols" class="block_disp">
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>                       
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>
-                                        <span>< = ></span><br/>
-                                    </div>
-                                    <div id="lecturers" class="block_disp">
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200' %>
-                                        <%= select_tag "credit_card", options_for_select([ "samuel douye wokoro jp", "professor okafor", "DR. Johnson Ayawari", "faith", "ben", "grace" ], "samuel"), class: 'modal_inputs', :"data-aloc"=> 'EEE200'%>                                                             
-                                    </div>
-                                </div>
+                            </div> 
+                            <div id = "alloc_contents"> 
+
+                                    <% if !@courses.empty? %>
+        <div id="avai_courses" >
+            <div id = "add_lect">ADD LECTURER</div>
+            <% @courses.each do |c| %>
+                <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
+                <select class= 'modal_inputs course_alloc' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                    <option id="opt_remove">default</option>
+                    <% @lecturer.each do |l|%>
+                        <option id="<%= l.id%>" class="click"><%="#{l.title} #{l.sname} #{l.fname} "%></option>
+                    <% end %>
+                </select>
+                <br/>
+            <% end %>
+        </div>
+        <div id="remove_lecturer" >
+            <div id = "rem_lect">REMOVE LECTURER</div>
+            <% error= true%>
+            <% @courses.each do |c| %>
+                
+                <% if @alloc_courses.find_by(course_id: c.id) %>
+                <% error= false%>
+                    <% lect_id = @alloc_courses.where(course_id: c.id).select(:lecturer_id) %>
+                    <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
+                        <select class= 'modal_inputs' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                            <option id="opt_remove">default                                            
+                            </option>
+                            <% lect_id.each do |lect| %>
+                                <% lecturer= @lecturer.find_by(id: lect.lecturer_id) %>
+                                <option class="remove_opt" ><%="#{lecturer.title} #{lecturer.sname} #{lecturer.fname}" %></option>
+                            <% end %>
+                        </select><br/>                
+                <% end %>
+            <% end %>
+            <%if error%>
+                <div id="allo_error">
+                    NO lecturer allocated
+                </div>
+            <%end%>
+        </div>
+
+        <div id="course_titles">
+            <% @courses.each do |c|%>
+                <p><%= "#{c.ccode} #{c.ctitle}"%></p>
+            <% end %>
+        </div>
+        
+    <% else %>
+        <div id="coures_view_error">
+            NO <%=@level%> level course available
+        </div>
+    <% end %>
+
+
+
+                            </div>
+                            <div id="time-table-activs">
+                                    <div id="ca_view">view</div>
+                                    <div id="print">print</div>
+                            </div>
                             </div>
                         </div>
                     </div>

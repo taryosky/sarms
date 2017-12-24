@@ -1,0 +1,53 @@
+    <% if !@level_courses.empty? %>
+        <div id="avai_courses" >
+            <div id = "add_lect">ADD LECTURER</div>
+            <% @level_courses.each do |c| %>
+                <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
+                <select class= 'modal_inputs course_alloc' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                    <option id="opt_remove">default</option>
+                    <% @lecturer.each do |l|%>
+                        <option id="<%= l.id%>" class="click"><%="#{l.title} #{l.sname} #{l.fname} "%></option>
+                    <% end %>
+                </select>
+                <br/>
+            <% end %>
+        </div>
+        <div id="remove_lecturer" >
+            <div id = "rem_lect">REMOVE LECTURER</div>
+            <% error= true%>
+            <% @level_courses.each do |c| %>
+                
+                <% if @alloc_courses.find_by(course_id: c.id) %>
+                <% error= false%>
+                    <% lect_id = @alloc_courses.where(course_id: c.id).select(:lecturer_id) %>
+                    <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
+                        <select class= 'modal_inputs' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                            <option id="opt_remove">default                                                    
+                            </option>
+                            <% lect_id.each do |lect| %>
+                                <% lecturer= @lecturer.find_by(id: lect.lecturer_id) %>
+                                <option class="remove_opt" ><%="#{lecturer.title} #{lecturer.sname} #{lecturer.fname}" %>
+                                    
+                                </option>
+                            <% end %>
+                        </select><br/>                
+                <% end %>
+            <% end %>
+            <%if error%>
+                <div id="allo_error">
+                    NO lecturer allocated
+                </div>
+            <%end%>
+        </div>
+
+        <div id="course_titles">
+            <% @level_courses.each do |c|%>
+                <p><%= "#{c.ccode} #{c.ctitle}"%></p>
+            <% end %>
+        </div>
+        
+    <% else %>
+        <div id="coures_view_error">
+            NO <%=@level%> level course available
+        </div>
+    <% end %>

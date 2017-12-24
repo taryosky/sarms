@@ -5,7 +5,11 @@
   text-align: center;
   margin-bottom: 2%;
 }
-.week_days > div, #time-table-activs > div{
+.levels{
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+.week_days > div, #time-table-activs > div, .levels > div{
   display: inline-block;
   border-radius: 100px;
   margin-right : 2%;
@@ -15,7 +19,55 @@
   cursor: pointer;
   font-size: 15px;
 }
-.week_days > div:hover, #time-table-activs > div:hover{
+#allo_error{
+  color: crimson;
+font-size: small;
+}
+#course_heading{
+  
+}
+#coures_view_error{
+  color: crimson;
+  font-size: x-large;
+  margin-top: 12%
+}
+#course_titles > p{
+padding:0px;
+margin-bottom:25px;
+  font-family: Consolas,"Courier New",monospace !important;
+  font-weight: normal !important;
+  font-size: 10pt !important;
+
+}
+#rem_lect, #add_lect {
+  margin-bottom: 19px !important;
+  font-size: 9pt;
+}
+
+#remove_lecturer > select{
+  width: 100%;
+}
+#course_titles{
+  width: 24%;
+  text-align: left;
+  display: inline-block;
+  margin-left: 6%;
+}
+#avai_courses, #remove_lecturer{
+  width: 30%;
+  display: inline-block;
+  vertical-align: top;
+}
+#avai_courses>select{
+ width: 35%;
+}
+#alloc_tab{
+  width: 100%;
+}
+#alloc_contents{
+  overflow: auto;
+}
+.week_days > div:hover, #time-table-activs > div:hover, .levels > div:hover{
   border-color: #aaa;
   box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.05);
 }
@@ -28,7 +80,14 @@
 }
 #time-table-activs{
   text-align: center;
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
 }
 #courses_body > tr > td{
   padding:0px;
+}
+
+#avai_courses > select, #remove_lecturer > select{
+ width: 60% !important; 
 }

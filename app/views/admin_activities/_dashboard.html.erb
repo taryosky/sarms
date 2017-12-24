@@ -124,7 +124,7 @@
 										 Current Session
 									</a>
 									<a href="#" class="list-group-item">
-										<span class="badge"><%= Util.where("name = ?", "registration").first.value == 1 ? "Open":"Closed" %></span>
+										<span class="badge"><%= Util.where("name = ?", "registration").first.value.to_i == 1 ? "Open":"Closed" %></span>
 										Course Registration Portal
 									</a>
 								</div>

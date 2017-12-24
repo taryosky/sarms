@@ -33,6 +33,12 @@ Rails.application.routes.draw do
   post '/delete_course', to: 'courses#delete'
 
   #routes for admin activities
+  post '/remove_lect', to: 'admin_activities#remove_lect'
+  post '/getallocatedcourses', to: 'admin_activities#get_allocated_courses'
+  post '/settimetable', to: 'admin_activities#set_time_table'
+  post '/gettimetable', to: 'admin_activities#get_time_table'
+  post '/get_courses', to: 'admin_activities#get_courses'
+  post '/alloc_course', to: 'admin_activities#alloc_course'
   post '/setregstatus', to: 'admin_activities#setregstatus'
   post '/setsession', to: 'admin_activities#setsession'
   post '/query_code', to: 'admin_activities#checkcode'
@@ -104,11 +110,6 @@ Rails.application.routes.draw do
   post '/assignment', to: 'assignments#new'
   get '/all_assign_courses', to: 'assignments#index2'
   post '/get_assignment', to: 'assignments#getassign'
-
-  #routes for time table
-  post'/settimetable', to: 'admin_activities#set_time_table'
-  post'/gettimetable', to: 'admin_activities#get_time_table'
-
 
   resources :admins
   resources :lecturers

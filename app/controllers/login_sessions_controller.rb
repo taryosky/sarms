@@ -12,7 +12,7 @@ class LoginSessionsController < ApplicationController
 
 		user = LoginDetail.find_by(user_name: user_name)
 
-		if user && user.password == user_password.lstrip.rstrip
+		if user && user.password == user_password.strip
 			user_type = user.user_type
 			user_table_id = user.user_id
 			case user_type
