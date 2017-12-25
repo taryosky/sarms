@@ -1,0 +1,15 @@
+@media print {
+
+    div#navs.admin-nav{
+        display: none;
+    }
+
+    .disp_false{
+        display: none;
+    }
+
+    #edit_cont1{
+        display: block;
+    }
+    
+}

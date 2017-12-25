@@ -1,3 +1,7 @@
-At the level of creating the Assignment through the assignment controller.
-the challenge i am facing is getting the current assignment_id for the assignmnet in the Assignment controller 
-work_duration : 9:00pm - 12:20am
+summary:
+
+--Currently working on the time table view functionality, the view is to be displayed in a pop up modal.
+
+--Am yet to use the return json data to populate a timetable table.
+
+work_duration : 6:00pm - 6:00pm

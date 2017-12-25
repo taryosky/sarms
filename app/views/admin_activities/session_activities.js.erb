@@ -1,17 +1,50 @@
 $("#page-inner").html("<%= j render 'session_activities' %>");
+$("div#modal").html("<%= j render 'time_table', locals: {'data': @data} %>");
 
 set_input_field();
 focus_implementation();
 validata_session_field();
 set_timetable();
-init();
 set_reg_status();
+view_time_table();
+init_time_table();
+course_alloc_handler();
+course_alloc_by_click_handler();
+view_course_allocations();
+remove_lect();
 
+function view_time_table(){
+	$("div#tt_view").click(function(){
+		$.ajax({
+			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+			url: '/gettimetable.js',
+			type: 'POST',
+			data: {"status": status},
+			error: function(data, status, xhr){
+				alert("An error occured");
+			},
+			success: function (data, status, xhr) {
 
-function init(){
-	<% temp = @session_val.split('/') %>
-	$("#input1").val("<%= temp[0]%>");
-	$("#input2").val("<%= temp[1]%>");
+			}// success callback function
+		});
+	});
+}
+
+function view_course_allocations(){
+	$("div#ca_view").click(function(){
+		$.ajax({
+			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+			url: '/getallocatedcourses.js',
+			type: 'POST',
+			data: {"status": status},
+			error: function(data, status, xhr){
+				alert("An error occured");
+			},
+			success: function (data, status, xhr) {
+
+			}// success callback function
+		});
+	});
 }
 
 function set_reg_status(){
@@ -32,7 +65,7 @@ function set_reg_status(){
 
 function set_timetable(){
 	$(".week_days > div").click(function(){
-		var append_elem = document.getElementsByTagName("tr");
+		var append_elem = document.getElementsByClassName("custom");
 		var div = $(this);
 
 		var str_append = create_time_table(div);
@@ -45,7 +78,18 @@ function set_timetable(){
 		set_input_field();
 		focus_implementation();
 	});
-	$(".week_days > div[id='monday']").trigger('click');
+}
+
+function init_time_table(){
+	var init_elem = $("div#monday");
+	var append_elem = document.getElementsByClassName("custom");
+		var str_append = create_time_table(init_elem);
+		for(var i=append_elem.length-2; i>=1; i--){
+			append_elem.item(i).nextElementSibling.remove();
+		}
+		var append_elem = $("#courses_body").append(str_append);
+		set_input_field();
+		focus_implementation();
 }
 
 function set_input_field(){
@@ -78,7 +122,7 @@ function create_time_table(div){
 	var return_string = "";
 	var row_count = -1;
 	for(var tr=0; tr<5; tr++){
-		return_string += "<tr>";
+		return_string += "<tr class=\"custom\">";
 		row_count+=1;
 		var temp;
 		if(tr==0){
@@ -86,13 +130,13 @@ function create_time_table(div){
 			for(var td=1; td<=5; td++){
 				var temp = json_data[query_name][td][tr];
 				
-				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\" "+temp+"\" type=\"text\" /></td>";
+				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\""+temp+"\" type=\"text\" /></td>";
 			}
 		}else{
 			for(var td=1; td<=5; td++){
 				var temp = json_data[query_name][td][tr].toString();
 				
-				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\" "+temp+"\" type=\"text\" /></td>";
+				return_string += "<td><input class=\"table_input\" id="+"\""+ div_name +"_"+td+"_"+row_count+"\""+" value=\""+temp+"\" type=\"text\" /></td>";
 			}
 		}
 		return_string += "</tr>";
@@ -103,17 +147,16 @@ function create_time_table(div){
 function validata_session_field(){
 	$("#seperator").attr("disabled","true");
 	$("input.fixed-lenght").attr("maxlength","4");
-
 	$("input.fixed-lenght").focusout(function(){
 		var elem = $(this);
 		var id = elem.attr("id");
 		var val = elem.val().trim();
 		var val1 = parseInt(val);
 		var input1 = $("#input1");
-		var input2 = $("#input2")
+		var input2 = $("#input2");
 		if (isNaN(val1)||val1==0){
-			input1.val("");
-			input2.val("");
+			input1.val(<%=@temp[0]%>);
+			input2.val(<%=@temp[1]%>);
 		}else{
 
 			if(id=="input1"){
@@ -132,7 +175,8 @@ function focus_implementation(){
 
 	$(".table_input").focusout(function() {
 		var value = $(this).val();
-		var query = $.trim(value);
+		var query = $.trim(value).toUpperCase();
+		$(this).val(query.toUpperCase());
 		var element = $(this);
 		var elem_id = element.attr("id");
 		var day = elem_id.substr(0,3);
@@ -142,7 +186,7 @@ function focus_implementation(){
 		var row = array[2];
 
 		var query = query.substr(0,6);
-		checkcode(query, value, element, day, period, row);
+		checkcode(query, element, day, period, row);
   	});
 	
 	$(".table_input").focusin(function() {
@@ -172,13 +216,13 @@ function get_time_table(){
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 			url: '/gettimetable.json',
 			async:false,
-			type: 'GET'
+			type: 'POST'
 	});
 }
 
-function checkcode(query, value, element, day, period, row){
+function checkcode(query, element, day, period, row){
 	if(query==""){
-		set_time_table(value, day, period, row);
+		set_time_table(query, day, period, row);
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -193,7 +237,7 @@ function checkcode(query, value, element, day, period, row){
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data){
 		                  	element.css("border","0px");
-		                  	set_time_table(value, day, period, row);
+		                  	set_time_table(query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid red");	                  	
@@ -202,4 +246,79 @@ function checkcode(query, value, element, day, period, row){
 	    		}
 	    	);
 	}
+}
+
+function course_alloc_handler(){
+	$(".course_alloc").change(function(){
+		var elem = $(this);
+		var course = elem.attr("data-aloc");
+		var level = elem.attr("data-level");
+		var lecturer = elem.val();
+		$.ajax(
+				{	
+					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+					url: '/alloc_course',
+					type: 'POST',
+					data: {"ccode": course, "lecturer": lecturer, "level": level},
+					error: function (data, status, xhr){
+					},
+		            success: function (data, status, xhr) {// success callback function
+		            }
+	    		}
+	    	);
+
+	});
+}
+
+function course_alloc_by_click_handler(){
+	$('div.levels> div').click(function(){
+		var elem_id = $(this).attr('id');
+		$.ajax(
+				{	
+					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+					url: '/get_courses',
+					type: 'POST',
+					data: {"data" : elem_id},
+					error: function (data, status, xhr){
+						
+					},
+		            success: function (data, status, xhr) {// success callback function
+		            	if(data){
+		                  	element.css("border","0px");
+		                  	set_time_table(query, day, period, row);
+		                  	element.css("border","0px");
+		                  }else{
+		                  	element.css("border","1px solid red");	                  	
+		                  }
+		            }
+	    		}
+	    	);
+	});
+}
+
+/*FUNCTION TO REMOVE LECTURER*/
+function remove_lect(){
+	$(".remove_opt").click(function(){
+		var opt_elem = $(this);
+		var opt_val = opt_elem.val();
+		var parent = opt_elem.parent();
+		var course_id = parent.attr("data-aloc");
+		var level = parent.attr("data-level");
+		opt_elem.hide();
+
+		$.ajax(
+				{	
+					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+					url: '/remove_lect',
+					type: 'POST',
+					data: {"lect_name" : opt_val, "course_id" : course_id, "level" : level},
+					error: function (data, status, xhr){
+						
+					},
+		            success: function (data, status, xhr) {// success callback function
+		            	
+		            }
+	    		}
+	    	);
+	});
 }

@@ -144,11 +144,9 @@ ActiveRecord::Schema.define(version: 20171124071827) do
   end
 
   create_table "utils", force: :cascade do |t|
-    t.string  "name"
-    t.string  "value"
-    t.integer "status"
+    t.string "name"
+    t.string "value"
     t.index ["name"], name: "index_utils_on_name"
-    t.index ["status"], name: "index_utils_on_status"
     t.index ["value"], name: "index_utils_on_value"
   end
 

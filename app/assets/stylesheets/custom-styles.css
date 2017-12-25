@@ -11,8 +11,49 @@ http://creativecommons.org/licenses/by/3.0/
 body {
     font-family: 'Open Sans', sans-serif;
 }
+.block_disp{
+  display: inline-block;
+  width: 10%;
+}
+#lecturers > select{
+  width: initial;
+  text-align: center;
+   margin-top: 14px;
+}
+#aloc_ops{
+  width: 90%;
+}
+#symbols{
+  width: 4% !important;
+}
+#avai_courses > span{
+  display: inline-block;
+  font-size: 13px;
+  margin-top: 15px;
+  width: 100%;
+}
+#avai_courses > span{
+  display: inline-block;
+  font-size: 13px;
+  margin-top: 15px;
+  width: 100%;
+}
+#remove_lecturer > span{
+  display: inline-block;
+  font-size: 13px !important;
+  margin-top: 15px;
+  width: 100%;
+}
+
+#lecturers{
+  margin-left: 
+}
+ #symbols > span{
+  display: inline-block;
+  font-size: 15px;
+  margin-top: 15px;
+ }
 #set_session{
-  border: 1px solid black;
   text-align: left;
   width: 20%;
   display: inline-block;
@@ -35,7 +76,7 @@ body {
   text-align: center;
 }
 #time-table-div{
-  height: 350px;
+  height: 420px;
 }
 
  #wrapper {
