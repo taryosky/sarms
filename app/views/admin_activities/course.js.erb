@@ -70,6 +70,18 @@ $("#edit_course_course_lecturer > option").each(function(){
 	}
 });
 
+function remButton(button){
+	var clss = "";
+	var cl = "";
+	var cls = button.id
+	var i=0;
+	if(cls.includes("addrow")){
+	}
+	else{
+		$(".extra-fields"+cls.charAt(6)).remove();
+	}	
+}
+
 
 
 

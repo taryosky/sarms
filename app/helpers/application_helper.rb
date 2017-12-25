@@ -39,12 +39,12 @@ module ApplicationHelper
 	def delete_passport(user)
 		if user.user_type == 0
 			if user.passport
-				file = Rails.root.join("profile_images/"+student.passport)
+				file = Rails.root.join("profile_images/"+user.passport)
 				File::delete(file)
 			end
 		else
 			if user.passport
-				file = Rails.root.join("profile_images/"+student.passport)
+				file = Rails.root.join("profile_images/"+user.passport)
 				File::delete(file)
 			end
 		end

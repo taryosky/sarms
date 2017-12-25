@@ -51,6 +51,8 @@ $(document).ready(function(){
 	$("#300-level-bar").css("height", ""+level300students/totalstudents*100+"%");
 	$("#400-level-bar").css("height", ""+level400students/totalstudents*100+"%");
 	$("#500-level-bar").css("height", ""+level500students/totalstudents*100+"%");
+	
+
 
 	 	
 });
@@ -68,6 +70,8 @@ function createUser(){
 	$("#edit_error, #create_error").text("");
 	$(".extra-fields").each(function(){$(this).remove()});
 	$(".error").each(function(){$(this).css("display","none")});
+	$(".delete-extra-row").css("display", "inline")
+	$(".add-extra-row").css("display", "inline")
 	
 }
 

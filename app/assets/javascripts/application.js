@@ -43,3 +43,7 @@ function activateTab(elem){
 		}
 	}
 }
+
+
+
+var add = document.getElementsByClassName('add-extra-row');
