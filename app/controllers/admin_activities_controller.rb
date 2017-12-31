@@ -140,7 +140,6 @@ class AdminActivitiesController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html{render layout:false}
     end
 
   end
