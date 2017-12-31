@@ -36,12 +36,12 @@
             <div class="sidebar-collapse">
                 <div id = "navs" class="admin-nav">
                     <ul class="na">
-                        <li class = "adminli" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Dashboard", '/admin_dashboard.js', remote:true %></li>
-                        <li class = "adminli" id = "lect"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Lecturer", "/admin_lecturer.js", remote:true %></li>
-                        <li class = "adminli" id = "stud"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Student", /admin_student.js, remote:true %></li>
-                        <li class = "adminli" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Courses", "/admin_course.js", remote:true %></li>
-                        <li class = "adminli" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "News", "/admin_news.js", remote:true %></li>
-                        <li class = "adminli" id = "session_act"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Session Activities", "/admin_session_activities.js", remote:true %> </li>
+                        <li class = "adminli" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Dashboard", admin_dashboard_path, remote:true %></li>
+                        <li class = "adminli" id = "lect"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Lecturer", admin_lecturer_path, remote:true %></li>
+                        <li class = "adminli" id = "stud"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Student", admin_student_path, remote:true %></li>
+                        <li class = "adminli" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Courses", admin_course_path, remote:true %></li>
+                        <li class = "adminli" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "News", admin_news_path, remote:true %></li>
+                        <li class = "adminli" id = "session_act"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Session Activities", admin_session_activities_path, remote:true %> </li>
                     </ul>
                 </div>
             </div>
