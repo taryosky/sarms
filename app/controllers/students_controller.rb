@@ -64,11 +64,11 @@ class StudentsController < ApplicationController
 	end
 		
 		@counter = 1
-		@_100_level_students = Student.where('level == ?', 100)
-		@_200_level_students = Student.where('level == ?', 200)
-		@_300_level_students = Student.where('level == ?', 300)
-		@_400_level_students = Student.where('level == ?', 400)
-		@_500_level_students = Student.where('level == ?', 500)
+		@_100_level_students = Student.where('level = ?', 100)
+		@_200_level_students = Student.where('level = ?', 200)
+		@_300_level_students = Student.where('level = ?', 300)
+		@_400_level_students = Student.where('level = ?', 400)
+		@_500_level_students = Student.where('level = ?', 500)
 		
 	    respond_to do|format|
 	        format.html
@@ -162,11 +162,11 @@ class StudentsController < ApplicationController
 	    end
 		
 		@counter = 1
-		@_100_level_students = Student.where('level == ?', 100)
-		@_200_level_students = Student.where('level == ?', 200)
-		@_300_level_students = Student.where('level == ?', 300)
-		@_400_level_students = Student.where('level == ?', 400)
-		@_500_level_students = Student.where('level == ?', 500)
+		@_100_level_students = Student.where('level = ?', 100)
+		@_200_level_students = Student.where('level = ?', 200)
+		@_300_level_students = Student.where('level = ?', 300)
+		@_400_level_students = Student.where('level = ?', 400)
+		@_500_level_students = Student.where('level = ?', 500)
 		
 	    respond_to do|format|
 	        format.html
@@ -185,11 +185,11 @@ class StudentsController < ApplicationController
 			end
 		end
 		@counter = 1
-		@_100_level_students = Student.where('level == ?', 100)
-		@_200_level_students = Student.where('level == ?', 200)
-		@_300_level_students = Student.where('level == ?', 300)
-		@_400_level_students = Student.where('level == ?', 400)
-		@_500_level_students = Student.where('level == ?', 500)
+		@_100_level_students = Student.where('level = ?', 100)
+		@_200_level_students = Student.where('level = ?', 200)
+		@_300_level_students = Student.where('level = ?', 300)
+		@_400_level_students = Student.where('level = ?', 400)
+		@_500_level_students = Student.where('level = ?', 500)
 	end
 	
 	def search
