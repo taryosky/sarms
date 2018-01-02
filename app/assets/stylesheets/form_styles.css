@@ -1,11 +1,17 @@
 .login-field{
-    width: 100%;
-    border-style: none;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px grey;
-    font-size: 12pt;
-    padding: 8px 8px 8px 8px;
-    margin-top: 5px;
+    width: 76%;
+border-style: none;
+border-radius: 5px;
+box-shadow: 0px 2px 5px grey;
+font-size: 12pt;
+padding: 8px 8px 8px 8px;
+margin-top: 36px;
+height: 30px;
+
+}
+#log_head{
+    border-bottom: 1px solid;
+
 }
 
 .form-header{
@@ -30,10 +36,11 @@
     cursor: pointer;
     border-radius: 5px;
     padding: 5px 20px 5px 20px;
-    float: right;
+    margin-top: 30px;
     background-color: #0099cc;
     color: #ffffff;
     font-weight: bolder;
     border-style: none;
+    margin-bottom: 22px;
     box-shadow: 0px 0px 9px grey;
 }

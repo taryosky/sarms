@@ -100,6 +100,7 @@ GEM
     pg (0.18.4-x86-mingw32)
     puma (3.4.0)
     rack (2.0.3)
+    rack-cors (1.0.2)
     rack-test (0.6.3)
       rack (>= 1.0)
     railroady (1.5.3)
@@ -202,6 +203,7 @@ DEPENDENCIES
   listen (= 3.0.8)
   pg (= 0.18.4)
   puma (= 3.4.0)
+  rack-cors
   railroady
   rails (= 5.0.0.1)
   rails-erd (~> 1.4, >= 1.4.6)

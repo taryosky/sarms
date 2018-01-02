@@ -6,25 +6,46 @@
 }
 
 #main-nav-bar{
-	background-color: #0099cc;
-	height: 40px;
-	padding-top: 13px;
-	padding-left: 20px;
-	padding-right: 30px;
-	width: 100%;
+display: inline-block;
+position: relative;
+bottom: 17%;margin-left: 25%;
+width: 60%;
+
 }
 
+#main-nav-bar > ul > li:hover, #main-nav-bar > ul > li > a:hover {
+    color: #23c3ff !important;
+}
+#main-nav-bar > ul > li, #main-nav-bar > ul > li > a {
+    color:black !important;
+    font-weight: bold !important;
+    height: 40px;
+font-family: "Open Sans", sams-serif !important;
+font-size: 14px !important;
+}
+.sub-nav-list > li{
+    padding-top: 10px;
+}
+#login_div{
+    display: inline-block;
+width: 15%;
+position: absolute;
+float: right;
+}
 #main-nav-right-ul{
 	display: inline-block;
 	float: right;
 	padding:0px;
 	margin: 0px;
+    width: 50%;
+    font-family:"Time new romance";
 }
 
 #main-nav-left-ul{
-	display: inline-block;
+	display: inline;
 	margin: 0px;
 	height: 100%;
+    width: 100%;
 }
 
 .main-nav-item{
@@ -38,7 +59,7 @@
 
 
 .sub-nav-list {
-    margin-top:0.7%;
+    margin-top: 1.7%;
     position:absolute;
     text-align:left;
     width: 220px;
@@ -46,7 +67,7 @@
     color: white;
     display: none;
     margin-left:-17px;
-    background-color: #0099cc;
+    background: rgba(27,32,33,0.9);
     -webkit-transition: height 1.5s;
     transition: height 1.5s;
 }
@@ -54,26 +75,26 @@
 .sub-nav-list > li {
     height: 30px;
     padding-left: 7%;
-    padding-top:3%;
+    margin-top:5%;
     padding-bottom:1.2%;
     font-weight:normal;
     z-index:6;
     -webkit-transition: padding-left 0.5s;
     transition: padding-left 0.5s;
+
 }
 
 .sub-nav-list > li:hover {
-    color: #dddddd;
+    color: #23c3ff !important;
    	z-index:5;
-   	padding-left: 27px;
-   	background-color: #f2f2f2;
+   	padding-left: 25px;
    	color: #cc9933;
 }
 
 .ul-menu{
 	list-style-type: none;
 	list-style-position: outside;
-	padding: 0px;
+	padding-bottom: 14px;
 }
 
 .ul-menu-right{
@@ -100,11 +121,9 @@
 
 .li-menu-item-hor{
 	display: inline-block;
-	margin-right: 20px;
 	height: inherit;
 	cursor: pointer;
-	height: 100%;
-	color: #ffffff;
+    margin-right: 9%;
 }
 
 .li-menu-item-hor:hover{

@@ -2,20 +2,21 @@
         <!-- The main content starts here-->
         <div class = "myrow">
         <div class="col-t-3 col-d-4"></div>
-        <div class="col-t-6 col-d-4">
+        <div class="col-t-6 col-d-4" style="text-align: center">
+            <div id = "log_div">
                 <%= form_for  :loginsession, url: user_login_path do |f| %>
-                        <div class="form-header">Login</div>
+                        <div id="log_head" class="form-header">WELCOME</div>
                         <% if flash[:error]  || flash[:message] %>
                         <div class="error"><%= flash[:error] || flash[:mmessage] %></div>
                         <% end %>
-                        <%= f.label 'Username', id: 'id', class:'login-label' %>
                         <%= f.text_field :name, class: 'login-field',
-                        placeholder: "Enter username" %>
+                        placeholder: "username" %>
 
-                        <%= f.label :password, class: 'login-label' %>
-                        <%= f.password_field :password, class: 'login-field' %>
-                    <%= f.submit 'LogIn', class: 'login-button' %>
+                        <%= f.password_field :password, class: 'login-field', placeholder: "password" %><br/>
+                    <%= f.submit 'LOGIN', class: 'login-button' %>
                 <% end %>
+                <a>forgot password ?</a>
+                </div>
         </div>
         <div class="colt-3- col-d-4"></div>
 		</div>

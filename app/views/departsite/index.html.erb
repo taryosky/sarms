@@ -1,14 +1,14 @@
 <!-- THIS IS THE INDEX PAGE BODY -->
-    <div class="row">    
-        <div class = "row">
+    <div class="myrow">    
+        <div class = "myrow">
             <!-- This div displays the sliding Banner -->
             <div class=" margin-bottom  slider slide-div" id="image-banner" >
-                <%= image_tag "index.gif", id: "slidingImage", class: "slide-image", alt: "Slide Banner" %>
+                <%= image_tag "slider.jpg", class: "slide1-image" %>
             </div>
         </div>
         
         <!-- The main content starts here-->
-        <div class = "row">
+        <div class = "myrow">
                 <!-- This div holds all the news -->
             <div class = "col-d-4 col-t-4">
                 <div class="" id="latest-news dashboard">
@@ -50,16 +50,16 @@ engineers in the 2005/2006 academic year</p><span class = "span ">read more</spa
 
             <!-- The the alumini and why elect here-->
             <div class = "col-d-4 col-t-4">
-                <div class = "row">
+                <div class = "myrow">
                     <div class = "col-8 centered">
                         <div class="" id="alumni">
                                 <h5>ALUMNI</h5>
-                                <p class = "alumni"><img src="alumni.jpg" alt="IEEE Logo" title="IEEE Logo" class=" img-width" id="ieee-logo"/>
+                                <p class = "alumni"><img src="" alt="IEEE Logo" title="IEEE Logo" class=" img-width" id="ieee-logo"/>
                                 </p>
                         </div>
                     </div>
                 </div>
-                <div class = "row">
+                <div class = "myrow">
                     <div class = "col-8 div-margin centered">
                         <div class="" id="why-elect-elect">
                             <h5>WHY ELECT/ELECT</h5>
@@ -72,10 +72,5 @@ engineers in the 2005/2006 academic year</p><span class = "span ">read more</spa
                     </div>
                 </div>
             </div>
-        </div><!--this closes the row -->
-    </div>
-    <div class="row">
-        <div class = "col-8">
-            <%= debug(params)%>
-        </div>
+        </div><!--this closes the myrow -->
     </div>

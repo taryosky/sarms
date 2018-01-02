@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <title>Home - EEE NDU</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-	<%= javascript_include_tag :defaults %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   </head>
@@ -14,7 +14,7 @@
     <div class="myrow" style="height: 100%; overflow: auto">
         <%= content_for?(:admin_header) ? yield(:admin_header) : render('layouts/header')%>
         <%= yield %>
-        <%= content_for?(:admin_footer) ? yield(:admin_footer) : render('layouts/footer')%>
     </div>
+    <%= content_for?(:admin_footer) ? yield(:admin_footer) : render('layouts/footer')%>
   </body>
 </html>

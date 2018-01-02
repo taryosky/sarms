@@ -140,7 +140,7 @@ p{
 /********************BACKGROUND********************/
 
 .blue-background{
-	background-color:  #000066;
+	background-color:  #a4a4ae;
 }
 .white-background{
 	background-color:  #FFFFFF;
@@ -414,12 +414,24 @@ td{
 	padding: 0px;
 }
 .slider{
-	height: 220px;
+	height: 300px;
+}
+#log_div{
+	margin-bottom: 250px;
+margin-top: 100px;
+display: inline-block;
+background-color: white;
+box-shadow: 0px 0px 33px grey;
+border-radius: 10px;
+height: 325px;
+width: 80%;
 }
 footer{
 	height: 30px;
 	padding-top: 7px;
-	color: white;
+	color:#000000;
+	font-family: Calibri, sans-serif;
+	font-size: 14px;
 }
 .white-shadow{
 	text-shadow: 1px 1px 2px white;

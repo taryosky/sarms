@@ -12,32 +12,27 @@
 <div class = "col-8 no-padding">
         <div class="myrow">
         <header>
-            <div class="col-d-12 col-t-12 no-padding">
                 <!--<img src="ndu_logo.png" id="logo"  alt="NDU LOGO" /> -->
-                <%= image_tag "", alt: "NDU Logo", title: "NDU Logo", class: "img-widt", id: "logo" %>
-                <div id="head">
-                    DEPARTMENT OF ELECTRICAL/ELECTRONICS ENGINEERING<br/>
-                    NIGER DELTA UNIVERSITY<br/>
-                    WILBERFORCE ISLAND<br/>
-                    BAYELSA STATE<br/>
-                </div>
-            </div>
-        </header>
-        </div>
-        
-        <!-- Navigation Bar -->
-        <div class="myrow">
-        <div class="col-d-12 col-t-12 no-padding">
+                <div id="dept_title">
+            <%= image_tag "navs/ndu_logo.png", alt: "NDU Logo", title: "NDU Logo", class: "img-widt", id: "logo" %><br/>
+            ELECTRICAL AND ELECTRONIC ENGINEERING</div>
             <nav class="" id="main-nav-bar">
                 <ul class="ul-menu" id="main-nav-left-ul">
+                    <!-- HOME NAV -->
                     <li class="li-menu-item-hor"><%= link_to 'Home', root_url, class:'nmenu' %></li>
+
+                    <!-- RESOURCE NAV -->
                     <li class="li-menu-item-hor" id="resource">Resource
                          <ul class="sub-nav-list ul-menu" id="resource-sub-list">
                             <li class="" id="project-archive">Project-Archive</li>
                             <li class="" id="gallery">Gallery</li>
                         </ul>
                     </li>
+
+                    <!-- NEWS NAV -->
                     <li class="li-menu-item-hor"><%= link_to 'News', news_index_path, class:'nmenu' %></li>
+
+                    <!-- PROGRAMS NAV -->
                     <li class="li-menu-item-hor" id="programmes">Programmes
                         <ul class="sub-nav-list ul-menu" id="programmes-sub-list">
                         
@@ -59,6 +54,8 @@
                             </li>
                         </ul>
                     </li>
+
+                    <!-- ABOUT NAV -->
                     <li class="li-menu-item-hor" id="about">About
                         <ul class="sub-nav-list ul-menu" id="about-sub-list">
                             <li class="" id="history">History</li>
@@ -67,22 +64,40 @@
                             <li class="" id="aims-objectives">Aims/Objectives</li>
                         </ul>
                     </li>
+
+                    <!-- ABOUT NAV -->
                     <li class="li-menu-item-hor">Donation</li>
                 </ul>
+                <div id="login_div">
                 <% if (stud_logged_in? || lect_logged_in?) %>
-                <ul class="ul-menu-right" id="main-nav-right-ul">
-                    <li class="li-menu-item-hor">My Profile</li>
-                    <%if lect_logged_in? %>
-                        <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
-                    <% elsif stud_logged_in? %>
-                        <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
-                    <% end %>
-                </ul>
+                    <ul class="ul-menu-right" id="main-nav-right-ul">
+                        <li class="li-menu-item-hor">My Profile</li>
+                        <%if lect_logged_in? %>
+                            <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
+                        <% elsif stud_logged_in? %>
+                            <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
+                        <% end %>
+                    </ul>
                 <% else %>
-                 <ul class="ul-menu-right" id="main-nav-right-ul">
-                    <li class="li-menu-item-hor"><%= link_to 'Log In', user_login_path, class:'smenu' %></li>
-                 </ul>
+                    <ul class="ul-menu-right" id="main-nav-right-ul">
+                        <i class="fa fa-sign-in my_icon" aria-hidden="true"></i>
+                       <li class="li-menu-item-hor"><%= link_to 'Log In', user_login_path, class:'smenu' %></li>
+                    </ul>
                 <% end %>
+            </div>
             </nav>
+            <div id="info_div">
+                <i class="fa fa-map-marker my_icon" aria-hidden="true"></i>
+                <span id="addr_span">Amasoma, Bayelsa state</span>
+                <i id="number_icon" class="fa fa-phone my_icon" aria-hidden="true"></i>
+                <span id="number_span">+2347056309444</span>
+            </div>
+        </header>
         </div>
+        
+        <!-- Navigation Bar -->
+        <div class="myrow">
+        
     </div>
+
+    

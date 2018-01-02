@@ -67,7 +67,8 @@ function createUser(){
 	$("input[type=text]").each(function(){$(this).val("")});
 	$("#create_cont").css("display", "block");
 	$(":text").removeAttr("disabled");
-	$("#edit_error, #create_error").text("");
+	$("#edit_error").text("");
+	$("#create_error").text("");
 	$(".extra-fields").each(function(){$(this).remove()});
 	$(".error").each(function(){$(this).css("display","none")});
 	$(".delete-extra-row").css("display", "inline")
