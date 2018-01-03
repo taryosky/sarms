@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <div class="myrow" style="height: 100%; overflow: auto">
+    <div class="myrow" style="height: 100%; overflow: auto;">
         <%= content_for?(:admin_header) ? yield(:admin_header) : render('layouts/header')%>
         <%= yield %>
     </div>

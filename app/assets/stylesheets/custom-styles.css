@@ -137,6 +137,9 @@ header{
   -moz-box-shadow: 0 0 10px #757575;
   -webkit-box-shadow: 0 0 10px #757575;
 }
+#custom_nav{
+  margin: 0px !important;
+}
 #page-inner {
     margin:10px 20px 10px 0px;
     background-color:transparent;
@@ -188,12 +191,13 @@ width: 30px;
 text-align: center;
 }
 .top-navbar{
-position: fixed;
   width: 100%;
-  z-index: 300;
     -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
+}
+.admin-side-nav{
+  margin-top: 5% !important;
 }
 .navbar-side {
   z-index: 1;
