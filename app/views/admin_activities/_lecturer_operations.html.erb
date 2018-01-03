@@ -1,11 +1,11 @@
-<div class="row">
+<div class="myrow">
     <div class="col-t-4 col-d-4"><button id="activate_create_lecturer_modal" onclick="createUser();">Create Single</button></div>
     <div class="col-t-4 col-d-4"><button id="activate_lecturer_multiple">Create Multiple From File</button></div>
 		<%= link_to "Print generated Passwords", print_lecturer_password_path, target:"_blank" %>
 </div>
 
 <!--CREATE OPERATIONS -->
-<div class="row">	
+<div class="myrow">	
 	
 	<div id="create_cont" class="my-modal">		
 		  <div id = "create_modal" class="my-modal-content">
@@ -15,7 +15,7 @@
         </div>
         <div id = "create_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
-           <div class = "row">
+           <div class = "myrow">
                     <div class = "col-t-12 col-d-12">
                             <div class="handle white_bg">
 								<div id="create_error" data-class="notice" class = "create_error msg"></div>
@@ -24,10 +24,10 @@
 									<span id="new-lecturer-error0" class='error'></span>
 									<%= f.label "Title:",  id: 'create_mat_no' %>
 									<%= fields_for :title do|ft| %>
-										<%= ft.select :title0, ["Prof.", "Dr.", "Ast. Lect."], html:{class: 'modal_inputs'} %>
+										<%= ft.select :title0, ["Prof.", "Dr.", "Ast. Lect."], {}, {class:"modal_inputs"} %>
 									<% end %>
 									
-									<%= f.label "Staff ID",  id: 'create_staff_id' %>
+									<%= f.label "Staff ID:",  id: 'create_staff_id' %>
 									<%= fields_for :staff_id do|fi| %>
 										<%= fi.text_field :staff_id0,  id: 'create_staff_id_field', class:"modal_inputs", size:"15" %>
 									<% end %>
@@ -47,7 +47,7 @@
 										<%= fo.text_field :othernames0,  id: 'create_other_names_field', class:"modal_inputs", size:"15" %>
 									<% end %>
 									
-									<div id="addrow" class="custom_button", data-row="new_row", onclick="addNewLecturerRow()">+</div><div id="remrow" class="custom_button", data-row="del_row">-</div>
+									<div id="addrow" class="custom_button", data-row="new_row", onclick="addNewLecturerRow()">+</div><div id="remrow" class="remrow custom_button", data-row="del_row">-</div>
 								</div>
 								<div id="append">
 								</div>
@@ -69,7 +69,7 @@
     <!--EDIT OPERATIONS -->
 	
     <!-- Table for courses is placed in this div -->
-	<div class="row">
+	<div class="myrow">
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                         <div class="panel panel-default">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /. ROW  -->
+                <!-- /. myrow  -->
             </div>
 	
 	
@@ -102,7 +102,7 @@
         </div>
         <div id = "edit_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
-           <div class = "row">
+           <div class = "myrow">
                 <div class = "col-t-2 col-d-2"></div>
                     <div class = "col-t-8 col-d-8">
                             <div class="handle white_bg">

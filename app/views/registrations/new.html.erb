@@ -1,8 +1,10 @@
-<div class="row">
-<div class="col-d-12 col-t-12">
-<%= render 'layouts/student_layout/card' %>
-<div class="col-d-9 col-t-8">
-            <div class="dashboard">
+<div class="myrow">
+    <div class="col-12 custom-pad">
+    <%= render 'layouts/student_layout/card' %>
+    
+        <div class="col-d-9 dash-pane">
+            <div id="page-inner" class="myfade">
+            <div class="dashboard ">
                 <h2 class="dashboad-header">Course Registration</h2>
                 <div  class="">
                     
@@ -36,7 +38,7 @@
                             <tr>
                                <td class="sn table-cell"><%= @counter %></td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.first_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="first_semester" /></td>
                             </tr>
-								<% @counter = @counter+1 %>
+                                <% @counter = @counter+1 %>
                                 <% end %>
                             <% end %>
 
@@ -60,13 +62,13 @@
                             </tr>
                                 <% end %>
                             <% end %>
-								<% @counter = 1 %>
+                                <% @counter = 1 %>
                             <% if !@second_semester_courses.nil? %>
                                 <% @second_semester_courses.each do|course| %>
                             <tr>
                                <td class="sn table-cell"><%= @counter %></td><td class="table-cell course-code"><%= course.ccode %></td><td class="table-cell course-title"><%= course.ctitle %></td><td class="table-cell course-status">C</td><td class="table-cell unit"><%= course.units %></td><td class="table-cell"><input type="checkbox" onclick="validateEnrollment($('.second_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="second_semester" /></td>
                             </tr>
-								<% @counter = @counter+1 %>
+                                <% @counter = @counter+1 %>
                                 <% end %>
                             <% end %>
 
@@ -87,14 +89,14 @@
                         </div>
                         <div class="button-cont"><input type="submit" name="submit" value="Register" id="register-button"></div>
                     </form>
-                </div>
+                </div>              
             </div>
         </div>
     </div>
+    </div>
 </div>
 
-
-        <script type="text/javascript">
+ <script type="text/javascript">
     $(document).ready(function(){
         //totalNumberOfUnits($(".first_semester"));
     });

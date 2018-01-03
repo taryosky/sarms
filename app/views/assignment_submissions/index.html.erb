@@ -1,10 +1,13 @@
-<div class="row">
-	<%= render "layouts/student_layout/card" %>
-	
-
-	<div class="col-d-9 col-t-8">
-	    <div class="dashboard">
-	    	<% if !flash[:notice].nil?%>
+<div class = "myrow" >
+	<div class="col-12 custom-pad">
+	<%= render 'layouts/student_layout/card' %>
+	<div class="col-d-9 dash-pane">
+	<div id="page-inner" class="myfade">
+		<div class="myrow">
+            
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                    	<% if !flash[:notice].nil?%>
 	    		<h4><%=flash[:notice]%></h4>
 	    	<% end %>
 	    	<% if @ass_code.empty? %>
@@ -19,9 +22,14 @@
 						<%= e.course.ccode.upcase %>   <%= e.course.ctitle.titlecase %>   <%= f.submit "submit" %>
 					<% end %>
 				<% end %>
+				</div>
 			<% end %>
-	        </div>
-	    </div>
-	</div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
 
+</div>
+</div>
 </div>

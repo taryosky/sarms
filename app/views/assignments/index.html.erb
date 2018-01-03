@@ -1,11 +1,10 @@
 <div class = "myrow" >
+	<div class="col-12 custom-pad">
 	<%= render 'layouts/lecturer_layout/card' %>
-</div>
-
-<div id="page-wrapper" class="dash-pane">
+	<div class="col-d-9 dash-pane">
 	<div id="page-inner" class="myfade">
 		<div class="myrow">
-            <div class="col-d-3 col-md-3">
+            
                 <div class="panel panel-default">
                     <div class="panel-body easypiechart-panel">
                     	<% if !flash[:notice].nil?%>
@@ -22,7 +21,10 @@
 						<% end %>
                     </div>
                 </div>
-            </div>
+            
         </div>
     </div>
+
+</div>
+</div>
 </div>

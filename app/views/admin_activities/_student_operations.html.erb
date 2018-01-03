@@ -1,4 +1,4 @@
-<div class="row">
+<div class="myrow">
     <div class="col-t-4 col-d-4"><button id="activate_create_student_modal" onclick="createUser();">Create Single</button></div>
     <div class="col-t-4 col-d-4"><button id="activate_student_multiple">Create Multiple From File</button></div>
 	<%= link_to "Print generated Passwords", print_student_password_path, target:"_blank" %>
@@ -14,7 +14,7 @@
 </ul>
 
 <!--CREATE OPERATIONS -->
-<div class="row">	
+<div class="myrow">	
 		<div id="create_cont" class="my-modal">		
 		  <div id = "edit_modal" class="my-modal-content">
         <div class="my-modal-header">
@@ -23,7 +23,7 @@
         </div>
         <div id = "create_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
-           <div class = "row">
+           <div class = "myrow">
                     <div class = "col-t-12 col-d-12">
                             <div class="handle white_bg">
 								<div id="create_error" data-class="notice" class = "create_error msg"></div>
@@ -53,9 +53,9 @@
 									
 									<%= f.label "Level:",  id: 'create_level' %>
 									<%= fields_for :level do|fl| %>
-										<%= fl.select :level0, ["100", "200", "300", "400", "500"], html:{class: 'modal_inputs'} %>
+										<%= fl.select :level0, ["100", "200", "300", "400", "500"], {}, {class:'modal_inputs'} %>
 									<% end %>
-									<div id="addrow0" class="custom_button add-extra-row", data-row="new_row", onclick="addNewStudentRow();remButton(this);">+</div><div id="remrow" class="custom_button delete-extra-row", data-row="del_row" onclick = "remButton(this);" style="display: none">-</div>
+									<div id="addrow0" class="custom_button add-extra-row", data-row="new_row", onclick="addNewStudentRow();remButton(this);">+</div><div id="remrow" class="remrow custom_button delete-extra-row", data-row="del_row" onclick = "remButton(this);" style="display: none">-</div>
 								</div>
 								<div id="append">
 								</div>
@@ -82,7 +82,7 @@
     <!--EDIT OPERATIONS -->
    	
     <!-- Table for courses is placed in this div -->
-	<div class="row">
+	<div class="myrow">
                     <div class="col-md-12 col-sm-12 col-xs-12">
 
                         <div class="panel panel-default">
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /. ROW  -->
+                <!-- /. myrow  -->
             </div>	
 	
 	
@@ -115,7 +115,7 @@
         </div>
         <div id = "edit_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
-           <div class = "row">
+           <div class = "myrow">
                 <div class = "col-t-2 col-d-2"></div>
                     <div class = "col-t-8 col-d-8">
                             <div class="handle white_bg">

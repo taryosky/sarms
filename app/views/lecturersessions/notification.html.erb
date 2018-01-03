@@ -1,13 +1,16 @@
 <div class="myrow">
-    <div class="col-12">
+    <div class="col-12 custom-pad">
     <%= render 'layouts/lecturer_layout/card' %>
-        <div class="col-d-9">
-            <div class="dashboard">
+    
+        <div class="col-d-9 dash-pane">
+            <div id="page-inner" class="myfade">
+            <div class="dashboard ">
                 <h2 class="dashboard-header">LECTURER'S NOTIFICATION</h2>
                 <% if flash[:alert]%>
                 	<%= flash[:alert] %>
                 <% end %>              
             </div>
         </div>
+    </div>
     </div>
 </div>

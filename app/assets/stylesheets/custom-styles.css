@@ -22,11 +22,10 @@ margin-left: 3%;
 }
 #info_div{
   color: black;
-position: relative;
   width: 25%;
-top: -108%;
-margin-left: 75%;
-font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
+  margin-top: -9.3%;
+  margin-left: 75%;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
 }
 #info_div > span{
   font-size: 12px;
@@ -131,10 +130,15 @@ header{
 }
 
 #page-wrapper {
-  margin: 0 13px 0 280px;
-    padding: 15px 15px;
+  padding: 15px 15px;
     min-height: 200px;
     background: #EDEDED;
+  box-shadow: 0 0 10px #757575;
+  -moz-box-shadow: 0 0 10px #757575;
+  -webkit-box-shadow: 0 0 10px #757575;
+}
+#custom_nav{
+  margin: 0px !important;
 }
 #page-inner {
     margin:10px 20px 10px 0px;
@@ -187,12 +191,13 @@ width: 30px;
 text-align: center;
 }
 .top-navbar{
-position: fixed;
   width: 100%;
-  z-index: 300;
     -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.05);
+}
+.admin-side-nav{
+  margin-top: 5% !important;
 }
 .navbar-side {
   z-index: 1;
@@ -201,18 +206,31 @@ position: fixed;
   top: 65px;
   padding-right: 5px;
 }
-.stud-navbar-side {
+.custom-pad{
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+.no-left-pad{
+  padding-left: 0px !important;
+}
+.spec-navbar-side {
   z-index: 1;
-  width: 260px;
-  padding-right: 5px;
+padding-right: 5px;
+float: left;
 }
-#page-wrapper {
-  position: relative;
-  top: 55px;
-  box-shadow: 0 0 10px #757575;
-  -moz-box-shadow: 0 0 10px #757575;
-  -webkit-box-shadow: 0 0 10px #757575;
+.dash-pane{
+  position: relative !important;
+top: -44%;
+width: 75% !important;
+height: 465px;
+background: #EDEDED;
+box-shadow: 0 0 10px #757575;
+-moz-box-shadow: 0 0 10px #757575;
+-webkit-box-shadow: 0 0 10px #757575;
+margin-top: 1.1%;
+height: 100% !important;
 }
+
 .navbar-right{
   float : right;
 }
@@ -706,11 +724,7 @@ line-height: 1.428571429;
 ------------------------------------------------*/
  
  @media(min-width:768px) {
-     #page-wrapper{
-               margin: 0 13px 0 280px;
-               padding: 0;
-               min-height: 150px;
-    }
+     
 	
 	
     .navbar-side {
@@ -727,16 +741,10 @@ line-height: 1.428571429;
 	#sideNav{
 	display:none;
 } 
- #page-wrapper {
-position: relative;
-top: 93px;
- }
+
  }
  @media(max-width:480px) {
- #page-wrapper {
-position: relative;
-top: 93px;
- }
+ 
 .page-header small {
 display: block;
 padding-top: 14px;
