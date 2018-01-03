@@ -100,9 +100,9 @@
 	width: 16%;
 }
 #addrow{
-  margin-left: 17px;
+  
 }
-#remrow{
+.remrow{
   margin-left: 5px;
   padding: 0px 8px;
 }

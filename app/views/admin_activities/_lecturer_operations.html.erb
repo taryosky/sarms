@@ -24,10 +24,10 @@
 									<span id="new-lecturer-error0" class='error'></span>
 									<%= f.label "Title:",  id: 'create_mat_no' %>
 									<%= fields_for :title do|ft| %>
-										<%= ft.select :title0, ["Prof.", "Dr.", "Ast. Lect."], html:{class: 'modal_inputs'} %>
+										<%= ft.select :title0, ["Prof.", "Dr.", "Ast. Lect."], {}, {class:"modal_inputs"} %>
 									<% end %>
 									
-									<%= f.label "Staff ID",  id: 'create_staff_id' %>
+									<%= f.label "Staff ID:",  id: 'create_staff_id' %>
 									<%= fields_for :staff_id do|fi| %>
 										<%= fi.text_field :staff_id0,  id: 'create_staff_id_field', class:"modal_inputs", size:"15" %>
 									<% end %>
@@ -47,7 +47,7 @@
 										<%= fo.text_field :othernames0,  id: 'create_other_names_field', class:"modal_inputs", size:"15" %>
 									<% end %>
 									
-									<div id="addrow" class="custom_button", data-row="new_row", onclick="addNewLecturerRow()">+</div><div id="remrow" class="custom_button", data-row="del_row">-</div>
+									<div id="addrow" class="custom_button", data-row="new_row", onclick="addNewLecturerRow()">+</div><div id="remrow" class="remrow custom_button", data-row="del_row">-</div>
 								</div>
 								<div id="append">
 								</div>
