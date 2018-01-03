@@ -68,29 +68,31 @@
                     <!-- ABOUT NAV -->
                     <li class="li-menu-item-hor">Donation</li>
                 </ul>
-                <div id="login_div">
-                <% if (stud_logged_in? || lect_logged_in?) %>
-                    <ul class="ul-menu-right" id="main-nav-right-ul">
-                        <li class="li-menu-item-hor">My Profile</li>
-                        <%if lect_logged_in? %>
-                            <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
-                        <% elsif stud_logged_in? %>
-                            <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
-                        <% end %>
-                    </ul>
-                <% else %>
-                    <ul class="ul-menu-right" id="main-nav-right-ul">
-                        <i class="fa fa-sign-in my_icon" aria-hidden="true"></i>
-                       <li class="li-menu-item-hor"><%= link_to 'Log In', user_login_path, class:'smenu' %></li>
-                    </ul>
-                <% end %>
-            </div>
             </nav>
-            <div id="info_div">
-                <i class="fa fa-map-marker my_icon" aria-hidden="true"></i>
-                <span id="addr_span">Amasoma, Bayelsa state</span>
-                <i id="number_icon" class="fa fa-phone my_icon" aria-hidden="true"></i>
-                <span id="number_span">+2347056309444</span>
+            <div id="info-cont">
+                <div id="info_div">
+                    <i class="fa fa-map-marker my_icon" aria-hidden="true"></i>
+                    <span id="addr_span">Amasoma, Bayelsa state</span>
+                    <i id="number_icon" class="fa fa-phone my_icon" aria-hidden="true"></i>
+                    <span id="number_span">+2347056309444</span>
+                </div>
+                <div id="login_div">
+                    <% if (stud_logged_in? || lect_logged_in?) %>
+                        <ul class="ul-menu-right" id="main-nav-right-ul">
+                            <li class="li-menu-item-hor">My Profile</li>
+                            <%if lect_logged_in? %>
+                                <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
+                            <% elsif stud_logged_in? %>
+                                <li class="li-menu-item-hor"><%= link_to 'Log Out', logout_path, class:'smenu' %></li>
+                            <% end %>
+                        </ul>
+                    <% else %>
+                        <ul class="ul-menu-right" id="main-nav-right-ul">
+                            <i class="fa fa-sign-in my_icon" aria-hidden="true"></i>
+                           <li class="li-menu-item-hor"><%= link_to 'Log In', user_login_path, class:'smenu' %></li>
+                        </ul>
+                    <% end %>
+                </div>
             </div>
         </header>
         </div>

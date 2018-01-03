@@ -44,7 +44,7 @@
 
                             <%= f.label "Semester : ",  id: 'create_semester' %>
                             <%= f.radio_button :semester, "first",  class: 'modal_inputs' %><%= f.label "first", class: "status"%>
-                            <%= f.radio_button :semester, "second", class: 'modal_inputs' %><%= f.label "second", class: "status"%><div id="addrow" class="custom_button", data-row="new_row", onclick="add()">+</div><div id="remrow" class="custom_button", data-row="del_row">-</div><br/>
+                            <%= f.radio_button :semester, "second", class: 'modal_inputs' %><%= f.label "second", class: "status"%><div id="addrow" class="custom_button", data-row="new_row", onclick="add()">+</div><div id="remrow" class="custom_button", data-row="del_myrow">-</div><br/>
                             <div id ="append">
                             </div>
 
@@ -65,7 +65,7 @@
         </div>
         <div id = "edit_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
-           <div class = "row">
+           <div class = "myrow">
                 <div class = "col-t-2 col-d-2"></div>
                     <div class = "col-t-8 col-d-8">
                             <div class="handle white_bg">
@@ -96,7 +96,7 @@
           <h2>COURSE DELETE</h2>
         </div>
         <div class="my-modal-body">
-          <div class = "row">
+          <div class = "myrow">
              <div id = "delete_modal_body" class="my-modal-body">
         <div id = "delete_course_option" class="course_option" data-class="display">
                 <div class = "col-t-2 col-d-2"></div>

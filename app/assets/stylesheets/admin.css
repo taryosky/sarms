@@ -97,7 +97,7 @@
 	padding-right: 10%;
 }
 .icon{
-	width: 20%;
+	width: 16%;
 }
 #addrow{
   margin-left: 17px;
@@ -185,13 +185,7 @@ span{
   font-family: 'Roboto Slab', serif;
   text-align: center;
 }
-.dash-pane{
-  position: absolute !important;
-  top:257px !important;
-  left: 2% !important;
-  width: 80% !important;
-  height: 465px;
-}
+
 #session_act{
   margin-bottom : 50px;
 }

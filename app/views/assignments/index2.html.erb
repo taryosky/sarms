@@ -1,9 +1,14 @@
-<div class = "row" >
-	
+
+<div class = "myrow" >
+	<div class="col-12 custom-pad">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class = "col-d-9 col-t-8">
-		<div class = "dashboard">
-			<% if @assigns.nil? %>
+	<div class="col-d-9 col-t-8 dash-pane">
+	<div id="page-inner" class="myfade">
+		<div class="myrow">
+            
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                    	<% if @assigns.nil? %>
 				<h1 class = "header centered">NO ASSIGNMENTS GIVEN</h1>
 			<% else %>
 				<h1 class = "header centered">GET ASSIGNMENTS SUBMITTED</h1>
@@ -15,6 +20,12 @@
 					<% end %>
 				<% end %>
 			<% end %>
-		</div>
-	</div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+</div>
+</div>
 </div>
