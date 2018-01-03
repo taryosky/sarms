@@ -1,0 +1,118 @@
+<div class="myrow">
+    <div class="col-12 custom-pad">
+    <%= render 'layouts/lecturer_layout/card' %>
+    
+        <div class="col-d-9 dash-pane">
+            <div id="page-inner" class="myfade">
+            <div class="dashboard"  style="text-align: left">
+                <h3 class="dashboad-header">Lecturer Profile
+					<% if flash[:successful] %>
+						<span class="success-message s-me"><%= flash[:successful] %>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %>
+					<% end %>
+				</h3><hr style="margin-bottom: 0px"/>
+                <div  class="myrow">
+					<div class="col-d-6">
+							<%= form_for :edit_lecturer, url: lecturer_info_update_path do|f| %>
+								<fieldset>
+								<%= f.label "Matric. No:", class:"info-label" %>
+								<%= f.text_field :matno, value: "#{current_lecturer.staff_id}".upcase,  id: "info-matno-field", readonly:true %><br/>
+								
+								<%= f.label "Surname:", class:"info-label" %>
+								<%= f.text_field :sname, value: "#{current_lecturer.sname}",  id: "info-sname-field", readonly:true %><br/>
+								
+								<%= f.label "First Name:", class:"info-label" %>
+								<%= f.text_field :fname, value: "#{current_lecturer.fname}",  id: "info-fname-field", readonly:true %><br/>
+								
+								<% if current_lecturer.lecturer_othername %>
+									<%= f.label "Other Names:", class:"info-label" %>
+									<%= f.text_field :othernames, value: "#{current_lecturer.lecturer_othername.othernames if current_lecturer.lecturer_othername}",  id: "info-oname-field", readonly:true %><br/>
+								<% end %>
+								
+								<%= f.label "Sex:", class:"info-label" %>
+								<%= f.text_field :sname, value: "#{current_lecturer.sex}".titlecase,  id: "info-sex-field", readonly:true %><br/>
+								
+								<%= f.label "Nationality:", class:"info-label" %>
+								<%= f.text_field :nationality, value: "#{current_lecturer.nationality}".titlecase,  id: "info-nationality-field", readonly:true %><br/>
+								
+								<%= f.label "State Of Origin:", class:"info-label" %>
+								<%= f.text_field :state_of_origin, value: "#{current_lecturer.state_of_origin}".titlecase,  id: "info-soo-field", readonly:true %><br/>
+								
+								<%= f.label "L.G.A:", class:"info-label" %>
+								<%= f.text_field :lga,value: "#{current_lecturer.lga}".titlecase,  id: "info-lga-field", readonly:true %><br/>
+								
+								<%= f.label "Religion:", class:"info-label" %>
+								<%= f.text_field :religion, value: "#{current_lecturer.religion}".titlecase,  id: "info-religion-field", readonly:true %><br/>
+								
+								<%= f.label "Email:", class:"info-label" %>
+								<%= f.email_field :email, value: "#{current_lecturer.email}".titlecase,  id: "info-email-field", readonly:true %><br/>
+								
+								<%= f.label "Phone:", class:"info-label" %>
+								<%= f.text_field :phone, value: "#{current_lecturer.phone}".titlecase,  id: "info-phone-field", readonly:true %><br/>
+								
+								<%= f.label "Password:", class:"info-label" %>
+								<%= f.password_field :password, value: "password field".titlecase,  id: "info-phone-field", readonly:true %><button id="change_pass" class="login-button" style="margin:15px 0px 0px 0px;">Change Password</button> <br/>
+								
+								<%= (link_to :Finish, lecturer_notifications_path, class:'login-button', id:"lecturer-update-button-1") if flash[:success] %>
+								</fieldset>
+							<% end %>
+					</div>
+					<div class="col-d-5">
+						<img src="<%= "#{Rails.root.join('profile_images', current_lecturer.passport)}" %>" id="stud-passport" />
+						<div>Current Passport </div>
+					</div>
+					<div>
+						<%= form_for :lecturer_passport, url: change_lecturer_passport_path, multipart:true do|f| %>
+							
+							<%= f.file_field :passport, class: "info-field", id: "lec-info-pass-field" %><br/>
+							
+							<%= f.submit "Change Passport", class:'login-button', id:"lecturer-update-button", style:"margin-top:0px" %>
+						<% end %>
+					</div>
+				</div>              
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="pass-modal" class="my-modal">
+	<div id="myrow myfade">
+		<div class="col-d-3"></div>
+		<div class="col-d-6 zoom-in mod-cont">
+			<div>
+			<h3>Change Password <span id="close-pass-change" style="float:right">&times</span></h3>
+			</div>
+			<hr style="margin-bottom: 0px; clear:both">
+			<div id="modal">
+				<%= form_for :lecturer_password, url: lecturer_update_password_path, multipart:true do|f| %>
+					<span id="opassword-error e-me" class="password-error"></span>
+					<%= f.label "Old Password:", class:"info-label" %>
+					<%= f.password_field :opassword, class: "info-field-p", id: "info-opassword-field" %><br/>
+					<hr/>
+					<span id="password-error" class="password-error e-me"></span>
+					<%= f.label "New Password:", class:"info-label" %>
+					<%= f.password_field :password, class: "info-field-p", id: "info-npassword-field" %><br/>
+					
+					<%= f.label "Confirm Password:", class:"info-label" %>
+					<%= f.password_field :password_c, class: "info-field-p", id: "info-cpassword-field" %><br/>
+					<span id="p-dn-match" class="password_c-error e-me"></span>
+					<span id="p-match" class="password_c-success s-me"></span>
+
+					<%= f.submit "Change", class:'login-button', id:"lecturer-update-button-1", style:"margin-left:82%; margin-buttom: 0px;"%>
+				<% end %>
+			</div>
+		</div>
+		<div class="col-d-3"></div>
+	<div>
+</div>
+
+<style>
+	input{
+		border: none;
+		height: 25px;
+		margin-left: 20px;
+	}
+</style>

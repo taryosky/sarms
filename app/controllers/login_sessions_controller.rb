@@ -78,6 +78,7 @@ class LoginSessionsController < ApplicationController
 
 	def destroy
 		logout get_user
+		redirect_to user_login_path
 	end
 	
 	def get_user
