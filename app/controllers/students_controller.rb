@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
 	
 	before_action :require_login 	#require_login method is defined in application_helper.rb
 	before_action :require_admin_login, only:[:create, :update, :delete, :print_passwords, :search]	#require_admin_login is defined in login_sessions_helper.rb
-	before_action :require_student_login, only:[:update_info, :update_student_info]				#require_admin_login is defined in login_sessions_helper.rb
+	before_action :require_student_login, only:[:update_info, :update_student_info, :change_passport, :change_password, :profile_view]				#require_admin_login is defined in login_sessions_helper.rb
 	
 	
 	def create
@@ -118,7 +118,7 @@ class StudentsController < ApplicationController
 				upload_passport @passport, current_student
 				@student_login.activation = 2
 				@student_login.save
-				flash[:success] = "Passport Successfully Updated"
+				flash[:success] = "Passport Successfully Uploaded"
 				redirect_to student_update_path
 			end
 		elsif @activation == 2
@@ -129,8 +129,8 @@ class StudentsController < ApplicationController
 				@student_login.password = @password
 				@student_login.activation = 3
 				@student_login.save
-				flash[:success] = "Congrats, you can now a student"
-				redirect_to student_notifications_path
+				flash[:successful] = "Profile Complete. You can now proceed"
+				redirect_to view_student_profile_path
 			else
 				flash.now[:error] = @verify
 				render "update_info"
@@ -138,6 +138,38 @@ class StudentsController < ApplicationController
 		else
 			redirect_to students_path
 		end
+	end
+	
+	def profile_view
+	end
+	
+	def change_passport
+		@passport = nil 
+		if params[:student_passport]
+			@passport = params[:student_passport][:passport]
+		end
+		if @passport.blank?
+			flash.now[:error] = "You can't submit a blank file"
+			render "update_info"
+		else
+			upload_passport @passport, current_student
+			flash[:successful] = "Passport Successfully Uploaded"
+		end
+		redirect_to view_student_profile_path
+	end
+	
+	def change_password
+		old_pass = params[:student_password][:opassword]
+		new_pass = params[:student_password][:password]
+		login = LoginDetail.find_by(user_name: current_student.matno)
+		if old_pass == login.password
+			login.password = new_pass
+			login.save
+			flash[:successful] = "Password successfully changed"
+		else
+			flash[:error] = "The old password you provided is not correct"
+		end
+		redirect_to view_student_profile_path
 	end
 
 	

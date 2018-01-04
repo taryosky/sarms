@@ -1,0 +1,92 @@
+$fontSize: 10.5pt;
+.info-label{
+	display: inline-block;
+	width: 110px;
+	font-size: $fontSize;
+	font-weight: normal;
+}
+
+.info-field{
+	display: inline-block;
+	width: 50%;
+	height: 27px;
+	margin-top: 7px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding-left: 5px;
+	&:focus{
+		border: 1px solid #aaa;
+		box-shadow: 0px 0px 0.1px 1px blue;
+	}
+}
+
+.info-radio-label{
+	margin-top: 7px;
+	margin-right: 7px;
+	display: inline-block;
+	font-size: $fontSize;
+	font-weight: normal;
+}
+
+#button-separate{
+	display: inline-block;
+	width: 20px;
+}
+
+#student-update-button-1{
+	margin-top: 15px;
+	position:relative;
+	left: 53%;
+}
+
+#stud-passport{
+	width:190px;
+	height: 200px;
+}
+
+#info-pass-field, #lec-info-pass-field{
+	display: none;
+}
+
+.mod-cont{
+	background-color: white;
+	border-radius: 8px;
+}
+
+#close-pass-change{
+	padding:0px;
+	margin:0px;
+	font-size: 20pt;
+	font-weight: bolder;
+	&:hover{
+		color: red;
+		cursor: pointer;
+	}
+}
+
+.info-field-p{
+	display: inline-block;
+	width: 76%;
+	height: 27px;
+	margin-top: 7px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding-left: 5px;
+	&:focus{
+		border: 1px solid #aaa;
+		box-shadow: 0px 0px 0.1px 1px blue;
+	}
+}
+
+.s-me, .e-me{
+	font-size: 11pt;
+	margin-right: 20px;
+}
+
+.s-me{
+	color: blue;
+}
+
+.e-me{
+	color: red;
+}

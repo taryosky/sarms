@@ -20,14 +20,15 @@ module ApplicationHelper
 		file_name = user.user_type == 0 ? user.matno.split("/").join("_") : user.id
 		new_file_name = file_name.to_s+File.extname(uploaded_io.original_filename)
 		user_passport = user.passport
-		if user_passport
-			delete_passport user
+		if user_passport.blank?
 			File.open( Rails.root.join('profile_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end
 			user.passport = new_file_name
 			user.save
+			
 		else
+			delete_passport user
 			File.open( Rails.root.join('profile_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end

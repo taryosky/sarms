@@ -9,7 +9,6 @@ module LoginSessionsHelper
 				session.delete(:admin_id)
 			end
 			flash[:error] = "You are logged out"
-			redirect_to user_login_path
 		elsif user.user_type == 1
 			if session[:student_id]
 				session.delete(:student_id)
@@ -19,7 +18,6 @@ module LoginSessionsHelper
 			end
 			session.delete(:staff_id)
 			flash[:error] = "You are logged out"
-			redirect_to user_login_path
 		else
 			session.delete(:admin_id)
 			if session[:lecturer_id]
@@ -29,7 +27,6 @@ module LoginSessionsHelper
 				session.delete(:student_id)
 			end
 			flash[:error] = "You are logged out"
-			redirect_to user_login_path
 		end
 	end
 	
@@ -41,38 +38,41 @@ module LoginSessionsHelper
 	end
 	
 	def require_admin_login
+		if session[:staff_id]
+			logout current_lecturer
+		end
+		if session[:student_id]
+			logout current_student
+		end
 		if !session[:admin_id]
-			if session[:staff_id]
-				logout current_lecturer
-			end
-			if session[:student_id]
-				logout current_student
-			end
-			flash[:error] = "Sorry, you are automatically logged out because of malicious activities"
+			flash[:error] = "You Logged out, Please Login"
+			redirect_to user_login_path
 		end
 	end
 	
 	def require_student_login
+		if session[:staff_id]
+			logout current_lecturer
+		end
+		if session[:admin_id]
+			logout current_admin
+		end
 		if !session[:student_id]
-			if session[:staff_id]
-				logout current_lecturer
-			end
-			if session[:admin_id]
-				logout current_admin
-			end
-			flash[:error] = "Sorry, you are automatically logged out because of malicious activities"
+			flash[:error] = "You Logged out, Please Login"
+			redirect_to user_login_path
 		end
 	end
 	
 	def require_lecturer_login
-		if !session[:student_id]
-			if session[:student_id]
-				logout current_student
-			end
-			if session[:admin_id]
-				logout current_admin
-			end
-			flash[:error] = "Sorry, you are automatically logged out because of malicious activities"
+		if session[:student_id]
+			logout current_student
+		end
+		if session[:admin_id]
+			logout current_admin
+		end
+		if !session[:staff_id]
+			flash[:error] = "You Logged out, Please Login"
+			redirect_to user_login_path
 		end
 	end
 end

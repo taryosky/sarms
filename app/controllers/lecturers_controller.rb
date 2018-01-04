@@ -2,7 +2,7 @@ class LecturersController < ApplicationController
 
 	before_action :require_login 			#require_login method is defined in application_helper.rb
 	before_action :require_admin_login, only:[:create, :update, :delete, :print_passwords, :search]	#require_admin_login is defined in login_sessions_helper.rb
-	before_action :require_lecturer_login, only:[:update_info, :update_lecturer_info]				#require_admin_login is defined in login_sessions_helper.rb
+	before_action :require_lecturer_login, only:[:update_info, :update_lecturer_info, :profile_view, :change_password, :change_passport]				#require_admin_login is defined in login_sessions_helper.rb
 	
 	def create
 	@lecturer = Lecturer.new 
@@ -178,6 +178,38 @@ class LecturersController < ApplicationController
 		else
 			redirect_to lecturers_path
 		end
+	end
+	
+	def profile_view
+	end
+	
+	def change_passport
+		@passport = nil 
+		if params[:lecturer_passport]
+			@passport = params[:lecturer_passport][:passport]
+		end
+		if @passport.blank?
+			flash.now[:error] = "You can't submit a blank file"
+			render "update_info"
+		else
+			upload_passport @passport, current_lecturer
+			flash[:successful] = "Passport Successfully Uploaded"
+		end
+		redirect_to view_lecturer_profile_path
+	end
+	
+	def change_password
+		old_pass = params[:lecturer_password][:opassword]
+		new_pass = params[:lecturer_password][:password]
+		login = LoginDetail.find_by(user_name: current_lecturer.staff_id)
+		if old_pass == login.password
+			login.password = new_pass
+			login.save
+			flash[:successful] = "Password successfully changed"
+		else
+			flash[:error] = "The old password you provided is not correct"
+		end
+		redirect_to view_lecturer_profile_path
 	end
 	
 	
