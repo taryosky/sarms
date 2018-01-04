@@ -16,8 +16,9 @@ gem 'railroady'
 gem 'bundler', '~> 1.15', '>= 1.15.1'
 gem 'rubyzip', '>= 1.0.0'
 gem 'zip-zip'
-gem 'remotipart', '~> 1.3', '>= 1.3.1'
 gem 'traceroute'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 
 
 group :development, :test do
