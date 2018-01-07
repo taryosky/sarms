@@ -1,25 +1,42 @@
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/student_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard ">
-                <% if @ass_code.empty? %>
-                <h2 class="header">No Pending Assignments</h2>
-            <% else %>
-                <h2 class="header">Pending Assignments</h2>
-                <div  class="notification">
-                    <% @ass_code.each do |e| %>
-                        <%= form_for :assign, url: assignment_getassignment_path do |f| %>
-                            <%= f.hidden_field :assignment_id, value: e.id %>
-                            <%= e.course.ccode.upcase %>   <%= e.course.ctitle.titlecase %>   <%= submit_tag "getAssignment" %>
-                        <% end %>
-                    <% end %>
-                    </div>
-            <% end %>             
-            </div>
-        </div>
-    </div>
-    </div>
+	<style>
+	 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {border:none;}
+	</style>
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Dwonload Assignment
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+
+	    	<% if @ass_code.empty? %>
+	    	<h3 class="empty-q">No Pending Assignments</h3>
+	    	
+	    	<% else %>
+	        <div class="table-responsive">
+				<table class="table">
+					<tr><th>Assignment No.</th><th>Course Code</th><th>Course Title</th><th>Assignment Topic</th><th>Submission Deadline</th><th></th></tr>
+				
+					<% @ass_code.each do |c| %>
+			
+						<%= form_for :assign, url: assignment_getassignment_path do |f| %>
+						<tr><td>Assignment <%= c.id %></td><td><%= c.course.ccode.titlecase %></td><td><%= c.course.ctitle %></td><td><%= c.topic %></td><td><%= c.submission_date %></td><td><%= f.hidden_field :assignment_id, value: c.id %><%= f.submit :Download, class:"login-button", style:"margin:0px" %></td></tr>
+							
+							
+						<% end %>
+					<% end %>
+				</table>
+			</div>
+			<% end %>
+
+	        </div>
+		</div>
+	</div>
 </div>

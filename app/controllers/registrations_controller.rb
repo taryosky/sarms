@@ -9,13 +9,21 @@ class RegistrationsController < ApplicationController
 	end
 
 	def new
+		redirect_to student_notifications_path if Util.where("name = ?", "registration").first.value.to_i != 1
 		@counter = 1
 		student = current_student
 		@course_ids = []
+		
+		@registered = Registration.where("student_id = ? AND session = ?",current_student.id, current_session)
+		
+		#get all the failed and carryover couses from the previous session
+		@course_to_reg = student.registrations.where(session: previous_session).where(status: [0,3])
+		@course_to_reg.each do |d|
+			@course_ids.push(d.course_id)
+		end
 
-		#DELETE THIS INSTANCE VARIABLES NOT BEEN USED
-		@fscc = Course.where(id: @course_ids).where(semester: 1)
-		@sscc = Course.where(id: @course_ids).where(semester: 2)
+		@fscc = Course.where(id: @course_ids).where(semester: 0)
+		@sscc = Course.where(id: @course_ids).where(semester: 1)
 
 		@first_semester_courses = Course.where(level: student.level).where(semester: 0)
 		@second_semester_courses = Course.where(level: student.level).where(semester: 1)
@@ -26,7 +34,7 @@ class RegistrationsController < ApplicationController
 		@reg_courses = params.require(:course)
 		
 		student = current_student
-		level = student_level(student)
+		level = current_student.level
 		#get all the course ids for fialed and carryover courses last session for both semesters
 		@rep_courses = student.registrations.select(:course_id).where(session: previous_session).where(status: [0,3])
 		@current_courses = Course.select(:id).where(level: level)
@@ -53,10 +61,9 @@ class RegistrationsController < ApplicationController
 				course_r = Course.find_by(id: course)
 				reg = Registration.create(student_id: current_student.id, course_id: course, session: current_session, year_of_study: level, status: :not_reg, units: course_r.units)
 
-				flash[:alert] = "REGISTRATION SUCCESSFUL"
-
 			end
 		end
+		flash[:success] = "You've successfully registered for this session"
 		redirect_to student_notifications_path
 	end
 

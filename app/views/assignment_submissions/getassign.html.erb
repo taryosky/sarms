@@ -1,11 +1,13 @@
+
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/student_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard ">
-                <% if @ass_code.empty? %>
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Check Results</h3>
+				<hr/>
+
+	           <% if @ass_code.empty? %>
                 <h2 class="header">No Pending Assignments</h2>
             <% else %>
                 <h2 class="header">Pending Assignments</h2>
@@ -17,9 +19,8 @@
                         <% end %>
                     <% end %>
                     </div>
-            <% end %>         
-            </div>
-        </div>
-    </div>
-    </div>
+            <% end %>
+	        </div>
+		</div>
+	</div>
 </div>

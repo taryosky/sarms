@@ -13,8 +13,11 @@
 	<%= render 'layouts/student_layout/card' %>
 		<div class="col-d-9">
 	        <div class="dashboard">
-	            <h2 class="dashboard-header">Student Results</h2>
-	            <table>
+	            <h3 class="dashboard-header">Student Results</h3>
+				<hr/>
+				<div><label class="info-label">Level</label><%= @level %>level</div>
+				<div><label class="info-label">Semester</label><%= @semester == 0? "First Semester" : "Second Semester" %>
+	            <table class="result-table">
 	            	<tr>
 	            		<th>S/N</th><th>COURSE CODE</th><th>COURSE TITLE</th><th>UNIT</th><th>SCORE</th><th>GRADE</th><th>GRADE POINT</th><th>REMARK</th>
 	            	</tr>

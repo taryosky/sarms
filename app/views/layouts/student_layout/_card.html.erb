@@ -8,7 +8,7 @@
                         <li class = "adminli adminli-modified" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Notifications", student_notifications_path %></li>
                         <li class = "adminli adminli-modified" id = "lect"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Submit Assignment", assignment_submissions_path %></li>
                         <li class = "adminli adminli-modified" id = "stud"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Check Results", check_results_path %></li>
-                        <li class = "adminli adminli-modified" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Register Courses", new_registration_path %></li>
+                        <% if Util.where("name = ?", "registration").first.value.to_i == 1 %><li class = "adminli adminli-modified" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Register Courses", new_registration_path %></li><% end %>
                         <li class = "adminli adminli-modified" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Download Assignment", assignment_getassignment_path%></li>
                         <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Visit Library", ""%> </li>
                         <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Lecture Timetable", "" %> </li>

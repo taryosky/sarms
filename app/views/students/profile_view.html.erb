@@ -1,16 +1,15 @@
+
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/student_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard"  style="text-align: left">
-                <h3 class="dashboad-header">Student Profile
-					<% if flash[:successful] %>
-						<span class="success-message s-me"><%= flash[:successful] %>
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Student Profile
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
 					<% end %>
 					<% if flash[:error] %>
-						<span class="error-message e-me"><%= flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
 					<% end %>
 				</h3><hr style="margin-bottom: 0px"/>
                 <div  class="myrow">
@@ -55,12 +54,11 @@
 								<%= f.label "Password:", class:"info-label" %>
 								<%= f.password_field :password, value: "password field".titlecase,  id: "info-phone-field", readonly:true %><button id="change_pass" class="login-button" style="margin:15px 0px 0px 0px;">Change Password</button> <br/>
 								
-								<%= (link_to :Finish, student_notifications_path, class:'login-button', id:"student-update-button-1") if flash[:success] %>
 								</fieldset>
 							<% end %>
 					</div>
 					<div class="col-d-5">
-						<img src="<%= "#{Rails.root.join('profile_images', current_student.passport)}" %>" id="stud-passport" />
+						<%= image_tag "profile_images/#{current_student.passport}", id:"stud-passport" %>
 						<div>Current Passport </div>
 					</div>
 					<div>
@@ -70,12 +68,18 @@
 							
 							<%= f.submit "Change Passport", class:'login-button', id:"student-update-button", style:"margin-top:0px" %>
 						<% end %>
+					</div>				
+				
+		
+	        </div>
+			
+			<div class="myrow">
+					<div class="col-t-4 col-d-4">
+						<%= (link_to :Finish, student_notifications_path, class:'login-button', id:"student-updae-button-1", style:"width: 100%;display: inline-block;text-align: center;") if flash[:successful] %>
 					</div>
-				</div>              
-            </div>
-        </div>
-    </div>
-    </div>
+				</div>
+		</div>
+	</div>
 </div>
 
 <div id="pass-modal" class="my-modal">

@@ -1,14 +1,33 @@
-<div class = "myrow" >
-	
+<div class="myrow">
+	<div class="col-12">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class = "col-d-9 col-t-8">
-		<div class = "dashboard">
-			<h1 class = "header centered">UPLOAD ASSIGNMENT FOR <%= @course.ctitle.upcase %></h1>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Create Assignments
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+				
+			<label class="info-label">Course Code:</label><label><%= @course.ccode %></label><br/>
+			<label class="info-label">Course Title:</label><label><%= @course.ctitle %></label></br/>
+			<label class="info-label">Course Units:</label><label><%= @course.units %> Units</label>
 			<%= form_for :assign, url: assignments_path do |d| %>
-				<%= d.file_field :file, multiple: false %><br/><br/>
-				<%=hidden_field_tag :course_id, @course.id %>
-				<%= submit_tag :upload %>
+				<%= d.label "Assignment Topic:", class:"info-label" %>
+				<%= d.text_field :topic, class:"info-field" %><br/>
+				<%= d.label "Deadline:", class:"info-label" %>
+				<%= d.date_field :submission_date, class:"info-field" %></br>
+				<%= d.label "", class:"info-label" %>
+				<%= d.file_field :file, multiple: false, class:"info-field", style:"display:inline-block;border:none;" %><br/>
+				<%= d.hidden_field :course_id, value:"#{@course.id}" %>
+				<%= d.label "", class:"info-label" %>
+				<%= d.submit "Upload", class:"login-button", style:"font-size:12pt" %>
 			<% end %>
+	        </div>
 		</div>
 	</div>
 </div>

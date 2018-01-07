@@ -18,8 +18,10 @@ $(document).ready(function(){
 		$("form[action='/change_lecturer_passport']").submit();
 	});
 	
+	
+	
 	$("#info-pass-field").change(function(event){
-		$("form").submit();
+		$("form[action='/change_passport']").submit();
 	});
 
 	$("#change_pass").click(function(event){

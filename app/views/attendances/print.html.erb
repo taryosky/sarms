@@ -1,52 +1,56 @@
-	<div class = "myrow" >
-    	<%= render 'layouts/lecturer_layout/card' %>
-    	<div class = "col-d-9 col-t-8">
-    		<div class = "dashboard">
-    		<h1 class = "header centered">Print Attendance</h1>
 
-		<p>COURSE TITLE: <%= @course.ctitle.upcase %></p>
-		<p>DATE:---------------------------</p>
-		<p>COURSE CODE: <%= @course.ccode.upcase %></p>
-		<p>UNITS: <%= @course.units %> UNITS</p>
-	<table border = "1" style = "width: 100%; text-align:center; border-collapse: collapse;">
-		<tr>
-			<thead>
-				<tr>
-					<td>S/N</td>
-					<td>NAME</td>
-					<td>MATRIC. NO</td>
-					<td>CA</td>
-					<td>EXAM</td>
-					<td>TOTAL</td>
-					<td>GRADE</td>
-					<td>REMARK</td>
-					<td>SIGN</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan = "9"><%= @course.level %> Level</td>
-				</tr>
-				<% @reg.each do|reg_student| %>
-				<tr>
-					<td><%= @counter %></td>
-					<td><%= reg_student.sname.upcase %>, <%= reg_student.fname.titlecase %> <%= Student.find_by(matno: reg_student.matno).student_othername ? Student.find_by(matno: reg_student.matno).student_othername : "" %></td>
-					<td><%= reg_student.matno.upcase %></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<% @counter+=1 %>
-				<% end %>
-			</tbody>
-		</tr>
-	</table>
+	
 
-	<button onclick="print()">Print</button>
+<div class="myrow">
+	<div class="col-12">
+	<%= render 'layouts/lecturer_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
 
-    		</div>
-    	</div>
-    </div>
+				<label class="att-label">COURSE CODE:</label><label> <%= @course.ccode.upcase %></label><br/>
+				<label class="att-label">COURSE TITLE: </label><label><%= @course.ctitle.upcase %></label><br/>
+				<label class="att-label">UNITS: </label><label><%= @course.units %> UNITS</label><br/>
+				<label class="att-label">LEVEL:</label><label> <%= @course.level %> LEVEL</label><br/><br/>
+				<label class="att-label">DATE:</label><label>---------------------------</label><br/><br/>
+				
+			<table class="table table-bordered">
+				<tr>
+					<thead>
+						<tr>
+							<td>S/N</td>
+							<td>NAME</td>
+							<td>MATRIC. NO</td>
+							<td>CA</td>
+							<td>EXAM</td>
+							<td>TOTAL</td>
+							<td>GRADE</td>
+							<td>REMARK</td>
+							<td>SIGN</td>
+						</tr>
+					</thead>
+					<tbody>
+						<% @reg.each do|reg_student| %>
+						<tr>
+							<td><%= @counter %></td>
+							<td><%= reg_student.sname.upcase %>, <%= reg_student.fname.titlecase %> <%= Student.find_by(matno: reg_student.matno).student_othername ? Student.find_by(matno: reg_student.matno).student_othername.othernames : "" %></td>
+							<td><%= reg_student.matno.upcase %></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<% @counter+=1 %>
+						<% end %>
+					</tbody>
+				</tr>
+			</table>
+
+			<button onclick="print()">Print</button>
+					
+
+	        </div>
+		</div>
+	</div>
+</div>
