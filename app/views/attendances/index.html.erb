@@ -1,9 +1,12 @@
-<div class = "myrow" >
+<div class="myrow">
+	<div class="col-12">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class = "col-d-9 col-t-8">
-		<div class = "dashboard">
-			<h1 class = "header centered">Choose Course To Print Attendance</h1>
-                <table id="attendance">
+		<div class="col-d-9">
+	        <div class="dashboard">
+
+                <h3 class = "head">Print Attendance</h3>
+				<hr/>
+                <table id="attendance" class="table table-bordered">
                 <th>S/N</th><th>Course Code</th><th>Course Title</th><th>Action</th>
                 <% @courses.each do|course| %>
                         <tr>
@@ -19,7 +22,9 @@
                     <% @counter +=1 %>
                 <% end %>
                 </table>
+					
 
+	        </div>
 		</div>
 	</div>
 </div>

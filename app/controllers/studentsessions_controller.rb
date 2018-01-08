@@ -26,5 +26,24 @@ class StudentsessionsController < ApplicationController
 	end
 
 	def notification
+		@notifications = Hash.new
+		temp_notice = Hash.new
+		
+		assignments = ""
+		
+		submissions = AssignmentSubmission.where("student_id = ?", current_student.id)
+		ass = Array.new
+		submissions.each do|as_id|
+			ass.push as_id.assignment_id
+		end
+		assignments = Assignment.where.not(id: ass).where("submission_date > ?", Time.now).size
+		if assignments !=0
+			temp_notice["assign"] = assignments
+		end
+		temp_notice.each do|key, val|
+			if !val.blank? || !val.nil? || !val
+				@notifications[key] = val
+			end
+		end
 	end
 end

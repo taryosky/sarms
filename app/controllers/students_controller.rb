@@ -129,14 +129,15 @@ class StudentsController < ApplicationController
 				@student_login.password = @password
 				@student_login.activation = 3
 				@student_login.save
-				flash[:successful] = "Profile Complete. You can now proceed"
-				redirect_to view_student_profile_path
+				flash[:success] = "Profile Update Completed. You can now proceed by clicking the finish button"
+				flash[:successful] = ""
+				redirect_to student_profile_path
 			else
 				flash.now[:error] = @verify
 				render "update_info"
 			end
 		else
-			redirect_to students_path
+			redirect_to student_notifications_path
 		end
 	end
 	
@@ -153,9 +154,9 @@ class StudentsController < ApplicationController
 			render "update_info"
 		else
 			upload_passport @passport, current_student
-			flash[:successful] = "Passport Successfully Uploaded"
+			flash[:success] = "Passport Successfully Uploaded"
 		end
-		redirect_to view_student_profile_path
+		redirect_to student_profile_path
 	end
 	
 	def change_password
@@ -165,11 +166,11 @@ class StudentsController < ApplicationController
 		if old_pass == login.password
 			login.password = new_pass
 			login.save
-			flash[:successful] = "Password successfully changed"
+			flash[:success] = "Password successfully changed"
 		else
 			flash[:error] = "The old password you provided is not correct"
 		end
-		redirect_to view_student_profile_path
+		redirect_to student_profile_path
 	end
 
 	

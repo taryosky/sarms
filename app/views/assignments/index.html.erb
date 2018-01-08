@@ -1,30 +1,49 @@
-<div class = "myrow" >
-	<div class="col-12 custom-pad">
+<div class="myrow">
+	<style>
+	 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {border:none;}
+	</style>
+	<div class="col-12">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class="col-d-9 dash-pane">
-	<div id="page-inner" class="myfade">
-		<div class="myrow">
-            
-                <div class="panel panel-default">
-                    <div class="panel-body easypiechart-panel">
-                    	<% if !flash[:notice].nil?%>
-	    					<h4><%=flash[:notice]%></h4>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Create Assignments
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+			
+			
+			
+						<% if @courses.empty?%>
+	    					<h3 class="empty-q">No course was assigned to you</h3>
 	    				<% else %>
-	    					<h1 class = "header centered">UPLOAD ASSIGNMENT</h1>
-							<% @courses.each do |c| %>
-								<%= form_for :assign, url: '/assignment' do |f| %>
-									<%= c.ctitle %>
-									<%= f.hidden_field :course_id, value: c.id %>
-									<%= f.submit :upload %>
+						<div>Click On the Button to Create Assignment.</div>
+						<div class="table-responsive">
+							<table class="table" border="0">
+								<tr><th>Course Code</th><th>Course Title</th><th>Units</th><th style="border:none"></th></tr>
+									<% @courses.each do |c| %>
+									
+									<%= form_for :assign, url: '/assignment' do |f| %>
+									<tr border="0">
+										<td><%= c.ccode %></td>	
+										<td><%= c.ctitle %></th>
+										<td><%= c.units %></td>
+										<td style="border:none"><%= f.hidden_field :course_id, value: c.id %><%= f.submit "Create", class:"login-button", style:"margin:0px" %></td></tr>
+										<% end %>
+									<% end %>
 								<% end %>
-							<% end %>
-						<% end %>
-                    </div>
-                </div>
-            
-        </div>
-    </div>
-
-</div>
-</div>
+							</table>
+						</div>
+			
+			
+			
+			
+			
+	        </div>
+		</div>
+	</div>
 </div>

@@ -118,12 +118,12 @@ class LecturersController < ApplicationController
 		@activation = LoginDetail.find_by(user_name: @staff_id).activation
 		@lecturer = current_lecturer
 		if @activation > 2
-			redirect_to lecturers_path
+			redirect_to lecturer_prof_path
 		end
 	end
 	
 	def update_lecturer_info
-		@activation = LoginDetail.find_by(user_name: current_lecturer.staff_id).activation
+		@activation = LoginDetail.find_by(user_name: current_lecturer.staff_id).activation.to_i
 		@lecturer = current_lecturer
 		@lecturer_login = LoginDetail.find_by(user_name: @lecturer.staff_id)
 		
@@ -169,14 +169,15 @@ class LecturersController < ApplicationController
 				@lecturer_login.password = @password
 				@lecturer_login.activation = 3
 				@lecturer_login.save
-				flash[:success] = "Congrats, you can now a student"
-				redirect_to lecturers_path
+				flash[:success] = "Congratulationss, Profile Completed. You can now proceed by clicking finish"
+				flash[:successful] = ""
+				redirect_to lecturer_profile_path
 			else
 				flash.now[:error] = @verify
 				render "update_info"
 			end
 		else
-			redirect_to lecturers_path
+			redirect_to lecturer_notifications_path
 		end
 	end
 	
@@ -193,9 +194,9 @@ class LecturersController < ApplicationController
 			render "update_info"
 		else
 			upload_passport @passport, current_lecturer
-			flash[:successful] = "Passport Successfully Uploaded"
+			flash[:success] = "Passport Successfully Uploaded"
 		end
-		redirect_to view_lecturer_profile_path
+		redirect_to lecturer_profile_path
 	end
 	
 	def change_password
@@ -205,11 +206,11 @@ class LecturersController < ApplicationController
 		if old_pass == login.password
 			login.password = new_pass
 			login.save
-			flash[:successful] = "Password successfully changed"
+			flash[:success] = "Password successfully changed"
 		else
 			flash[:error] = "The old password you provided is not correct"
 		end
-		redirect_to view_lecturer_profile_path
+		redirect_to lecturer_profile_path
 	end
 	
 	

@@ -1,35 +1,42 @@
-<div class = "myrow" >
-	<div class="col-12 custom-pad">
+<div class="myrow">
+	<style>
+	 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {border:none;}
+	</style>
+	<div class="col-12">
 	<%= render 'layouts/student_layout/card' %>
-	<div class="col-d-9 dash-pane">
-	<div id="page-inner" class="myfade">
-		<div class="myrow">
-            
-                <div class="panel panel-default">
-                    <div class="panel-body easypiechart-panel">
-                    	<% if !flash[:notice].nil?%>
-	    		<h4><%=flash[:notice]%></h4>
-	    	<% end %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Submit Assignments
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+
 	    	<% if @ass_code.empty? %>
-	    	<h2 class="header">No Pending Assignments</h2>
+	    	<h4 class="header">No Pending Assignments</h4><hr>
 	    	
 	    	<% else %>
-	        <h2 class="header">Pending Assignments</h2>
-	        <div  class="notification">
-	            <% @ass_code.each do |e| %>
-					<%= form_for :assign, url: assignment_submit_path do |f| %>
-						<%= f.hidden_field :assignment_id, value: e.id %>
-						<%= e.course.ccode.upcase %>   <%= e.course.ctitle.titlecase %>   <%= f.submit "submit" %>
+	        <div class="table-responsive">
+				<table class="table">
+					<tr><th>Assignment No.</th><th>Course Code</th><th>Course Title</th><th>Assignment Topic</th><th>Submission Deadline</th><th></th></tr>
+				
+					<% @ass_code.each do |c| %>
+			
+						<%= form_for :assign, url: assignment_submit_path do |f| %>
+						<tr><td>Assignment <%= c.id %></td><td><%= c.course.ccode.titlecase %></td><td><%= c.course.ctitle %></td><td><%= c.topic %></td><td><%= c.submission_date.strftime("%d %b %Y") %></td><td><%= f.hidden_field :assignment_id, value: c.id %><%= f.submit :Submit, class:"login-button", style:"margin:0px" %></td></tr>
+							
+							
+						<% end %>
 					<% end %>
-				<% end %>
-				</div>
+				</table>
+			</div>
 			<% end %>
-                    </div>
-                </div>
-            
-        </div>
-    </div>
 
-</div>
-</div>
+	        </div>
+		</div>
+	</div>
 </div>

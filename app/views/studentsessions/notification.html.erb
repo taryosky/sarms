@@ -1,16 +1,28 @@
+
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/student_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard ">
-                <h2 class="dashboard-header">STUDENT'S NOTIFICATION</h2>
-                <% if flash[:alert]%>
-                    <%= flash[:alert] %>
-                <% end %>              
-            </div>
-        </div>
-    </div>
-    </div>
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Notifications
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+				<% if @notifications.empty? %>
+					<h3 class="centered empty-q">You have no notifications</h3>
+				<% else %>
+					<% @notifications.each do|key, note| %>
+						<% if key == "assign" %>
+							<div class= "notification">You have <%= note %> unsubmitted assignment(s). click <%= link_to "here", assignment_submissions_path %> to submit</div>
+						<% end %>
+					<% end %>
+				<% end %>
+	        </div>
+		</div>
+	</div>
 </div>

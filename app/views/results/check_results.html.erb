@@ -1,23 +1,37 @@
 
-
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/student_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard ">
-                <h2 class="dashboard-header">Check Results</h2>
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Check Results</h3>
+				<hr/>
+				<% if @result_not_available %>
+					<h3 class="empty-q">No Results Available</h3>
+				<% else %>
 
-	            <%= form_for :result, url: results_path do|f| %>
-	            	<%= f.label :level, "Level" %>
-	            	<%= f.text_field :level %>
-	            	<%= f.label :semester, "Semester" %>
-	            	<%= f.text_field :semester %>
-	            	<%= f.submit "Check Result" %>
-	            <% end %>             
-            </div>
-        </div>
-    </div>
-    </div>
+					<%= form_for :result, url: results_path do|f| %>
+					
+						<%= f.label :level, "Level", class:"info-label" %>
+						<%= f.select :level,{},{},{class:"info-field"} do %>
+						  <% @levels.each do |level| -%>
+							<%= content_tag(:option, level.year_of_study, value: level.year_of_study) %>
+						  <% end %>
+						<% end %><br/>
+						<%= f.label :semester, "Semester", class:"info-label" %>
+						
+						<%= f.select :semester,{},{},{class:"info-field"} do %>
+						  <% [[0, "First Semester"],[1, "Second Semester"]].each do |sem| -%>
+							<%= content_tag(:option, sem.last, value: sem.first) %>
+						  <% end %>
+						<% end %><br/>
+						
+						<%= f.label "", class:"info-label" %><%= f.submit "Check Result", class:"info-field login-button" %>
+					<% end %> 
+					
+				<% end %>
+
+	        </div>
+		</div>
+	</div>
 </div>

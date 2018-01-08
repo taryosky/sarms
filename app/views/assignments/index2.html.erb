@@ -1,31 +1,43 @@
-
-<div class = "myrow" >
-	<div class="col-12 custom-pad">
+<div class="myrow">
+	<style>
+	 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {border:none;}
+	</style>
+	<div class="col-12">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class="col-d-9 col-t-8 dash-pane">
-	<div id="page-inner" class="myfade">
-		<div class="myrow">
-            
-                <div class="panel panel-default">
-                    <div class="panel-body easypiechart-panel">
-                    	<% if @assigns.nil? %>
-				<h1 class = "header centered">NO ASSIGNMENTS GIVEN</h1>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Get Submitted Assignments
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %></span>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %></span>
+					<% end %>
+				</h3>
+				<hr/>
+			
+			
+			
+			<% if @assigns.empty? %>
+				<h3 class = "empty-q">No Student Submitted For This Course</h3>
 			<% else %>
-				<h1 class = "header centered">GET ASSIGNMENTS SUBMITTED</h1>
+			<table class="table">
+				<tr><th>Assignment No.</th><th>Course Code</th><th>Course Title</th><th>Assignment Topic</th><th>Submission Deadline</th><th></th></tr>
+			
 				<% @assigns.each do |c| %>
+		
 					<%= form_for :assign, url: get_assignment_path do |f| %>
-						Assignment<%= c.id %>
-						<%= f.hidden_field :assign_id, value: c.id %>
-						<%= f.submit :get %>
+					<tr><td>Assignment <%= c.id %></td><td><%= c.course.ccode %></td><td><%= c.course.ctitle %></td><td><%= c.topic %></td><td><%= c.submission_date %></td><td><%= f.hidden_field :assign_id, value: c.id %><%= f.submit :Get, class:"login-button", style:"margin:0px" %></td></tr>
+						
+						
 					<% end %>
 				<% end %>
 			<% end %>
-                    </div>
-                </div>
-            
-        </div>
-    </div>
-
-</div>
-</div>
+			</table>
+			
+			
+			
+	        </div>
+		</div>
+	</div>
 </div>

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/print_lecturer_password', to: 'lecturers#print_passwords'
   post '/lecturer_info_update', to: 'lecturers#update_lecturer_info'
   get '/lecturer_update', to: 'lecturers#update_info'
-  get '/view_lecturer_profile', to: 'lecturers#profile_view'
+  get '/lecturer_profile', to: 'lecturers#profile_view'
   post '/change_lecturer_passport', to: 'lecturers#change_passport'
   post '/lecturer_update_password', to: 'lecturers#change_password'
   
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   post '/student_info_update', to: 'students#update_student_info'
   get '/student_update', to: 'students#update_info'
   get '/student_notifications', to: 'studentsessions#notification'
-  get '/view_student_profile', to: 'students#profile_view'
+  get '/student_profile', to: 'students#profile_view'
   post '/change_passport', to: 'students#change_passport'
   post '/student_update_password', to: 'students#change_password'
 

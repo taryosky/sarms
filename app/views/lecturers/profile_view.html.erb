@@ -1,13 +1,15 @@
+
 <div class="myrow">
-    <div class="col-12 custom-pad">
-    <%= render 'layouts/lecturer_layout/card' %>
-    
-        <div class="col-d-9 dash-pane">
-            <div id="page-inner" class="myfade">
-            <div class="dashboard"  style="text-align: left">
-                <h3 class="dashboad-header">Lecturer Profile
-					<% if flash[:successful] %>
-						<span class="success-message s-me"><%= flash[:successful] %>
+	<div class="col-12">
+	<%= render 'layouts/lecturer_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+			
+			
+			
+			<h3 class="dashboad-header">Lecturer Profile
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %>
 					<% end %>
 					<% if flash[:error] %>
 						<span class="error-message e-me"><%= flash[:error] %>
@@ -55,9 +57,10 @@
 								<%= f.label "Password:", class:"info-label" %>
 								<%= f.password_field :password, value: "password field".titlecase,  id: "info-phone-field", readonly:true %><button id="change_pass" class="login-button" style="margin:15px 0px 0px 0px;">Change Password</button> <br/>
 								
-								<%= (link_to :Finish, lecturer_notifications_path, class:'login-button', id:"lecturer-update-button-1") if flash[:success] %>
+								
 								</fieldset>
 							<% end %>
+	
 					</div>
 					<div class="col-d-5">
 						<img src="<%= "#{Rails.root.join('profile_images', current_lecturer.passport)}" %>" id="stud-passport" />
@@ -71,12 +74,20 @@
 							<%= f.submit "Change Passport", class:'login-button', id:"lecturer-update-button", style:"margin-top:0px" %>
 						<% end %>
 					</div>
-				</div>              
-            </div>
-        </div>
-    </div>
-    </div>
+				</div>  
+				<div class="myrow">
+					<div class="col-t-4 col-d-4">
+						<%= (link_to :Finish, lecturer_notifications_path, class:'login-button', id:"lecturer-updae-button-1", style:"width: 100%;display: inline-block;text-align: center;") if flash[:successful] %>
+					</div>
+				</div>
+			
+
+	        </div>
+		</div>
+	</div>
 </div>
+
+
 
 <div id="pass-modal" class="my-modal">
 	<div id="myrow myfade">

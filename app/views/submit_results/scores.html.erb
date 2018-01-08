@@ -1,33 +1,61 @@
-<div class = "myrow" >
-	
+<div class="myrow">
+	<div class="col-12">
 	<%= render 'layouts/lecturer_layout/card' %>
-	<div class = "col-d-9 col-t-8">
-		<div class = "dashboard">
-			<h1 class = "header centered">Enter Results</h1>
-            <p>Course Code: <%= @course.ccode %> Course Title:  <%= @course.ctitle %> Units:    <%= @course.units %> </p>
-             <%= form_for :scores, url: submit_results_path do|f| %>
-             <%= f.hidden_field :course, value: @course.id %>
-            <table id="scores_table">
-                <tr>
-                    <th>S/N</th><th>Matric. No.</th><th>C. A. Score</th><th>Exam Score</th>
-                </tr>
+		<div class="col-d-9">
+	        <div class="dashboard">
+			
+			
+			
+			<h3 class="dashboad-header">Results Scores
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %>
+					<% end %>
+				</h3><hr style="margin-bottom: 0px"/>
+				<br/>
 
-                    <% @stud_info.each do|stud_info| %>
-                        <tr>
-                            <td><%= @counter %></td>
-                            <td><%= f.label "#{stud_info.matno}" %></td>
-                            <%= fields_for :ca_score do|fe| %>
-                              <td> <%= fe.text_field "#{stud_info.matno}" %></td>
-                            <% end %>
-                            <%= fields_for :exam_score do|fe| %>
-                               <td><%= fe.text_field "#{stud_info.matno}" %></td>
-                            <% end %>
-                           <% @counter = @counter+1 %>
-                       </tr>
-                    <% end %>
-            </table>
-            <%= f.submit :submit %>
-             <% end %>
+
+
+				<label class="info-label">Course Code:</label><label> <%= @course.ccode %></label><br/>
+				<label class="info-label">Course Title:</label><label><%= @course.ctitle %></label><br/>
+				<label class="info-label">Units:</label><label><%= @course.units %> </label><br/><br/>	
+				<% if @stud_info.empty? %>
+					<h3 class="empty-q centered"> No student registered this course </h3>
+				<% else %>
+					<%= form_for :scores, url: submit_results_path do|f| %>
+					<%= f.hidden_field :course, value: @course.id %>
+					<div class="table-responsive">
+						<table id="scores_table" class="table table-bordered table-striped table-hover">
+							<tr>
+								<th>S/N</th><th>Matric. No.</th><th>C. A. Score</th><th>Exam Score</th>
+							</tr>
+
+								<% @stud_info.each do|stud_info| %>
+									<tr>
+										<td><%= @counter %></td>
+										<td><span class="score-label" ><%= "#{stud_info.matno.upcase}" %></span></td>
+										<%= fields_for :ca_score do|fe| %>
+										  <td> <%= fe.text_field "#{stud_info.matno}", placeholder:"0", class:"score-field" %></td>
+										<% end %>
+										<%= fields_for :exam_score do|fe| %>
+										   <td><%= fe.text_field "#{stud_info.matno}", placeholder:"0", class:"score-field" %></td>
+										<% end %>
+									   <% @counter = @counter+1 %>
+								   </tr>
+								<% end %>
+						</table>
+					</div>
+					<%= f.submit :submit, class:"login-button", style:"margin:0px" %>
+					 <% end %>
+				<% end %>
+				
+				
+				
+	        </div>
 		</div>
 	</div>
 </div>
+
+				

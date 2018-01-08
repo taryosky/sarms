@@ -1,0 +1,24 @@
+.score-field{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	border: none;
+	background-color: inherit;
+	padding-left: 20px;
+	&:hover{
+		background-color: white;
+	}
+	&:focus{
+		background-color: white;
+	}
+}
+
+.score-label{
+		font-weight:normal;
+		font-size: 12pt;
+}
+
+.empty-q{
+	color: #ccc;
+	text-align: center;
+}

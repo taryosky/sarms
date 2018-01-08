@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171124071827) do
     t.integer  "lecturer_id",     null: false
     t.integer  "course_id",       null: false
     t.string   "session",         null: false
+    t.string   "topic"
     t.datetime "submission_date"
     t.string   "assignment_path"
     t.string   "file"

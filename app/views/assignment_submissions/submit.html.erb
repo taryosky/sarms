@@ -1,11 +1,21 @@
-<%= render 'layouts/student_layout/card' %>
-<div class = "col-d-9 col-t-8">
-	<div class = "dashboard centered">
-		<h1>SUBMIT ASSINGMENT FOR <%= @course.ctitle.upcase %></h1>
-	<%= form_for :assignment_submission, url: assignment_submissions_path  do |f| %>
-		<%= f.file_field :upload %>
-		<%= f.hidden_field :assignment_id, value: @assignment.id %>
-		<%= f.submit %>
-	<% end %>
+<div class="myrow">
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Subnmit Assignments</h3>
+				<hr/>
+				<label class="info-label">Course Code:</label><label><%= @course.ccode.upcase %> </label><br/>
+				<label class="info-label">Course Title:</label><label><%= @course.ctitle.titlecase %> </label><br/>
+				<label class="info-label">Course Units:</label><label><%= @course.units %> </label><br/><br/>
+				<div>Submit by uploading the file </div>
+						<%= form_for :assignment_submission, url: assignment_submissions_path  do |f| %>
+						<br/>
+						<%= f.file_field :upload, class:"info-field", style:"border:none" %><br/>
+						<%= f.hidden_field :assignment_id, value: @assignment.id %>
+						<%= f.submit :Submit, class:"info-field login-button", style:"margin:0px;border:none" %>
+					<% end %>
+	        </div>
+		</div>
 	</div>
 </div>
