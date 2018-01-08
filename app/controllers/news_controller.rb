@@ -119,13 +119,13 @@ class NewsController < ApplicationController
 		news_im = news.news_image
 		if news_im
 			delete_news_image news.id
-			File.open( Rails.root.join('public/news', new_file_name), 'wb') do | file | 
+			File.open( Rails.root.join('app/assets/images/news_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end
 			news_im.path = new_file_name
 			news_im.save
 		else
-			File.open( Rails.root.join('public/news', new_file_name), 'wb') do | file | 
+			File.open( Rails.root.join('app/assets/images/news_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end
 			news_im = NewsImage.new
@@ -139,7 +139,7 @@ class NewsController < ApplicationController
 		news = News.find_by(id: id)
 		img = news.news_image.path
 		if !img.blank?
-			file = Rails.root.join("public/news/"+img)
+			file = Rails.root.join("app/assets/images/news_images/"+img)
 			if file
 				File::delete(file)
 			end

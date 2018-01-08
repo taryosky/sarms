@@ -145,7 +145,7 @@ class AssignmentSubmissionsController < ApplicationController
 		
 			waiting_assignment = activeAssignments arr_assign, arr_submits
 		
-			@ass_code = Assignment.where(id: waiting_assignment)
+			@ass_code = Assignment.where(id: waiting_assignment).where("submission_date > ?", Time.now) 
 		end
 
 		def getAssignments record

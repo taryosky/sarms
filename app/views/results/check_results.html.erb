@@ -32,6 +32,13 @@
 				<% end %>
 
 	        </div>
+			<% @semester.each do|key, sem| %>
+				 <% sem.each do|f| %>
+				 <div>
+					<%= f.semester %>
+				</div>
+				<% end %>
+			<% end %>
 		</div>
 	</div>
 </div>

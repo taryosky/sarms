@@ -171,3 +171,8 @@ div .sum-head{
 .bold{
 	font-weight: bolder;
 }
+
+.news-image{
+	width:inherit;
+	height: 200px;
+}

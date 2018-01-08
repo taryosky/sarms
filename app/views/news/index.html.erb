@@ -4,16 +4,27 @@
     </div>
     <div class = "col-d-10 col-t-10">
         <div class = "trans-background no-padding dashboard">
-            <h6 class = "news-date"><%=  %></h6>
             <% @all_news.each do|news| %>
-            <div>
-                <h5 class = "pad-left text-left black-font"><%= news.title.titlecase %><span class="news-date"><%= "#{news.created_at.day}/#{news.created_at.month}/#{news.created_at.year}" %></span></h5>
-            </div>
-            <% cont = news.content.split("\n") %>
-            <p><%= cont[0].slice(0, 300) %>....</p>
-            <span class = "news-span"><%= link_to 'read more...',  news_path(news.enc_id), class: 'read-more', style:'color:#FF6600;' %></span>
-            <hr class = "hr">
+			<div class="myrow">
+				<% if news.news_image %>
+					<div class="col-t-4 col-d-4">
+						<div class="news-date-s">
+						</div>
+						<div><%= image_tag("news_images/"+"#{news.news_image.path}", class:"news-image") %></div>
+					</div>
+				<% end%>
+				
+
+				<div>
+					<h5 class = "pad-left text-left black-font"><%= news.title.titlecase %><span class="news-date"><%= "#{news.created_at.day}/#{news.created_at.month}/#{news.created_at.year}" %></span></h5>
+				</div>
+				<% cont = news.content.split("\n") %>
+				<p><%= cont[0].slice(0, 300) %>....</p>
+				<span class = "news-span"><%= link_to 'read more...',  news_path(news.enc_id), class: 'read-more', style:'color:#FF6600;' %></span>
+				<hr class = "hr">
+			</div>
             <% end %> <!-- End Loop -->
+			
         </div>
     </div>
 </div>
