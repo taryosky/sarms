@@ -171,8 +171,11 @@ class AdminActivitiesController < ApplicationController
     return @response
   end
 
+#CAUTION!!! HIGHLY LOGICAL UNIT FULL UNDERSTANDING
+#OF WORKING REQUIRED, BEFORE ATEMPT TO MODIFY
+#ALL TIME TABLE SETTING EDITING AND UPDATING IS DONE HERE
   def set_time_table
-    empty_content = false
+    empty_content = false #use to determine wether or not to set the element value to "", this is done when the course code don't exits
     value = params[:value]
     day = params[:day]
     per = params[:period]
@@ -182,17 +185,19 @@ class AdminActivitiesController < ApplicationController
 
     code = value[0..5]
 
-    code.empty? ? temp=past_val : temp=code
+    code.empty? ? temp=past_val : temp=code #assign the course from either the past value or the value passed
 
+    #if either a past value or a value exits for the code
     if !temp.empty?
 
       cors = Course.find_by(ccode: temp)
       id = cors.id if cors
 
       course_on_time_table = TimeTable.find_by(course_id: id, period: per, day: day)
-
+      #if both the present value and the past are empty
       if(pres_val.empty? && past_val.empty?)
         value = ""
+      #if both the present value id not empty and the past is empty
       elsif(!pres_val.empty? && past_val.empty?)
         if id
           if course_on_time_table
@@ -202,12 +207,16 @@ class AdminActivitiesController < ApplicationController
             TimeTable.create(course_id: id, period: per, day: day)
           end
         end
+      #if both the present value is empty and the past is not empty
       elsif (pres_val.empty? && !past_val.empty?)
         if id && course_on_time_table
           course_on_time_table.destroy
         end
+      #if both the present value is not empty and the past is not empty
       elsif (!pres_val.empty? && !past_val.empty?)
+        #check id both present and past value are thesame
         if (pres_val==past_val)
+          #checking if the course code exits but not present on the time table so you can create it
           if id && !course_on_time_table
             TimeTable.create(course_id: id, period: per, day: day)
           end
@@ -223,6 +232,7 @@ class AdminActivitiesController < ApplicationController
 
           present_course = TimeTable.find_by(course_id: id1, period: per, day: day)
           if present_course
+            value=""
             empty_content=true
             present_course.destroy
           end
