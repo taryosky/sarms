@@ -172,6 +172,7 @@ class AdminActivitiesController < ApplicationController
   end
 
   def set_time_table
+    empty_content = false
     value = params[:value]
     day = params[:day]
     per = params[:period]
@@ -196,6 +197,7 @@ class AdminActivitiesController < ApplicationController
         if id
           if course_on_time_table
             value = ""
+            empty_content = true
           else
             TimeTable.create(course_id: id, period: per, day: day)
           end
@@ -210,6 +212,7 @@ class AdminActivitiesController < ApplicationController
             TimeTable.create(course_id: id, period: per, day: day)
           end
           if course_on_time_table
+            empty_content=true
           end
         else
           course1 = Course.find_by(ccode: pres_val)
@@ -218,6 +221,11 @@ class AdminActivitiesController < ApplicationController
           id1 = course1.id if course1
           id2 = course2.id if course2
 
+          present_course = TimeTable.find_by(course_id: id1, period: per, day: day)
+          if present_course
+            empty_content=true
+            present_course.destroy
+          end
           pre_course_on_time_table = TimeTable.find_by(course_id: id2, period: per, day: day) if id2
 
           pre_course_on_time_table.destroy if pre_course_on_time_table
@@ -238,6 +246,10 @@ class AdminActivitiesController < ApplicationController
         end
       else
       end
+    end
+    
+    respond_to do |format|
+      format.json{render json: empty_content}
     end
   end
 

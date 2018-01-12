@@ -20,7 +20,7 @@ function view_time_table(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in view_time_table method");
 			},
 			success: function (data, status, xhr) {
 
@@ -37,7 +37,7 @@ function view_course_allocations(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in view_course_allocations method");
 			},
 			success: function (data, status, xhr) {
 
@@ -55,7 +55,7 @@ function set_reg_status(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in set_reg_status method");
 			},
 			success: function (data, status, xhr) {}// success callback function
 		});
@@ -104,7 +104,7 @@ function set_session(input){
 			type: 'POST',
 			data: {"input": input},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in set_session method");
 			},
 			success: function (data, status, xhr) {}// success callback function
 	});
@@ -202,18 +202,21 @@ function focus_implementation(){
 	});	
 }
 
-function set_time_table(past_val, pres_val, value, day, period, row){
+function set_time_table(element, past_val, pres_val, value, day, period, row){
 	
 	$.ajax({
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-			url: '/settimetable',
+			url: '/settimetable.json',
 			type: 'POST',
 			data: {"pres_val":past_val, "past_val": pres_val, "value": value, "day": day, "period": period, "row":row},
 			error: function(data, status, xhr){
-				alert("An error occured");
-				alert(data);
+				alert("An error occured in set_time_table method");
 			},
-			success: function (data, status, xhr) {}// success callback function
+			success: function (data, status, xhr) {
+				if(data){
+					element.val("");
+				}
+			}// success callback function
 	});
 }
 
@@ -228,7 +231,7 @@ function get_time_table(){
 
 function checkcode(full_val, pres_val, past_val, query, element, day, period, row){
 	if(query==""){
-		set_time_table(pres_val, past_val, query, day, period, row);
+		set_time_table(element, pres_val, past_val, query, day, period, row);
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -238,12 +241,12 @@ function checkcode(full_val, pres_val, past_val, query, element, day, period, ro
 					type: 'POST',
 					data: {"query" : query, "val":full_val},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in checkcode method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data['response']){
 		                  	element.css("border","0px");
-		                  	set_time_table(pres_val, past_val, query, day, period, row);
+		                  	set_time_table(element, pres_val, past_val, query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid green");
@@ -287,12 +290,12 @@ function course_alloc_by_click_handler(){
 					type: 'POST',
 					data: {"data" : elem_id},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in course_alloc_by_click_handler method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data){
 		                  	element.css("border","0px");
-		                  	set_time_table("", "", query, day, period, row);
+		                  	set_time_table("", "", "", query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid red");	                  	
@@ -320,7 +323,7 @@ function remove_lect(){
 					type: 'POST',
 					data: {"lect_name" : opt_val, "course_id" : course_id, "level" : level},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in remove_lect method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	
