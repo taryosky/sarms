@@ -155,6 +155,7 @@ class AdminActivitiesController < ApplicationController
     stat = Hash.new
     pres_val = params[:val]
     query = params[:query]
+    query = query[0..5]
     course =  Course.find_by(ccode: query)
     if course
       stat[:response] = true
@@ -187,14 +188,14 @@ class AdminActivitiesController < ApplicationController
       cors = Course.find_by(ccode: temp)
       id = cors.id if cors
 
-
       course_on_time_table = TimeTable.find_by(course_id: id, period: per, day: day)
 
       if(pres_val.empty? && past_val.empty?)
-
+        value = ""
       elsif(!pres_val.empty? && past_val.empty?)
         if id
           if course_on_time_table
+            value = ""
           else
             TimeTable.create(course_id: id, period: per, day: day)
           end
@@ -205,6 +206,11 @@ class AdminActivitiesController < ApplicationController
         end
       elsif (!pres_val.empty? && !past_val.empty?)
         if (pres_val==past_val)
+          if id && !course_on_time_table
+            TimeTable.create(course_id: id, period: per, day: day)
+          end
+          if course_on_time_table
+          end
         else
           course1 = Course.find_by(ccode: pres_val)
           course2 = Course.find_by(ccode: past_val)
