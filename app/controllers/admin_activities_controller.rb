@@ -152,13 +152,20 @@ class AdminActivitiesController < ApplicationController
   end
 
   def checkcode
-    @response =""
-    @query = params[:query]
-    Course.find_by(ccode: @query) ? @response = true : @response = false
+    stat = Hash.new
+    pres_val = params[:val]
+    query = params[:query]
+    course =  Course.find_by(ccode: query)
+    if course
+      stat[:response] = true
+      stat[:value] = pres_val
+    else
+      stat[:response] = false
+      stat[:value] = pres_val
+    end
+    
     respond_to do |format|
-      format.js
-      format.html{render layout:false}
-      format.json{render json: @response.to_json}
+      format.json{render json: stat.to_json}
     end
     return @response
   end
@@ -168,19 +175,63 @@ class AdminActivitiesController < ApplicationController
     day = params[:day]
     per = params[:period]
     row = params[:row].to_i
-    path = "#{Rails.root}/public/time_table/time_table.json"
-    file = File.new(path, 'r')
-    data = JSON.parse(File.read(file))
-    file.close
-    if data
-      data[day][per][row] = value
-      temp = data.to_json
-      file = File.new(path,"w")
-      if file.write(temp)
-        file.close
-      end
-    else
+    pres_val = params[:pres_val]
+    past_val = params[:past_val]
 
+    code = value[0..5]
+
+    code.empty? ? temp=past_val : temp=code
+
+    if !temp.empty?
+
+      cors = Course.find_by(ccode: temp)
+      id = cors.id if cors
+
+
+      course_on_time_table = TimeTable.find_by(course_id: id, period: per, day: day)
+
+      if(pres_val.empty? && past_val.empty?)
+
+      elsif(!pres_val.empty? && past_val.empty?)
+        if id
+          if course_on_time_table
+          else
+            TimeTable.create(course_id: id, period: per, day: day)
+          end
+        end
+      elsif (pres_val.empty? && !past_val.empty?)
+        if id && course_on_time_table
+          course_on_time_table.destroy
+        end
+      elsif (!pres_val.empty? && !past_val.empty?)
+        if (pres_val==past_val)
+        else
+          course1 = Course.find_by(ccode: pres_val)
+          course2 = Course.find_by(ccode: past_val)
+
+          id1 = course1.id if course1
+          id2 = course2.id if course2
+
+          pre_course_on_time_table = TimeTable.find_by(course_id: id2, period: per, day: day) if id2
+
+          pre_course_on_time_table.destroy if pre_course_on_time_table
+          TimeTable.create(course_id: id1, period: per, day: day) if id1
+        end
+      end
+
+      path = "#{Rails.root}/public/time_table/time_table.json"
+      file = File.new(path, 'r')
+      data = JSON.parse(File.read(file))
+      file.close
+      if data
+        data[day][per][row] = value
+        temp = data.to_json
+        file = File.new(path,"w")
+        if file.write(temp)
+          file.close
+        end
+      else
+      end
     end
   end
 

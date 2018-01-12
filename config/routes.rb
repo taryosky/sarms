@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get '/student_profile', to: 'students#profile_view'
   post '/change_passport', to: 'students#change_passport'
   post '/student_update_password', to: 'students#change_password'
+  get '/view_time_table', to: 'students#view_time_table'
 
   #routes for courses
   post '/search_course', to: 'courses#search'

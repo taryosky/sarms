@@ -109,7 +109,7 @@ function set_session(input){
 			success: function (data, status, xhr) {}// success callback function
 	});
 }
-
+// workflag
 function create_time_table(div){
 	var json_data;
 	var ajaxR = get_time_table();
@@ -172,10 +172,17 @@ function validata_session_field(){
 
 function focus_implementation(){
 
+	var pres_val = "";
+	var past_val = "";
+	var full_val = "";
+
 	$(".table_input").focusout(function() {
 		var value = $(this).val();
 		var query = $.trim(value).toUpperCase();
 		$(this).val(query.toUpperCase());
+
+		pres_val = query.substr(0, 6).toUpperCase();
+
 		var element = $(this);
 		var elem_id = element.attr("id");
 		var day = elem_id.substr(0,3);
@@ -183,25 +190,25 @@ function focus_implementation(){
 
 		var period = array[1];
 		var row = array[2];
-
-		var query = query.substr(0,6);
-		checkcode(query, element, day, period, row);
+		checkcode(full_val, pres_val, past_val, query, element, day, period, row);
   	});
 	
 	$(".table_input").focusin(function() {
 		var $elem = $(this);
 		$elem.css("border","0px")
-		var $elem_val = $elem.val();
+		var $elem_val = $elem.val().toUpperCase();
+		past_val = $elem_val.substr(0,6);
+		full_val = $elem_val;
 	});	
 }
 
-function set_time_table(value, day, period, row){
+function set_time_table(past_val, pres_val, value, day, period, row){
 	
 	$.ajax({
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 			url: '/settimetable',
 			type: 'POST',
-			data: {"value": value, "day": day, "period": period, "row":row},
+			data: {"pres_val":past_val, "past_val": pres_val, "value": value, "day": day, "period": period, "row":row},
 			error: function(data, status, xhr){
 				alert("An error occured");
 				alert(data);
@@ -219,9 +226,9 @@ function get_time_table(){
 	});
 }
 
-function checkcode(query, element, day, period, row){
+function checkcode(full_val, pres_val, past_val, query, element, day, period, row){
 	if(query==""){
-		set_time_table(query, day, period, row);
+		set_time_table(pres_val, past_val, query, day, period, row);
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -229,17 +236,18 @@ function checkcode(query, element, day, period, row){
 					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 					url: '/query_code.json',
 					type: 'POST',
-					data: {"query" : query},
+					data: {"query" : query, "val":full_val},
 					error: function (data, status, xhr){
 						
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	if(data){
+		            	if(data['response']){
 		                  	element.css("border","0px");
-		                  	set_time_table(query, day, period, row);
+		                  	set_time_table(pres_val, past_val, query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
-		                  	element.css("border","1px solid red");	                  	
+		                  	element.css("border","1px solid green");
+		                  	element.val(data['value']);	                  	
 		                  }
 		            }
 	    		}
@@ -284,7 +292,7 @@ function course_alloc_by_click_handler(){
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data){
 		                  	element.css("border","0px");
-		                  	set_time_table(query, day, period, row);
+		                  	set_time_table("", "", query, day, period, row);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid red");	                  	

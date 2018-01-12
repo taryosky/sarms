@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124071827) do
+ActiveRecord::Schema.define(version: 20180111192951) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name", default: "elect_elect_admin_name"
@@ -142,6 +142,15 @@ ActiveRecord::Schema.define(version: 20171124071827) do
     t.index ["fname"], name: "index_students_on_fname"
     t.index ["matno"], name: "index_students_on_matno"
     t.index ["sname"], name: "index_students_on_sname"
+  end
+
+  create_table "time_tables", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "period"
+    t.string  "day"
+    t.index ["course_id"], name: "index_time_tables_on_course_id"
+    t.index ["day"], name: "index_time_tables_on_day"
+    t.index ["period"], name: "index_time_tables_on_period"
   end
 
   create_table "utils", force: :cascade do |t|

@@ -112,7 +112,7 @@ header{
   width: 46%;
 }
 #time_table_head  > tr > th, #courses_body > tr > th[rowspan="5"]{
-  font-size: 95%;
+  font-size: 88%;
 }
 #courses_body > tr > th[rowspan="5"]{
   width: 100px;

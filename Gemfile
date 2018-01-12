@@ -17,8 +17,6 @@ gem 'bundler', '~> 1.15', '>= 1.15.1'
 gem 'rubyzip', '>= 1.0.0'
 gem 'zip-zip'
 gem 'traceroute'
-gem 'bootstrap-sass', '~> 3.2.0'
-gem 'autoprefixer-rails'
 
 
 group :development, :test do
