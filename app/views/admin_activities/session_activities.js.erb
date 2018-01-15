@@ -2,8 +2,8 @@ $("#page-inner").html("<%= j render 'session_activities' %>");
 $("div#modal").html("<%= j render 'time_table', locals: {'data': @data} %>");
 set_input_field();
 focus_implementation();
-validata_session_field();
-set_timetable();
+validate_session_field();
+ show_courses_for_the_day();
 set_reg_status();
 view_time_table();
 init_time_table();
@@ -62,7 +62,7 @@ function set_reg_status(){
 	});
 }
 
-function set_timetable(){
+function show_courses_for_the_day(){
 	$(".week_days > div").click(function(){
 		var append_elem = document.getElementsByClassName("custom");
 		var div = $(this);
@@ -143,7 +143,7 @@ function create_time_table(div){
 	return return_string;
 }
 
-function validata_session_field(){
+function validate_session_field(){
 	$("#seperator").attr("disabled","true");
 	$("input.fixed-lenght").attr("maxlength","4");
 	$("input.fixed-lenght").focusout(function(){
@@ -172,17 +172,12 @@ function validata_session_field(){
 
 function focus_implementation(){
 
-	var pres_val = "";
 	var past_val = "";
-	var past_row = "";
 	var focus = false;
 	$(".table_input").focusout(function() {
 		focus = true;
-		var value = $(this).val();
-		var query = $.trim(value).toUpperCase();
+		var query = $.trim($(this).val()).toUpperCase();
 		$(this).val(query.toUpperCase());
-
-		pres_val = query.toUpperCase();
 
 		var element = $(this);
 		var elem_id = element.attr("id");
@@ -190,33 +185,27 @@ function focus_implementation(){
 		var array = elem_id.split('_');
 
 		var period = array[1];
-		var pre_row = array[2];
+		var row = array[2];
 
-		checkcode(pres_val, past_val, query, element, day, period, pre_row, past_row);
+		checkcode(past_val, query, element, day, period, row);
   	});
 	
 	$(".table_input").focusin(function() {
-		if(focus){
-
-		}
 		var $elem = $(this);
 		var elem_id = $elem.attr("id");
 		var array = elem_id.split('_');
-		past_row = array[2];
-
 		$elem.css("border","0px")
-		var $elem_val = $elem.val().toUpperCase();
-		past_val = $elem_val;
+		past_val = $elem.val().trim().toUpperCase();
 	});	
 }
 
-function set_time_table(element, pres_val, past_val, value, day, period, pre_row, past_row, hall){
+function set_time_table(element, past_val, value, day, period, row, hall){
 	
 	$.ajax({
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 			url: '/settimetable.json',
 			type: 'POST',
-			data: {"pres_val": pres_val, "past_val": past_val, "value": value, "day": day, "period": period, "pre_row":pre_row, "past_row":past_row, "hall":hall},
+			data: {"past_val": past_val, "value": value, "day": day, "period": period, "row":row, "hall":hall},
 			error: function(data, status, xhr){
 				alert("An error occured in set_time_table method");
 			},
@@ -237,9 +226,9 @@ function get_time_table(){
 	});
 }
 
-function checkcode(pres_val, past_val, query, element, day, period, pre_row, past_row){
+function checkcode(past_val, query, element, day, period, row){
 	if(query==""){
-		set_time_table(element, pres_val, past_val, query, day, period, pre_row, past_row, "");
+		set_time_table(element, past_val, query, day, period, row, "");
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -247,14 +236,14 @@ function checkcode(pres_val, past_val, query, element, day, period, pre_row, pas
 					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 					url: '/query_code.json',
 					type: 'POST',
-					data: {"query" : query, "val":past_val},
+					data: {"query" : query, "past_val" : past_val},
 					error: function (data, status, xhr){
 						alert("An error occured in checkcode method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data['response']){
 		                  	element.css("border","0px");
-		                  	set_time_table(element, pres_val, past_val, query, day, period, pre_row, past_row, data['hall']);
+		                  	set_time_table(element, past_val, query, day, period, row, data['hall']);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid green");

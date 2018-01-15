@@ -153,7 +153,7 @@ class AdminActivitiesController < ApplicationController
 
   def checkcode
     stat = Hash.new
-    pres_val = params[:val]
+    pres_val = params[:past_val]
     query = params[:query]
     query_short = query[0..5]
     course =  Course.find_by(ccode: query_short)
@@ -187,9 +187,8 @@ class AdminActivitiesController < ApplicationController
     day = params[:day]
     per = params[:period]
     hall = params[:hall]
-    pre_row = params[:pre_row].to_i
-    past_row = params[:past_row].to_i
-    pres_val = params[:pres_val]
+    row = params[:row].to_i
+    pres_val = value
     past_val = params[:past_val]
 
     code = value[0..5]
@@ -204,10 +203,8 @@ class AdminActivitiesController < ApplicationController
       t_per = Array.new()
 
       ttable = TimeTable.all
-      if ttable
-        ttable.each do |p|
-          t_per.push(p.period)
-        end
+      ttable.each do |p|
+        t_per.push(p.period)
       end
 
       cors = Course.find_by(ccode: temp)
@@ -232,14 +229,14 @@ class AdminActivitiesController < ApplicationController
               end
             end
             if status
-              TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+              TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
               value = pres_val
             else
               value = ""
               empty_content = true
             end
           else
-            TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+            TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
             value = pres_val
           end
         end
@@ -257,7 +254,7 @@ class AdminActivitiesController < ApplicationController
           if(course_on_time_table)
             
           elsif id && !course_on_time_table
-            TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+            TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
           end
         else
 
@@ -271,31 +268,23 @@ class AdminActivitiesController < ApplicationController
           present_course = TimeTable.find_by(course_id: id1, period: per, day: day, hall: pres_hall)
           past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
 
-          if present_course
-            if present_course.row==past_course.row
-              value=""
-            else
-              value=""
-              empty_content = true
-            end
-          else
-              past_course.destroy
-              status = true
+          if past_course.destroy
+              status = false
             if ttable.size > 0
               ttable.each do |time_table|
                 if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
-                    status = false
+                    status = true
                 end
               end
               if status
-                TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+                TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
                 value = pres_val
               else
                 value = ""
                 empty_content = true
               end
             else
-              TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+              TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
               value = pres_val
             end
           end
@@ -307,7 +296,7 @@ class AdminActivitiesController < ApplicationController
       data = JSON.parse(File.read(file))
       file.close
       if data
-        data[day][per][pre_row] = value
+        data[day][per][row] = value
         temp = data.to_json
         file = File.new(path,"w")
         if file.write(temp)
