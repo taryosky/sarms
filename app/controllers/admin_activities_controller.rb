@@ -194,31 +194,59 @@ class AdminActivitiesController < ApplicationController
 
     code = value[0..5]
 
-    code.empty? ? temp=past_val : temp=code #assign the course from either the past value or the value passed
+    code.empty? ? temp=past_val[0..5] : temp=code #assign the course from either the past value or the value passed
 
     #if either a past value or a value exits for the code
     if !temp.empty?
+      course1 = Course.find_by(ccode: pres_val[0..5])
+      course2 = Course.find_by(ccode: past_val[0..5])
+
+      t_per = Array.new()
+
+      ttable = TimeTable.all
+      if ttable
+        ttable.each do |p|
+          t_per.push(p.period)
+        end
+      end
 
       cors = Course.find_by(ccode: temp)
       id = cors.id if cors
 
       course_on_time_table = TimeTable.find_by(course_id: id, period: per, day: day)
+     
       #if both the present value and the past are empty
       if(pres_val.empty? && past_val.empty?)
         value = ""
       #if both the present value id not empty and the past is empty
       elsif(!pres_val.empty? && past_val.empty?)
-          if course_on_time_table
-            value = ""
-            empty_content = true
+        if course_on_time_table
+          value = ""
+          empty_content = true
+        else
+          status = true
+          if ttable.size > 0
+            ttable.each do |time_table|
+              if time_table.period.to_s == per && Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level
+                  status = false
+              end
+            end
+            if status
+              TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+              value = pres_val
+            else
+              value = ""
+              empty_content = true
+            end
           else
             TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+            value = pres_val
           end
-        
-      #if both the present value is empty and the past is not empty
+        end
+      #if the present value is empty and the past is not empty
       elsif (pres_val.empty? && !past_val.empty?)
         if course_on_time_table
-          empty_content=true
+          empty_content = true
           value=""
           course_on_time_table.destroy
         end
@@ -228,14 +256,10 @@ class AdminActivitiesController < ApplicationController
         if (pres_val==past_val)
           if(course_on_time_table)
             
-          end
-          #checking if the course code exits but not present on the time table so you can create it
-          if id && !course_on_time_table
+          elsif id && !course_on_time_table
             TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
           end
         else
-          course1 = Course.find_by(ccode: pres_val[0..5])
-          course2 = Course.find_by(ccode: past_val[0..5])
 
           pres_hall = pres_val.split('-')[1].strip
           past_hall = past_val.split('-')[1].strip
@@ -255,8 +279,25 @@ class AdminActivitiesController < ApplicationController
               empty_content = true
             end
           else
-            past_course.destroy
-            TimeTable.create(course_id: id1, period: per, day: day, hall: hall, row: pre_row)
+              past_course.destroy
+              status = true
+            if ttable.size > 0
+              ttable.each do |time_table|
+                if time_table.period.to_s == per && Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level
+                    status = false
+                end
+              end
+              if status
+                TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+                value = pres_val
+              else
+                value = ""
+                empty_content = true
+              end
+            else
+              TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
+              value = pres_val
+            end
           end
         end
       end
