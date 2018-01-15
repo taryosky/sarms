@@ -174,14 +174,15 @@ function focus_implementation(){
 
 	var pres_val = "";
 	var past_val = "";
-	var full_val = "";
-
+	var past_row = "";
+	var focus = false;
 	$(".table_input").focusout(function() {
+		focus = true;
 		var value = $(this).val();
 		var query = $.trim(value).toUpperCase();
 		$(this).val(query.toUpperCase());
 
-		pres_val = query.substr(0, 6).toUpperCase();
+		pres_val = query.toUpperCase();
 
 		var element = $(this);
 		var elem_id = element.attr("id");
@@ -189,26 +190,33 @@ function focus_implementation(){
 		var array = elem_id.split('_');
 
 		var period = array[1];
-		var row = array[2];
-		checkcode(full_val, pres_val, past_val, query, element, day, period, row);
+		var pre_row = array[2];
+
+		checkcode(pres_val, past_val, query, element, day, period, pre_row, past_row);
   	});
 	
 	$(".table_input").focusin(function() {
+		if(focus){
+
+		}
 		var $elem = $(this);
+		var elem_id = $elem.attr("id");
+		var array = elem_id.split('_');
+		past_row = array[2];
+
 		$elem.css("border","0px")
 		var $elem_val = $elem.val().toUpperCase();
-		past_val = $elem_val.substr(0,6);
-		full_val = $elem_val;
+		past_val = $elem_val;
 	});	
 }
 
-function set_time_table(element, past_val, pres_val, value, day, period, row){
+function set_time_table(element, pres_val, past_val, value, day, period, pre_row, past_row, hall){
 	
 	$.ajax({
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 			url: '/settimetable.json',
 			type: 'POST',
-			data: {"pres_val":past_val, "past_val": pres_val, "value": value, "day": day, "period": period, "row":row},
+			data: {"pres_val": pres_val, "past_val": past_val, "value": value, "day": day, "period": period, "pre_row":pre_row, "past_row":past_row, "hall":hall},
 			error: function(data, status, xhr){
 				alert("An error occured in set_time_table method");
 			},
@@ -229,9 +237,9 @@ function get_time_table(){
 	});
 }
 
-function checkcode(full_val, pres_val, past_val, query, element, day, period, row){
+function checkcode(pres_val, past_val, query, element, day, period, pre_row, past_row){
 	if(query==""){
-		set_time_table(element, pres_val, past_val, query, day, period, row);
+		set_time_table(element, pres_val, past_val, query, day, period, pre_row, past_row, "");
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -239,18 +247,18 @@ function checkcode(full_val, pres_val, past_val, query, element, day, period, ro
 					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 					url: '/query_code.json',
 					type: 'POST',
-					data: {"query" : query, "val":full_val},
+					data: {"query" : query, "val":past_val},
 					error: function (data, status, xhr){
 						alert("An error occured in checkcode method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	if(data['response']){
 		                  	element.css("border","0px");
-		                  	set_time_table(element, pres_val, past_val, query, day, period, row);
+		                  	set_time_table(element, pres_val, past_val, query, day, period, pre_row, past_row, data['hall']);
 		                  	element.css("border","0px");
 		                  }else{
 		                  	element.css("border","1px solid green");
-		                  	element.val(data['value']);	                  	
+		                  	element.val(data['value']);                 	
 		                  }
 		            }
 	    		}
@@ -293,13 +301,7 @@ function course_alloc_by_click_handler(){
 						alert("An error occured in course_alloc_by_click_handler method");
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	if(data){
-		                  	element.css("border","0px");
-		                  	set_time_table("", "", "", query, day, period, row);
-		                  	element.css("border","0px");
-		                  }else{
-		                  	element.css("border","1px solid red");	                  	
-		                  }
+		            	
 		            }
 	    		}
 	    	);

@@ -98,8 +98,9 @@ header{
  }
 #set_session{
   text-align: left;
-  width: 20%;
+  width: 50%;
   display: inline-block;
+  border: 2px solid #DEDEDE;
 }
 #seperator{
   width: 6px !important;
@@ -113,6 +114,13 @@ header{
 }
 #time_table_head  > tr > th, #courses_body > tr > th[rowspan="5"]{
   font-size: 88%;
+}
+#stu_time_table_head{
+  font-size: 52%;
+}
+#stu_courses_body > tr > th, #stu_courses_body > tr > td{
+  font-size: 53% !important;
+  text-align: center !important;
 }
 #courses_body > tr > th[rowspan="5"]{
   width: 100px;

@@ -155,11 +155,18 @@ class AdminActivitiesController < ApplicationController
     stat = Hash.new
     pres_val = params[:val]
     query = params[:query]
-    query = query[0..5]
-    course =  Course.find_by(ccode: query)
+    query_short = query[0..5]
+    course =  Course.find_by(ccode: query_short)
+
     if course
-      stat[:response] = true
-      stat[:value] = pres_val
+      if query.match(/[A-Z]{3}\d{3}\s?-\s?(LAB$|(EN[1-9]$|ENLH[1-2]$))/)
+        stat[:hall] = query.split('-')[1].strip();
+        stat[:response] = true
+        stat[:value] = pres_val
+      else
+        stat[:response] = false
+        stat[:value] = pres_val
+      end
     else
       stat[:response] = false
       stat[:value] = pres_val
@@ -179,7 +186,9 @@ class AdminActivitiesController < ApplicationController
     value = params[:value]
     day = params[:day]
     per = params[:period]
-    row = params[:row].to_i
+    hall = params[:hall]
+    pre_row = params[:pre_row].to_i
+    past_row = params[:past_row].to_i
     pres_val = params[:pres_val]
     past_val = params[:past_val]
 
@@ -199,47 +208,56 @@ class AdminActivitiesController < ApplicationController
         value = ""
       #if both the present value id not empty and the past is empty
       elsif(!pres_val.empty? && past_val.empty?)
-        if id
           if course_on_time_table
             value = ""
             empty_content = true
           else
-            TimeTable.create(course_id: id, period: per, day: day)
+            TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
           end
-        end
+        
       #if both the present value is empty and the past is not empty
       elsif (pres_val.empty? && !past_val.empty?)
-        if id && course_on_time_table
+        if course_on_time_table
+          empty_content=true
+          value=""
           course_on_time_table.destroy
         end
       #if both the present value is not empty and the past is not empty
       elsif (!pres_val.empty? && !past_val.empty?)
         #check id both present and past value are thesame
         if (pres_val==past_val)
+          if(course_on_time_table)
+            
+          end
           #checking if the course code exits but not present on the time table so you can create it
           if id && !course_on_time_table
-            TimeTable.create(course_id: id, period: per, day: day)
-          end
-          if course_on_time_table
-            empty_content=true
+            TimeTable.create(course_id: id, period: per, day: day, row: pre_row, hall: hall)
           end
         else
-          course1 = Course.find_by(ccode: pres_val)
-          course2 = Course.find_by(ccode: past_val)
+          course1 = Course.find_by(ccode: pres_val[0..5])
+          course2 = Course.find_by(ccode: past_val[0..5])
+
+          pres_hall = pres_val.split('-')[1].strip
+          past_hall = past_val.split('-')[1].strip
 
           id1 = course1.id if course1
           id2 = course2.id if course2
 
-          present_course = TimeTable.find_by(course_id: id1, period: per, day: day)
-          if present_course
-            value=""
-            empty_content=true
-            present_course.destroy
-          end
-          pre_course_on_time_table = TimeTable.find_by(course_id: id2, period: per, day: day) if id2
 
-          pre_course_on_time_table.destroy if pre_course_on_time_table
-          TimeTable.create(course_id: id1, period: per, day: day) if id1
+          present_course = TimeTable.find_by(course_id: id1, period: per, day: day, hall: pres_hall)
+          past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
+
+          if present_course
+            if present_course.row==past_course.row
+              value=""
+            else
+              value=""
+              empty_content = true
+            end
+          else
+            past_course.destroy
+            TimeTable.create(course_id: id1, period: per, day: day, hall: hall, row: pre_row)
+          end
         end
       end
 
@@ -248,7 +266,7 @@ class AdminActivitiesController < ApplicationController
       data = JSON.parse(File.read(file))
       file.close
       if data
-        data[day][per][row] = value
+        data[day][per][pre_row] = value
         temp = data.to_json
         file = File.new(path,"w")
         if file.write(temp)

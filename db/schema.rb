@@ -146,11 +146,15 @@ ActiveRecord::Schema.define(version: 20180111192951) do
 
   create_table "time_tables", force: :cascade do |t|
     t.integer "course_id"
-    t.integer "period"
     t.string  "day"
+    t.integer "period"
+    t.string  "hall"
+    t.integer "row"
     t.index ["course_id"], name: "index_time_tables_on_course_id"
     t.index ["day"], name: "index_time_tables_on_day"
+    t.index ["hall"], name: "index_time_tables_on_hall"
     t.index ["period"], name: "index_time_tables_on_period"
+    t.index ["row"], name: "index_time_tables_on_row"
   end
 
   create_table "utils", force: :cascade do |t|

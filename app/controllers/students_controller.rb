@@ -238,33 +238,49 @@ class StudentsController < ApplicationController
 	end
 
 	def view_time_table
-		path = "#{Rails.root}/public/time_table/time_table.json"
-		tmp = File.open(path, 'r')
+		@mon = Array.new(5,"")
+		@tue = Array.new(5,"")
+		@wed = Array.new(5,"")
+		@thu = Array.new(5,"")
+		@fri = Array.new(5,"")
 
-		@tmp_to_json = JSON.parse(File.read(tmp))
+		@reg_arr = Array.new
+		@tt_arr = Array.new()
+		@stu_arr = Array.new()
 
-		tmp.close
+		all_course = Course.all
 
-		student = current_student
+		@student_course = current_student.registrations.where(status:1)
+		@student_course.each do |c|
+			@reg_arr.push(c.course_id)
+		end
 
-		if student.nil?
-		else
-			@arr = Array.new
-			puts "an active students available"
-			@courses=student.registrations
-			@courses.each do |cos|
-				@arr.push(Course.find_by(id: cos.id).ccode)
-			end
-			@reg_courses_from_file = Array.new
-			@tmp_to_json.each do |day|
-				@tmp_to_json[day].each do |period|
-					@tmp_to_json[day][period].each do |course|
-
-						@reg_courses_from_file.push course
-					end
+		@time_table = TimeTable.all.order(:period)
+		@time_table.each do |tt|
+			if @reg_arr.include?(tt.course_id)
+				if tt.day=="mon"
+					course=all_course.find_by(id: tt.course_id)
+					@mon[tt.period-1] += course.ccode+"-"+tt.hall+" "
+				end
+				if tt.day=="tue"
+					course=all_course.find_by(id: tt.course_id)
+					@tue[tt.period-1] +=  course.ccode+"-"+tt.hall+" "
+				end
+				if tt.day=="wed"
+					course=all_course.find_by(id: tt.course_id)
+					@wed[tt.period-1] += course.ccode+"-"+tt.hall+" "
+				end
+				if tt.day=="thu"
+					course=all_course.find_by(id: tt.course_id)
+					@thu[tt.period-1] += course.ccode+"-"+tt.hall+" "
+				end
+				if tt.day=="fri"
+					course=all_course.find_by(id: tt.course_id)
+					@fri[tt.period-1] += course.ccode+"-"+tt.hall+" "
 				end
 			end
 		end
+		
 	end
 
 	def new_student_params
