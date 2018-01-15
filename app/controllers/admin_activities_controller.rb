@@ -257,36 +257,30 @@ class AdminActivitiesController < ApplicationController
             TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
           end
         else
-
-          pres_hall = pres_val.split('-')[1].strip
           past_hall = past_val.split('-')[1].strip
 
-          id1 = course1.id if course1
           id2 = course2.id if course2
 
-
-          present_course = TimeTable.find_by(course_id: id1, period: per, day: day, hall: pres_hall)
           past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
 
-          if past_course.destroy
-              status = false
-            if ttable.size > 0
-              ttable.each do |time_table|
-                if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
-                    status = true
-                end
+          status = false
+          
+          if ttable.size > 0
+            ttable.each do |time_table|
+              if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
+                  status = true
               end
-              if status
-                TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
-                value = pres_val
-              else
-                value = ""
-                empty_content = true
-              end
-            else
-              TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
-              value = pres_val
             end
+            if status
+              past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+              value = pres_val
+            else
+              value = ""
+              empty_content = true
+            end
+          else
+            past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+            value = pres_val
           end
         end
       end
