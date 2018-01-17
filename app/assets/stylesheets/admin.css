@@ -113,7 +113,7 @@ img{
 	padding: 10px 10px 20px 10px;
 }
 #navs{
-padding-left: 15%;
+
 }
 .handle{
 	padding-top: 30px;
@@ -123,10 +123,10 @@ img{
 	padding:0px;
 }
  .adminli a{
-	color: #000000;
+	display: inline-block;
 	text-align: left;
-	width: 100%;
-
+	width: 80%;
+	height: 25px;
 }
 .na{
     list-style-type: none;
@@ -190,20 +190,28 @@ span{
   margin-bottom : 50px;
 }
 .adminli{
-  color: white;
-  margin-top: 40px;
+	font-weight: bolder;
+  margin-top: 20px;
   list-style-type: none;
   text-align: left;
-  width: 90%;
+  padding-top: 10px;
+  padding-left: 20px;
+  vertical-align: center;
 }
 .adminli-modified{
   margin-top: 30px;
 }
 
+.adminli:hover{
+	background-color: white;
+	box-shadow: 0px 0px 5px 1px black;
+	color: white;
+}
+
 .adminli li:hover{
   cursor: pointer;
-  color: #cccccc;
 }
+
 a:hover{
   color: #cccccc;
 }

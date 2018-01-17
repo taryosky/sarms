@@ -198,3 +198,15 @@ table[id~="students-"]{
 	display: inline-block;
 	width: 120px;
 }
+
+.news-field{
+	display:inline-block;
+	width: 100%;
+	border: 1px solid black;
+	border-radius: 2px;
+}
+
+#create_news_heading_field{
+	height: 30px;
+	margin-bottom: 20px;
+}

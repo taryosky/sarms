@@ -1,5 +1,11 @@
 $("#page-inner").html("<%= j render "dashboard" %>");
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#dash").addClass("active-user-menu");
+
 	var totalstudents = "<%= Student.all.size %>";
 	var level100students = "<%= Student.where("level = ?", "100").size %>"
 	var level200students = "<%= Student.where("level = ?", "200").size %>"

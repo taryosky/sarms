@@ -76,6 +76,8 @@ class NewsController < ApplicationController
 			@news = News.find_by_enc_id(params[:id])
 			@news_date = @news.created_at
 			@cont = @news.content.split("\n")
+			@all_news = News.all.reverse
+			@count = 0;
 		else
 			@news = News.where(year:params[:id])
 			@news = @news.reverse

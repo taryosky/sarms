@@ -12,6 +12,12 @@ course_alloc_by_click_handler();
 view_course_allocations();
 remove_lect();
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#session_act").addClass("active-user-menu");
+
 function view_time_table(){
 	$("div#tt_view").click(function(){
 		$.ajax({

@@ -16,16 +16,16 @@
         <div id = "create_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
            <div class = "myrow">
-                <div class = "col-t-2 col-d-2"></div>
-                    <div class = "col-t-8 col-d-8">
+                <div class = "col-t-1 col-d-1"></div>
+                    <div class = "col-t-10 col-d-10">
                             <div class="handle white_bg">
                             <div id="create_success" class = "create_success msg"></div>
                             <div id="create_error" data-class="notice" class = "create_error msg"></div>
 							<%= form_for :create_news, url:"/create_news", remote: true, multipart: true, authenticity_token:true do|f| %>
-                            <%= f.label "News Heading",  id: 'create_news_heading' %>
-                            <%= f.text_field :heading, id: 'create_news_heading_field' %><br/>
+                            <%= f.label "News Heading",  id: 'create_news_heading' %> <br/>
+                            <%= f.text_field :heading, id: 'create_news_heading_field', class:"news-field" %><br/>
                             <%= f.label "Body",  id: 'create_content' %>
-                            <%= f.text_area :content,  id: 'create_news_content_field', class:"news_content" %><br/>
+                            <%= f.text_area :content,  id: 'create_news_content_field', class:"news_content news-field" %><br/>
                             <%= f.label :"News Photo",  id: 'create_news_photo' %>
                             <%= f.file_field :image,  html:{style:"displa: none"} %><br/>
 							<div id="select_news_image">Upload Image</div>
@@ -33,7 +33,7 @@
                         <% end %>
                             </div>
                     </div>
-                <div class = "col-2"></div>
+                <div class = "col-t-1 col-d-1"></div>
             </div>
             </div>
         </div>

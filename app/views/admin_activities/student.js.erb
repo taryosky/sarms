@@ -10,6 +10,11 @@ $("#table_for_students").append(generateSpilloverStudentsTable());
 
 trig_student_edit();
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#stud").addClass("active-user-menu");
 
 $("#edit_student_form_fields").click(function(){
 	$(this).css("display", "none");

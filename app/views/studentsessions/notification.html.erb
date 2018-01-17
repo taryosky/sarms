@@ -18,7 +18,9 @@
 				<% else %>
 					<% @notifications.each do|key, note| %>
 						<% if key == "assign" %>
-							<div class= "notification">You have <%= note %> unsubmitted assignment(s). click <%= link_to "here", assignment_submissions_path %> to submit</div>
+							<div class="alert alert-success">
+							  <strong>Assignment(s): &nbsp</strong> You have <%= note %> unsubmitted assignment(s). click <%= link_to "here", assignment_submissions_path %> to submit
+							</div>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -26,3 +28,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#dash").addClass("active-user-menu");
+	});
+</script>

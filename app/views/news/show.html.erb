@@ -1,18 +1,59 @@
-<div class = "myrow">
-	<div class = "col-8">
-		<div class = "col-1"></div>
-			<div class = "col-6 no-padding margin-left">
-				<div class = "trans-background no-padding no-padding">
-					<h4><%= @news.title %><span class="news-date"><%= "#{@news_date.day}/#{@news_date.month}/#{@news_date.year}" %></span></h4>
-					<% @cont.each do |c| %>
-					<p><%= c %></p>
-					<% end %>
-					<p id="buttons-p">
-<span class="itr-btn"> <%= link_to "<< Previous", news_path(previous_news(@news.id)), id:'previous-button', class:'iterate-button' %> </span> 
-					<span class="itr-btn"> <%= link_to "Next>>", news_path(next_news(@news.id)), id:'next-button', class:'iterate-button' %> </span>
-					</p>
-				</div>
-        	</div>
-    	<div class = "col-1"></div>
+<div class="myrow">
+    <div class = "col-d-2 col-t-2">
+        <%= render 'layouts/news_menu' %>
     </div>
+    <div class = "col-d-7 col-t-7">
+		<div class="myrow">
+			<div class = "trans-background no-padding dashboard">
+				<% if @news.news_image %>
+					<div><%= image_tag("news_images/"+"#{@news.news_image ? @news.news_image.path : 'noimage.JPG'}", class:"news-image", style:"object-fit:cover;") %></div>
+					<style>
+						#full-story{
+							position: relative;
+							top: -70px;
+							background-color: white;
+						}
+					</style>
+				<% end %>
+				
+				<div class="myrow">
+					<div class="col-t-2 col-d-2" style="padding:20px 2px 2px 2px">
+						<div style="text-align:center">
+							<div class="news-s-date"><span style="font-size: 18pt; font-weight:bolder"><%= @news.created_at.day %></span><br/><div><%= @news.created_at.strftime("%b") %>, <%= @news.created_at.year %></div></div>
+						</div>
+					</div>
+					<div class="col-t-10 col-d-10" style="padding:0px">
+						<div id="full-story" class = "trans-background no-padding no-padding">
+							<h1 id="show-news-header"><%= @news.title %></h1>
+							<div style="margin-left:10px"><div class="news-element news-cartigory">Cartegory: None |</div><div class="news-element news-date">Date: <%= "#{@news.created_at.strftime("%d %b, %Y")}" %></div></div>
+							<% @cont.each do |c| %>
+								<p><%= c %></p>
+							<% end %>
+							<p id="buttons-p">
+							<span class="pre-button"> <%= link_to "<< Previous", news_path(previous_news(@news.id)), id:'previous-button', class:'itr-btn' %> </span> 
+							<span class=""> <%= link_to "Next>>", news_path(next_news(@news.id)), id:'next-button', class:' itr-btn' %> </span>
+							</p>
+						</div>
+					</div>
+				</div>
+					
+			</div>
+		</div>
+    </div>
+	<div class="col-t-3 col-d-3" style="padding-left:2px;">
+		<div class="dashboard" style="padding-top: 5px;">
+			<h3 style="color:#ccc">Latest News</h3><hr style="margin-top: 5px; margin-buttom: 5px"/>
+			<% @all_news.each do|news| %>
+				<% if @count < 6 %>
+					<% if news.enc_id != @news.enc_id %>
+						<div class="myrow" style="max-height: 120px; overflow: hidden">
+							<div class="col-d-5" style="padding:5px"><%= image_tag("news_images/"+"#{news.news_image ? news.news_image.path : 'noimage.JPG'}", class:"news-image", style:"object-fit:cover;") %></div>
+							<div class="col-d-7" style="padding:5px"><%= link_to news.title.titlecase, news_path(news.enc_id), class:"news-head-link" %><div style="color:#ccc"><%= news.created_at.strftime("%d %b, %Y") %></div></div>
+						</div>
+					<% end %>
+				<% end %>
+			<% end %>
+			
+		</div>
+	</div>
 </div>
