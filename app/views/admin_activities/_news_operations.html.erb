@@ -1,6 +1,6 @@
 <div class="myrow">
-    <div class="col-t-4 col-d-4"><button id="activate_create_news_modal" onclick="createUser();">Create Single</button></div>
-    <div class="col-t-4 col-d-4"><button id="activate_news_multiple">Create Multiple From File</button></div>
+    <div class="col-t-4 col-d-4"><button id="activate_create_news_modal" class="admin-menu-btn" onclick="createUser();">Create Single</button></div>
+    <div class="col-t-4 col-d-4"><button id="activate_news_multiple" class="admin-menu-btn">Create From File</button></div>
 </div>
 <div id="edit_success" class = "edit_success msg"></div>
 <div id="create_success" class = "create_success msg"></div>
@@ -28,8 +28,7 @@
                             <%= f.text_area :content,  id: 'create_news_content_field', class:"news_content news-field" %><br/>
                             <%= f.label :"News Photo",  id: 'create_news_photo' %>
                             <%= f.file_field :image,  html:{style:"displa: none"} %><br/>
-							<div id="select_news_image">Upload Image</div>
-                            <%= f.submit :create, id: 'create_news' %><div id="cancel_create_lect_form" class="button" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
+                            <%= f.submit :create, id: 'create_news', class:"admin-cont-btn" %><div id="cancel_create_lect_form" class="button admin-cont-btn" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
                         <% end %>
                             </div>
                     </div>
@@ -94,9 +93,9 @@
 								<%= f.label :"News Photo",  id: 'edit_photo' %>
 								<%= f.file_field :image,  html:{style:"displa: none"} %>
 								<%= f.submit :finish, id: "edit_news_button" %>
-								<div id="edit_news_form_fields" class="button">Edit</div>
-								<%= f.submit :delete, id:"delete_news_form_fields", class:"button" %>
-								<div id="cancel_edit_lect_form" class="button" data-class="cancel_ref" data-ref="edit_cont1">Ok</div>
+								<div id="edit_news_form_fields" class="button admin-cont-btn">Edit</div>
+								<%= f.submit :delete, id:"delete_news_form_fields", class:"button admin-cont-btn" %>
+								<div id="cancel_edit_lect_form" class="button admin-cont-btn" data-class="cancel_ref" data-ref="edit_cont1">Ok</div>
 							
 								<% end %>
                             </div>

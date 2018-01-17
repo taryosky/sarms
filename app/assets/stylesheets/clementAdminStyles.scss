@@ -210,3 +210,40 @@ table[id~="students-"]{
 	height: 30px;
 	margin-bottom: 20px;
 }
+
+.admin-cont-btn{
+	background-color: #0099cc;
+	color: #ffffff;
+	font-weight: bolder;
+	box-shadow: 0px 0px 9px grey;
+	border: none;
+	display: inline-block;
+	width: 80px;
+	height: 25px;
+	border-radius: 5px;
+	margin: 10px;
+	text-align: center;
+	padding-top: 3px;
+	cursor: pointer;
+	&:hover{
+		background-color: skyblue;
+	}
+	
+}
+
+.admin-menu-btn{
+	background-color: #0099cc;
+	color: #ffffff;
+	font-weight: bolder;
+	box-shadow: 0px 0px 9px grey;
+	border: none;
+	display: inline-block;
+	border-radius: 5px;
+	margin: 10px;
+	text-align: center;
+	padding: 5px;
+	cursor: pointer;
+	&:hover{
+		background-color: skyblue;
+	}
+}
