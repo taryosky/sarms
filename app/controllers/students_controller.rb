@@ -15,16 +15,16 @@ class StudentsController < ApplicationController
 		@students = Hash.new
 		@student_othernames_hash = Hash.new
 		@student_matno.each do|key, value|
-			num = (key.slice(key.length-1)).to_i
-			student = Student.new
-			student_othernames = StudentOthername.new
-			student.matno = value
-			student.sname = @student_sname["sname#{num}"]
-			student.fname = @student_fname["fname#{num}"]
-			student.level = @student_level["level#{num}"]
-			student_othernames.othernames = @student_othernames["othernames#{num}"]
-			@students["index#{num}"] = student
-			@student_othernames_hash["index#{num}"] = student_othernames if !student_othernames.nil?
+		num = (key.slice(key.length-1)).to_i
+		student = Student.new
+		student_othernames = StudentOthername.new
+		student.matno = value
+		student.sname = @student_sname["sname#{num}"]
+		student.fname = @student_fname["fname#{num}"]
+		student.level = @student_level["level#{num}"]
+		student_othernames.othernames = @student_othernames["othernames#{num}"]
+		@students["index#{num}"] = student
+		@student_othernames_hash["index#{num}"] = student_othernames if !student_othernames.nil?
 		end
 		
 		@invalid_students = Hash.new
@@ -237,6 +237,34 @@ class StudentsController < ApplicationController
 		@passwords = LoginDetail.select(:user_id, :password).where("user_type = ? AND activation = ?", 0, 0)
 	end
 
+
+	def student_creation_file
+		uploaded_file = params[:create_student][:Upload_file]
+		if uploaded_file
+			@file_path = "#{Rails.root}/public/temp/student_creation_file.xls"
+			file = File.new(@file_path, "wb")
+			file.write(uploaded_file.read)
+			file.close
+			render 'create_option'
+		end
+	end
+
+	def create_student_from_file
+		count = 0
+		stud = ""
+		@file_path = "#{Rails.root}/public/temp/student_creation_file.csv"
+
+		CSV.foreach(@file_path, headers: true) do |row|
+			nams = row["NAME"].split(' ')
+			stud = Student.create(matno: row["ID"], sname: nams[0], fname: nams[1])
+			if stud.persisted?
+				stud.gen_login_password
+				count +=1
+			end
+		end
+		File.destroy(@file_path)
+	end
+
 	def view_time_table
 		@mon = Array.new(5,"")
 		@tue = Array.new(5,"")
@@ -260,23 +288,23 @@ class StudentsController < ApplicationController
 			if @reg_arr.include?(tt.course_id)
 				if tt.day=="mon"
 					course=all_course.find_by(id: tt.course_id)
-					@mon[tt.period-1] += course.ccode+"-"+tt.hall+" "
+					@mon[tt.period-1] += course.ccode+"-"+tt.hall
 				end
 				if tt.day=="tue"
 					course=all_course.find_by(id: tt.course_id)
-					@tue[tt.period-1] +=  course.ccode+"-"+tt.hall+" "
+					@tue[tt.period-1] +=  course.ccode+"-"+tt.hall
 				end
 				if tt.day=="wed"
 					course=all_course.find_by(id: tt.course_id)
-					@wed[tt.period-1] += course.ccode+"-"+tt.hall+" "
+					@wed[tt.period-1] += course.ccode+"-"+tt.hall
 				end
 				if tt.day=="thu"
 					course=all_course.find_by(id: tt.course_id)
-					@thu[tt.period-1] += course.ccode+"-"+tt.hall+" "
+					@thu[tt.period-1] += course.ccode+"-"+tt.hall
 				end
 				if tt.day=="fri"
 					course=all_course.find_by(id: tt.course_id)
-					@fri[tt.period-1] += course.ccode+"-"+tt.hall+" "
+					@fri[tt.period-1] += course.ccode+"-"+tt.hall
 				end
 			end
 		end
@@ -290,4 +318,5 @@ class StudentsController < ApplicationController
 	def edit_student_params
 		params.require(:edit_student).permit(:matno, :fname, :sname, :state_of_origin, :nationality, :lga, :sex, :email, :phone, :religion)
 	end
+
 end

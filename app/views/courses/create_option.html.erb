@@ -1,0 +1,68 @@
+ <% content_for :admin_header do %>
+ <head><%= csrf_meta_tag %></head>
+ <!--/. NAV TOP  -->
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header ">
+                <a class="navbar-brand" href="/admin_index">
+                    <%= image_tag('ndu.png', class: 'icon icon-img logo') %>
+                    <strong>ELECT/ELECT</strong>
+                </a>
+            </div>
+            <ul id ="custom_nav" class="nav navbar-top-links navbar-right" style="float:right">
+                    <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+<% end %>
+        
+ <!-- /. NAV SIDE  -->
+<div class="admin_width no-left-pad">
+ <!-- /. NAV SIDE  -->
+    <nav class="navbar-default spec-navbar-side admin-side-nav" role="navigation">
+        <div class="sidebar-collapse">
+            <div id = "navs" class="admin-nav">
+                <ul class="na">
+
+                    <li class = "adminli" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Dashboard", admin_dashboard_path, remote:true %></li>
+                    <li class = "adminli" id = "lect"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Lecturer", admin_lecturer_path, remote:true %></li>
+                    <li class = "adminli" id = "stud"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Student", admin_student_path, remote:true %></li>
+                    <li class = "adminli" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Courses", admin_course_path, remote:true %></li>
+                    <li class = "adminli" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "News", admin_news_path, remote:true %></li>
+                    <li class = "adminli" id = "session_act"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Session Activities", admin_session_activities_path, remote:true %> </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+     
+        <div id="page-wrapper" class="col-d-9 margin-top_cus">          
+            <div id="page-inner" class="myfade">
+                <h3 class="dashboard-header">TimeTable</h3><br/>
+				<table>
+					<tr>
+						<th>MATNO</th>
+						<th>NAME</th>
+					</tr>
+					<% CSV.foreach(@file_path) do |row|%>
+						<% nam, matno = row %>
+						<tr><td><%=nam%></td><td><%=matno%></td></tr>
+					<% end %>
+				</table>
+    			<%= link_to "create", '/create_student_from_file', method: :POST%> | <%= link_to "edit", ''%> | <%= link_to "cancel", ''%>
+            <!-- /. PAGE INNER  -->
+            </div>
+        <!-- /. PAGE WRAPPER  -->

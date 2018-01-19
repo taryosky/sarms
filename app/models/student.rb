@@ -11,10 +11,10 @@ class Student < ApplicationRecord
 	VALID_STRING_ONLY = /\A[A-Za-z]/
 	validates :fname, presence: true, length: {minimum: 3}, format: {with: VALID_STRING_ONLY}
 	validates :sname, presence: true, length: {minimum: 3}, format: {with: VALID_STRING_ONLY}	
-	
+	validates :matno, presence: true, uniqueness:{case_sensitive: false}
 
 			VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]{2,}+\z/i
-			# validates :matno, presence: true
+			
 			# validates :fname, presence: true, length: {minimum: 3}, format: {with: VALID_STRING_ONLY}
 			# validates :sname, presence: true, length: {minimum: 3}, format: {with: VALID_STRING_ONLY}	
 			# validates :email, presence: true, length: {maximum: 255}, format: { with: VALID_EMAIL_REGEX}, uniqueness: { case_sensitive: false}
@@ -26,4 +26,20 @@ class Student < ApplicationRecord
 	def user_type
 		return 0
 	end
+
+	def gen_login_password
+		user=self
+		user_activation_status = user.user_type == 2 ? 1 : 0
+		@user_name = ""
+		if user.user_type == 0
+			@user_name = user.matno
+		elsif user.user_type == 1
+			@user_name = user.staff_id
+		else
+			user.name
+		end
+		@user_password =  SecureRandom.hex(10)
+		login_detail = LoginDetail.create(user_name: @user_name, user_id: user.id, user_type: user.user_type, activation: user_activation_status, password: @user_password)
+	end
+
 end

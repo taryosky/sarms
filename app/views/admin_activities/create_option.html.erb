@@ -1,0 +1,57 @@
+<div class="myrow">	
+	<div id="create_from_file" class="">		
+	  <div id = "edit_odal" class="my-modal-content">
+        <div class="my-modal-header">
+         <span id="cancel_create_from_file" class="cancel_button" data-class="cancel_ref" data-ref = "create_cont">&times;</span>
+          <h2>FILE UPLOAD</h2>
+        </div>
+        <div id = "create_modal_body" class="my-modal-body">
+        	<div id = "find_course_option" class="course_option" data-class="display">
+	            <div class = "myrow">
+		            <div class = "col-t-12 col-d-12">
+	                    <div class="handle white_bg">
+							<div id="create_error" data-class="notice" class = "create_error msg"></div>
+							<%= form_for :create_student, url:"/student_creation_file", html:{id:"create_student_from_file"} do|f| %>
+							<div id="student-fields0" class="fields_div">
+								<span id="new-student-error0" class='error'></span>
+								<%= f.label "Upload file"%>
+								<%= f.file_field :Upload_file %>
+								<%= f.submit :upload, id: 'create_student' %>
+	                    	</div>
+	                    	<% end %>
+		           		</div>
+	            	</div>
+	            </div>
+	        </div>
+      	</div>
+	</div>
+</div>
+</div>
+
+
+<div class="myrow">
+	<div class="col-12">
+	<%= render 'layouts/student_layout/card' %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">TimeTable</h3><br/>
+				<table>
+					<tr>
+						<th>MATNO</th>
+						<th>NAME</th>
+					</tr>
+					<tr>
+						<td>MATNO</td>
+						<td>NAME</td>
+					</tr>
+					<tr>
+						<td>MATNO</td>
+						<td>NAME</td>
+					</tr>
+				</table>
+    			<span>create</span> | <span>edit</span>
+
+	        </div>
+		</div>
+	</div>
+</div>

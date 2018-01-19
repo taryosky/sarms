@@ -1,4 +1,5 @@
 module ApplicationHelper
+	
 	def gen_login_password(user)
 		user_activation_status = user.user_type == 2 ? 1 : 0
 		@user_name = ""

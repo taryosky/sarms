@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   post '/update_news', to: 'news#update'
   post '/preview_news', to: 'news#preview'
   
-  #routes for lecturers 
+  #routes for lecturers
+  post '/create_lecturer_from_file', to: 'lecturers#create_lecturer_from_file'
+  post '/lecturer_creation_file', to: 'lecturers#lecturer_creation_file'
   post '/create_lecturer', to: 'lecturers#create'
   post 'delete_lecturer', to: 'lecturers#delete'
   post '/edit_lecturer', to: 'lecturers#update'
@@ -20,6 +22,8 @@ Rails.application.routes.draw do
   post '/lecturer_update_password', to: 'lecturers#change_password'
   
   #routes for students
+  post '/create_student_from_file', to: 'students#create_student_from_file'
+  post '/student_creation_file', to: 'students#student_creation_file'
   post '/create_student', to: 'students#create'
   post '/edit_student', to: 'students#update'
   post '/delete_student', to: 'students#delete'
@@ -34,6 +38,8 @@ Rails.application.routes.draw do
   get '/view_time_table', to: 'students#view_time_table'
 
   #routes for courses
+  post '/create_course_from_file', to: 'courses#create_courses_from_file'
+  post '/course_creation_file', to: 'courses#course_creation_file'
   post '/search_course', to: 'courses#search'
   post '/create_course', to: 'courses#create'
   post '/update_course', to: 'courses#update'
