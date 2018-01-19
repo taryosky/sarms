@@ -1,5 +1,4 @@
 @media print {
-
     div#navs.admin-nav{
         display: none;
     }
@@ -11,5 +10,16 @@
     #edit_cont1{
         display: block;
     }
-    
+	
+	.print-hide{
+		display: none;
+	}
+	
+	.p-password{
+		color: #ccc;
+	}
+	
+	body{
+		margin: 0px;
+	}
 }

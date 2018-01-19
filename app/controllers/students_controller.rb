@@ -6,15 +6,15 @@ class StudentsController < ApplicationController
 	
 	
 	def create
-	@student = Student.new 
-	@student_matno = params[:matno]
-	@student_sname = params[:sname]
-	@student_fname = params[:fname]
-	@student_othernames = params[:othernames]
-	@student_level = params[:level]
-	@students = Hash.new
-	@student_othernames_hash = Hash.new
-	@student_matno.each do|key, value|
+		@student = Student.new 
+		@student_matno = params[:matno]
+		@student_sname = params[:sname]
+		@student_fname = params[:fname]
+		@student_othernames = params[:othernames]
+		@student_level = params[:level]
+		@students = Hash.new
+		@student_othernames_hash = Hash.new
+		@student_matno.each do|key, value|
 		num = (key.slice(key.length-1)).to_i
 		student = Student.new
 		student_othernames = StudentOthername.new
@@ -25,43 +25,43 @@ class StudentsController < ApplicationController
 		student_othernames.othernames = @student_othernames["othernames#{num}"]
 		@students["index#{num}"] = student
 		@student_othernames_hash["index#{num}"] = student_othernames if !student_othernames.nil?
-	end
-	
-	@invalid_students = Hash.new
-	@students.each do|key, value|
-		if !value.valid?
-			num = (key.slice(key.length-1)).to_i
-			array = Array.new
-			if !value.errors[:matno].empty?
-				array.push "Matric. No"
-			end
-			if !value.errors[:sname].empty?
-				array.push "Surname"
-			end
-			if !value.errors[:fname].empty?
-				array.push "First Name"
-			end
-			if !value.errors[:level].empty?
-				array.push "Level"
-			end
-			@invalid_students[num] = array
 		end
-	end
-	
-	if @invalid_students.empty?
+		
+		@invalid_students = Hash.new
 		@students.each do|key, value|
-			value.save
-			@password = gen_login_password value
-			if @student_othernames_hash[key] != nil
-				@student_othernames_hash[key].student_id = value.id
-				@student_othernames_hash[key].save
+			if !value.valid?
+				num = (key.slice(key.length-1)).to_i
+				array = Array.new
+				if !value.errors[:matno].empty?
+					array.push "Matric. No"
+				end
+				if !value.errors[:sname].empty?
+					array.push "Surname"
+				end
+				if !value.errors[:fname].empty?
+					array.push "First Name"
+				end
+				if !value.errors[:level].empty?
+					array.push "Level"
+				end
+				@invalid_students[num] = array
 			end
 		end
-		#Update the login log file
-		file = File.open( Rails.root.join('log', "create_new.log"), 'a')
-		file.syswrite("\t\t#{@students.size} Student(s) Created\n=====================================\nDate/time: #{Time.now}\n\n\n")
-		file.close
-	end
+	
+		if @invalid_students.empty?
+			@students.each do|key, value|
+				value.save
+				@password = gen_login_password value
+				if @student_othernames_hash[key] != nil
+					@student_othernames_hash[key].student_id = value.id
+					@student_othernames_hash[key].save
+				end
+			end
+			#Update the login log file
+			file = File.open( Rails.root.join('log', "create_new.log"), 'a')
+			file.syswrite("\t\t#{@students.size} Student(s) Created\n=====================================\nDate/time: #{Time.now}\n\n\n")
+			file.close
+		end
 		
 		@counter = 1
 		@_100_level_students = Student.where('level = ?', 100)
@@ -234,18 +234,91 @@ class StudentsController < ApplicationController
 	end
 	
 	def print_passwords
+		@row = 0;
+		@col = 0;
 		@passwords = LoginDetail.select(:user_id, :password).where("user_type = ? AND activation = ?", 0, 0)
 	end
 
+
+	def student_creation_file
+		uploaded_file = params[:create_student][:Upload_file]
+		if uploaded_file
+			@file_path = "#{Rails.root}/public/temp/student_creation_file.xls"
+			file = File.new(@file_path, "wb")
+			file.write(uploaded_file.read)
+			file.close
+			render 'create_option'
+		end
+	end
+
+	def create_student_from_file
+		count = 0
+		stud = ""
+		@file_path = "#{Rails.root}/public/temp/student_creation_file.csv"
+
+		CSV.foreach(@file_path, headers: true) do |row|
+			nams = row["NAME"].split(' ')
+			stud = Student.create(matno: row["ID"], sname: nams[0], fname: nams[1])
+			if stud.persisted?
+				stud.gen_login_password
+				count +=1
+			end
+		end
+		File.destroy(@file_path)
+	end
+
+	def view_time_table
+		@mon = Array.new(5,"")
+		@tue = Array.new(5,"")
+		@wed = Array.new(5,"")
+		@thu = Array.new(5,"")
+		@fri = Array.new(5,"")
+
+		@reg_arr = Array.new
+		@tt_arr = Array.new()
+		@stu_arr = Array.new()
+
+		all_course = Course.all
+
+		@student_course = current_student.registrations.where(status:1)
+		@student_course.each do |c|
+			@reg_arr.push(c.course_id)
+		end
+
+		@time_table = TimeTable.all.order(:period)
+		@time_table.each do |tt|
+			if @reg_arr.include?(tt.course_id)
+				if tt.day=="mon"
+					course=all_course.find_by(id: tt.course_id)
+					@mon[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="tue"
+					course=all_course.find_by(id: tt.course_id)
+					@tue[tt.period-1] +=  course.ccode+"-"+tt.hall
+				end
+				if tt.day=="wed"
+					course=all_course.find_by(id: tt.course_id)
+					@wed[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="thu"
+					course=all_course.find_by(id: tt.course_id)
+					@thu[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="fri"
+					course=all_course.find_by(id: tt.course_id)
+					@fri[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+			end
+		end
+		
+	end
+
+	def new_student_params
+		params.require(:create_student).permit(:matno, :fname, :sname, :state_of_origin, :nationality, :lga, :sex, :email, :phone, :religion, :level)
+	end
+
+	def edit_student_params
+		params.require(:edit_student).permit(:matno, :fname, :sname, :state_of_origin, :nationality, :lga, :sex, :email, :phone, :religion)
+	end
+
 end
-
-def new_student_params
-	params.require(:create_student).permit(:matno, :fname, :sname, :state_of_origin, :nationality, :lga, :sex, :email, :phone, :religion, :level)
-end
-
-def edit_student_params
-	params.require(:edit_student).permit(:matno, :fname, :sname, :state_of_origin, :nationality, :lga, :sex, :email, :phone, :religion)
-end
-
-
-

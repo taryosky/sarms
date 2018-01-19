@@ -193,10 +193,16 @@ table[id~="students-"]{
 
 .console{
 	font-family: consolas;
+		font-size: 8pt;
+		
 }
 .student_pass_name, .student_pass_uname, .student_pass_pass{
 	display: inline-block;
 	width: 120px;
+}
+
+.p-password{
+	color: #ccc;
 }
 
 .news-field{

@@ -36,6 +36,7 @@
                     </div>
                     <div class="panel-body">
                         <div id="table_for_courses" class="table-responsive">
+
                             <table class="table table-bordered">
                                 <thead id="time_table_head">
                                     <tr class="custom">
@@ -85,6 +86,7 @@
             </div>
                 <div class="myrow">
                     <div class="col-md-12 col-sm-12 col-d-12 disp_false">
+
                     </div>
                     <div class="col-md-12 col-sm-12 col-d-12 disp_false">
                         <div class="panel panel-default" style="text-align: center; min-height: 600px">
@@ -125,7 +127,7 @@
                 <% error= false%>
                     <% lect_id = @alloc_courses.where(course_id: c.id).select(:lecturer_id) %>
                     <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
-                        <select class= 'modal_inputs' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                        <select class= 'modal_inputs remove_lect' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
                             <option id="opt_remove">default                                            
                             </option>
                             <% lect_id.each do |lect| %>

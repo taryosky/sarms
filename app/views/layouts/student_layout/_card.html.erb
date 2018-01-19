@@ -11,7 +11,7 @@
                         <% if Util.where("name = ?", "registration").first.value.to_i == 1 %><li class = "adminli adminli-modified" id = "cos-reg"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Register Courses", new_registration_path %></li><% end %>
                         <li class = "adminli adminli-modified" id = "ass-download"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Download Assignment", assignment_getassignment_path%></li>
                         <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Visit Library", ""%> </li>
-                        <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Lecture Timetable", "" %> </li>
+                        <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Lecture Timetable", "/view_time_table"%> </li>
                     </ul>
                 </div>
             </div>

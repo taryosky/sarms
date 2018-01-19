@@ -2,8 +2,8 @@ $("#page-inner").html("<%= j render 'session_activities' %>");
 $("div#modal").html("<%= j render 'time_table', locals: {'data': @data} %>");
 set_input_field();
 focus_implementation();
-validata_session_field();
-set_timetable();
+validate_session_field();
+ show_courses_for_the_day();
 set_reg_status();
 view_time_table();
 init_time_table();
@@ -26,7 +26,7 @@ function view_time_table(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in view_time_table method");
 			},
 			success: function (data, status, xhr) {
 
@@ -43,7 +43,7 @@ function view_course_allocations(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in view_course_allocations method");
 			},
 			success: function (data, status, xhr) {
 
@@ -61,14 +61,14 @@ function set_reg_status(){
 			type: 'POST',
 			data: {"status": status},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in set_reg_status method");
 			},
 			success: function (data, status, xhr) {}// success callback function
 		});
 	});
 }
 
-function set_timetable(){
+function show_courses_for_the_day(){
 	$(".week_days > div").click(function(){
 		var append_elem = document.getElementsByClassName("custom");
 		var div = $(this);
@@ -110,12 +110,12 @@ function set_session(input){
 			type: 'POST',
 			data: {"input": input},
 			error: function(data, status, xhr){
-				alert("An error occured");
+				alert("An error occured in set_session method");
 			},
 			success: function (data, status, xhr) {}// success callback function
 	});
 }
-
+// workflag
 function create_time_table(div){
 	var json_data;
 	var ajaxR = get_time_table();
@@ -149,7 +149,7 @@ function create_time_table(div){
 	return return_string;
 }
 
-function validata_session_field(){
+function validate_session_field(){
 	$("#seperator").attr("disabled","true");
 	$("input.fixed-lenght").attr("maxlength","4");
 	$("input.fixed-lenght").focusout(function(){
@@ -178,10 +178,13 @@ function validata_session_field(){
 
 function focus_implementation(){
 
+	var past_val = "";
+	var focus = false;
 	$(".table_input").focusout(function() {
-		var value = $(this).val();
-		var query = $.trim(value).toUpperCase();
+		focus = true;
+		var query = $.trim($(this).val()).toUpperCase();
 		$(this).val(query.toUpperCase());
+
 		var element = $(this);
 		var elem_id = element.attr("id");
 		var day = elem_id.substr(0,3);
@@ -190,29 +193,33 @@ function focus_implementation(){
 		var period = array[1];
 		var row = array[2];
 
-		var query = query.substr(0,6);
-		checkcode(query, element, day, period, row);
+		checkcode(past_val, query, element, day, period, row);
   	});
 	
 	$(".table_input").focusin(function() {
 		var $elem = $(this);
+		var elem_id = $elem.attr("id");
+		var array = elem_id.split('_');
 		$elem.css("border","0px")
-		var $elem_val = $elem.val();
+		past_val = $elem.val().trim().toUpperCase();
 	});	
 }
 
-function set_time_table(value, day, period, row){
+function set_time_table(element, past_val, value, day, period, row, hall){
 	
 	$.ajax({
 			headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-			url: '/settimetable',
+			url: '/settimetable.json',
 			type: 'POST',
-			data: {"value": value, "day": day, "period": period, "row":row},
+			data: {"past_val": past_val, "value": value, "day": day, "period": period, "row":row, "hall":hall},
 			error: function(data, status, xhr){
-				alert("An error occured");
-				alert(data);
+				alert("An error occured in set_time_table method");
 			},
-			success: function (data, status, xhr) {}// success callback function
+			success: function (data, status, xhr) {
+				if(data){
+					element.val("");
+				}
+			}// success callback function
 	});
 }
 
@@ -225,9 +232,9 @@ function get_time_table(){
 	});
 }
 
-function checkcode(query, element, day, period, row){
+function checkcode(past_val, query, element, day, period, row){
 	if(query==""){
-		set_time_table(query, day, period, row);
+		set_time_table(element, past_val, query, day, period, row, "");
 		element.css("border","0px");
 	}else{
 		$.ajax(
@@ -235,17 +242,18 @@ function checkcode(query, element, day, period, row){
 					headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
 					url: '/query_code.json',
 					type: 'POST',
-					data: {"query" : query},
+					data: {"query" : query, "past_val" : past_val},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in checkcode method");
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	if(data){
+		            	if(data['response']){
 		                  	element.css("border","0px");
-		                  	set_time_table(query, day, period, row);
+		                  	set_time_table(element, past_val, query, day, period, row, data['hall']);
 		                  	element.css("border","0px");
 		                  }else{
-		                  	element.css("border","1px solid red");	                  	
+		                  	element.css("border","1px solid green");
+		                  	element.val(data['value']);                 	
 		                  }
 		            }
 	    		}
@@ -285,16 +293,10 @@ function course_alloc_by_click_handler(){
 					type: 'POST',
 					data: {"data" : elem_id},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in course_alloc_by_click_handler method");
 					},
 		            success: function (data, status, xhr) {// success callback function
-		            	if(data){
-		                  	element.css("border","0px");
-		                  	set_time_table(query, day, period, row);
-		                  	element.css("border","0px");
-		                  }else{
-		                  	element.css("border","1px solid red");	                  	
-		                  }
+		            	
 		            }
 	    		}
 	    	);
@@ -318,7 +320,7 @@ function remove_lect(){
 					type: 'POST',
 					data: {"lect_name" : opt_val, "course_id" : course_id, "level" : level},
 					error: function (data, status, xhr){
-						
+						alert("An error occured in remove_lect method");
 					},
 		            success: function (data, status, xhr) {// success callback function
 		            	

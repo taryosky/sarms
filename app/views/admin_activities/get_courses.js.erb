@@ -5,6 +5,7 @@ remove_lect();
 
 
 function course_alloc_handler(){
+	
 	$(".course_alloc").change(function(){
 		var elem = $(this);
 		var level = elem.attr("data-level");
@@ -26,12 +27,13 @@ function course_alloc_handler(){
 }
 
 function remove_lect(){
-	$(".remove_opt").click(function(){
-		var opt_elem = $(this);
+	$(".remove_lect").change(function(){
+		var parent = $(this);
+		var opt_elem = parent.children(":selected");
 		var opt_val = opt_elem.val();
-		var parent = opt_elem.parent();
 		var course_id = parent.attr("data-aloc");
 		var level = parent.attr("data-level");
+
 		opt_elem.hide();
 
 		$.ajax(
@@ -48,5 +50,6 @@ function remove_lect(){
 		            }
 	    		}
 	    	);
+	    
 	});
 }

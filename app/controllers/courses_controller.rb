@@ -33,6 +33,32 @@ class CoursesController < ApplicationController
 	@lecturers = Lecturer.all
   end
 
+	def course_creation_file
+		uploaded_file = params[:create_course][:Upload_file]
+		if uploaded_file
+			@file_path = "#{Rails.root}/public/temp/course_creation_file.xls"
+			file = File.new(@file_path, "wb")
+			file.write(uploaded_file.read)
+			file.close
+			render 'create_option'
+		end
+	end
+
+	def create_course_from_file
+		count = 0
+		stud = ""
+		@file_path = "#{Rails.root}/public/temp/course_creation_file.csv"
+
+		CSV.foreach(@file_path, headers: true) do |row|
+			nams = row["NAME"].split(' ')
+			lecturer = Course.create(matno: row["ID"], sname: nams[0], fname: nams[1])
+			if lecturer.persisted?
+				lecturer.gen_login_password
+				count +=1
+			end
+		end
+		File.destroy(@file_path)
+	end
   def create
 	@largestId = nil
 	@course = Course.new 

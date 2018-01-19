@@ -152,35 +152,156 @@ class AdminActivitiesController < ApplicationController
   end
 
   def checkcode
-    @response =""
-    @query = params[:query]
-    Course.find_by(ccode: @query) ? @response = true : @response = false
+    stat = Hash.new
+    pres_val = params[:past_val]
+    query = params[:query]
+    query_short = query[0..5]
+    course =  Course.find_by(ccode: query_short)
+
+    if course
+      if query.match(/[A-Z]{3}\d{3}\s?-\s?(LAB$|(EN[1-9]$|ENLH[1-2]$))/)
+        stat[:hall] = query.split('-')[1].strip();
+        stat[:response] = true
+        stat[:value] = pres_val
+      else
+        stat[:response] = false
+        stat[:value] = pres_val
+      end
+    else
+      stat[:response] = false
+      stat[:value] = pres_val
+    end
+    
     respond_to do |format|
-      format.js
-      format.html{render layout:false}
-      format.json{render json: @response.to_json}
+      format.json{render json: stat.to_json}
     end
     return @response
   end
 
+#CAUTION!!! HIGHLY LOGICAL UNIT FULL UNDERSTANDING
+#OF WORKING REQUIRED, BEFORE ATEMPT TO MODIFY
+#ALL TIME TABLE SETTING EDITING AND UPDATING IS DONE HERE
   def set_time_table
+    empty_content = false #use to determine wether or not to set the element value to "", this is done when the course code don't exits
     value = params[:value]
     day = params[:day]
     per = params[:period]
+    hall = params[:hall]
     row = params[:row].to_i
-    path = "#{Rails.root}/public/time_table/time_table.json"
-    file = File.new(path, 'r')
-    data = JSON.parse(File.read(file))
-    file.close
-    if data
-      data[day][per][row] = value
-      temp = data.to_json
-      file = File.new(path,"w")
-      if file.write(temp)
-        file.close
-      end
-    else
+    pres_val = value
+    past_val = params[:past_val]
 
+    code = value[0..5]
+
+    code.empty? ? temp=past_val[0..5] : temp=code #assign the course from either the past value or the value passed
+
+    #if either a past value or a value exits for the code
+    if !temp.empty?
+      course1 = Course.find_by(ccode: pres_val[0..5])
+      course2 = Course.find_by(ccode: past_val[0..5])
+
+      t_per = Array.new()
+
+      ttable = TimeTable.all
+      ttable.each do |p|
+        t_per.push(p.period)
+      end
+
+      cors = Course.find_by(ccode: temp)
+      id = cors.id if cors
+
+      course_on_time_table = TimeTable.find_by(course_id: id, period: per, day: day)
+     
+      #if both the present value and the past are empty
+      if(pres_val.empty? && past_val.empty?)
+        value = ""
+      #if both the present value id not empty and the past is empty
+      elsif(!pres_val.empty? && past_val.empty?)
+        if course_on_time_table
+          value = ""
+          empty_content = true
+        else
+          status = true
+          if ttable.size > 0
+            ttable.each do |time_table|
+              if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
+                  status = false
+              end
+            end
+            if status
+              TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
+              value = pres_val
+            else
+              value = ""
+              empty_content = true
+            end
+          else
+            TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
+            value = pres_val
+          end
+        end
+      #if the present value is empty and the past is not empty
+      elsif (pres_val.empty? && !past_val.empty?)
+        if course_on_time_table
+          empty_content = true
+          value=""
+          course_on_time_table.destroy
+        end
+      #if both the present value is not empty and the past is not empty
+      elsif (!pres_val.empty? && !past_val.empty?)
+        #check id both present and past value are thesame
+        if (pres_val==past_val)
+          if(course_on_time_table)
+            
+          elsif id && !course_on_time_table
+            TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
+          end
+        else
+          past_hall = past_val.split('-')[1].strip
+
+          id2 = course2.id if course2
+
+          past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
+
+          status = false
+          
+          if ttable.size > 0
+            ttable.each do |time_table|
+              if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
+                  status = true
+              end
+            end
+            if status
+              past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+              value = pres_val
+            else
+              value = ""
+              empty_content = true
+            end
+          else
+            past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+            value = pres_val
+          end
+        end
+      end
+
+      path = "#{Rails.root}/public/time_table/time_table.json"
+      file = File.new(path, 'r')
+      data = JSON.parse(File.read(file))
+      file.close
+      if data
+        data[day][per][row] = value
+        temp = data.to_json
+        file = File.new(path,"w")
+        if file.write(temp)
+          file.close
+        end
+      else
+      end
+    end
+    
+    respond_to do |format|
+      format.json{render json: empty_content}
     end
   end
 

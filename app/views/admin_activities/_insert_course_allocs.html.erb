@@ -21,7 +21,7 @@
                 <% error= false%>
                     <% lect_id = @alloc_courses.where(course_id: c.id).select(:lecturer_id) %>
                     <span style="display:inline; margin-right: 12px;"><%= c.ccode %></span><=>
-                        <select class= 'modal_inputs' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
+                        <select class= 'modal_inputs remove_lect' data-level="<%= c.level%>" data-aloc="<%= c.id %>"  style="margin-bottom: 25px; margin-left: 12px;">
                             <option id="opt_remove">default                                                    
                             </option>
                             <% lect_id.each do |lect| %>

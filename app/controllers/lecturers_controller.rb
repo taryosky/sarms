@@ -95,7 +95,32 @@ class LecturersController < ApplicationController
 		@lecturers = Lecturer.all
 	end
 	
-	
+	def lecturer_creation_file
+		uploaded_file = params[:create_lecturer][:Upload_file]
+		if uploaded_file
+			@file_path = "#{Rails.root}/public/temp/student_creation_file.xls"
+			file = File.new(@file_path, "wb")
+			file.write(uploaded_file.read)
+			file.close
+			render 'create_option'
+		end
+	end
+
+	def create_lecturer_from_file
+		count = 0
+		stud = ""
+		@file_path = "#{Rails.root}/public/temp/lecturer_creation_file.csv"
+
+		CSV.foreach(@file_path, headers: true) do |row|
+			nams = row["NAME"].split(' ')
+			lecturer = Lecturer.create(matno: row["ID"], sname: nams[0], fname: nams[1])
+			if lecturer.persisted?
+				lecturer.gen_login_password
+				count +=1
+			end
+		end
+		File.destroy(@file_path)
+	end
 	
 	def delete
 		@lecturer = Lecturer.find_by(id: params[:edit_lecturer][:id])
@@ -224,6 +249,8 @@ class LecturersController < ApplicationController
 	end
 	
 	def print_passwords
+		@row = 0;
+		@col = 0;
 		@passwords = LoginDetail.select(:user_id, :password).where("user_type = ? AND activation = ?", 1, 0)
 	end
 end
