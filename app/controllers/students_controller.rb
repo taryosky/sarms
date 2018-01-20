@@ -262,7 +262,7 @@ class StudentsController < ApplicationController
 				count +=1
 			end
 		end
-		File.destroy(@file_path)
+		File.delete(@file_path)
 	end
 
 	def view_time_table
