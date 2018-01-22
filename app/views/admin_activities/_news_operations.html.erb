@@ -1,6 +1,6 @@
 <div class="myrow">
-    <div class="col-t-4 col-d-4"><button id="activate_create_news_modal" onclick="createUser();">Create Single</button></div>
-    <div class="col-t-4 col-d-4"><button id="activate_news_multiple">Create Multiple From File</button></div>
+    <div class="col-t-4 col-d-4"><button id="activate_create_news_modal" class="admin-menu-btn" onclick="createUser();">Create Single</button></div>
+    <div class="col-t-4 col-d-4"><button id="activate_news_multiple" class="admin-menu-btn">Create From File</button></div>
 </div>
 <div id="edit_success" class = "edit_success msg"></div>
 <div id="create_success" class = "create_success msg"></div>
@@ -16,24 +16,23 @@
         <div id = "create_modal_body" class="my-modal-body">
         <div id = "find_course_option" class="course_option" data-class="display">
            <div class = "myrow">
-                <div class = "col-t-2 col-d-2"></div>
-                    <div class = "col-t-8 col-d-8">
+                <div class = "col-t-1 col-d-1"></div>
+                    <div class = "col-t-10 col-d-10">
                             <div class="handle white_bg">
                             <div id="create_success" class = "create_success msg"></div>
                             <div id="create_error" data-class="notice" class = "create_error msg"></div>
 							<%= form_for :create_news, url:"/create_news", remote: true, multipart: true, authenticity_token:true do|f| %>
-                            <%= f.label "News Heading",  id: 'create_news_heading' %>
-                            <%= f.text_field :heading, id: 'create_news_heading_field' %><br/>
+                            <%= f.label "News Heading",  id: 'create_news_heading' %> <br/>
+                            <%= f.text_field :heading, id: 'create_news_heading_field', class:"news-field" %><br/>
                             <%= f.label "Body",  id: 'create_content' %>
-                            <%= f.text_area :content,  id: 'create_news_content_field', class:"news_content" %><br/>
+                            <%= f.text_area :content,  id: 'create_news_content_field', class:"news_content news-field" %><br/>
                             <%= f.label :"News Photo",  id: 'create_news_photo' %>
                             <%= f.file_field :image,  html:{style:"displa: none"} %><br/>
-							<div id="select_news_image">Upload Image</div>
-                            <%= f.submit :create, id: 'create_news' %><div id="cancel_create_lect_form" class="button" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
+                            <%= f.submit :create, id: 'create_news', class:"admin-cont-btn" %><div id="cancel_create_lect_form" class="button admin-cont-btn" data-class="cancel_ref" data-ref="create_cont">Cancel</div>
                         <% end %>
                             </div>
                     </div>
-                <div class = "col-2"></div>
+                <div class = "col-t-1 col-d-1"></div>
             </div>
             </div>
         </div>
@@ -94,9 +93,9 @@
 								<%= f.label :"News Photo",  id: 'edit_photo' %>
 								<%= f.file_field :image,  html:{style:"displa: none"} %>
 								<%= f.submit :finish, id: "edit_news_button" %>
-								<div id="edit_news_form_fields" class="button">Edit</div>
-								<%= f.submit :delete, id:"delete_news_form_fields", class:"button" %>
-								<div id="cancel_edit_lect_form" class="button" data-class="cancel_ref" data-ref="edit_cont1">Ok</div>
+								<div id="edit_news_form_fields" class="button admin-cont-btn">Edit</div>
+								<%= f.submit :delete, id:"delete_news_form_fields", class:"button admin-cont-btn" %>
+								<div id="cancel_edit_lect_form" class="button admin-cont-btn" data-class="cancel_ref" data-ref="edit_cont1">Ok</div>
 							
 								<% end %>
                             </div>

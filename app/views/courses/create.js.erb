@@ -10,10 +10,10 @@ var form_rows = $('div[id^="course-fields"]');
 		inval_courses["<%= key %>"] = "<%= value.join(",") %>";
 		no_of_inv_fields["<%= key %>"] = "<%= value.join(",") %>".split(",").length
 	<% end %>
-	for(i=0; i<form_rows.length; i++){
+	for(i=0; i<= parseInt("<%= @largestId %>"); i++){
 		var id=form_rows[i].id;
 		var num = id.slice(id.length-1);
-		if(inval_courses[i] != null){
+		if(inval_courses[num] != null){
 			$("#new-course-error"+i).html(inval_courses[i]+" "+ (no_of_inv_fields[i]>1 ? "are":"is")+" not correctly filled for this course");
 			$("#new-course-error"+i).css("display", "block");
 		}

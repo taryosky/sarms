@@ -234,6 +234,8 @@ class StudentsController < ApplicationController
 	end
 	
 	def print_passwords
+		@row = 0;
+		@col = 0;
 		@passwords = LoginDetail.select(:user_id, :password).where("user_type = ? AND activation = ?", 0, 0)
 	end
 

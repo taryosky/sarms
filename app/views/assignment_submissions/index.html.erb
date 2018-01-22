@@ -17,7 +17,7 @@
 				<hr/>
 
 	    	<% if @ass_code.empty? %>
-	    	<h4 class="header">No Pending Assignments</h4><hr>
+	    	<h3 class="header empty-q">No Pending Assignments</h3>
 	    	
 	    	<% else %>
 	        <div class="table-responsive">
@@ -40,3 +40,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#ass-sub").addClass("active-user-menu");
+	});
+</script>

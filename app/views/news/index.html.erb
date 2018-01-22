@@ -4,16 +4,35 @@
     </div>
     <div class = "col-d-10 col-t-10">
         <div class = "trans-background no-padding dashboard">
-            <h6 class = "news-date"><%=  %></h6>
             <% @all_news.each do|news| %>
-            <div>
-                <h5 class = "pad-left text-left black-font"><%= news.title.titlecase %><span class="news-date"><%= "#{news.created_at.day}/#{news.created_at.month}/#{news.created_at.year}" %></span></h5>
-            </div>
-            <% cont = news.content.split("\n") %>
-            <p><%= cont[0].slice(0, 300) %>....</p>
-            <span class = "news-span"><%= link_to 'read more...',  news_path(news.enc_id), class: 'read-more', style:'color:#FF6600;' %></span>
-            <hr class = "hr">
+			<div class="myrow">
+				<div class="col-t-4 col-d-4" style="padding-right: 0px">
+					<div class="myrow">
+						<div class="col-t-3 col-d-2" style="padding:0px 2px 2px 2px">
+							<div style="text-align:center">
+								<div style="background-color: skyblue; color:#fff"><span style="font-size: 18pt; font-weight:bolder"><%= news.created_at.day %></span><br/><div><%= news.created_at.strftime("%b") %>, <%= news.created_at.year %></div></div>
+								<div style="padding:15%;"><%= image_tag("navs/calendar-black.png", class:"news-image") %></div>
+							</div>
+						</div>
+						<div class="col-t-9 col-d-10" style="padding: 0px 0px 15px 15px">
+							<div class="news-image-div"><%= image_tag("news_images/"+"#{news.news_image ? news.news_image.path : 'noimage.JPG'}", class:"news-image", style:"object-fit:cover;") %></div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-t-8 col-d-8" style="padding-left: 0px">
+					<div>
+						<h5 class = "pad-left text-left black-font"><%= link_to news.title.titlecase, news_path(news.enc_id), class:"news-head-link" %></h5>
+						<div style="margin-left:10px"><div class="news-element news-cartigory">Cartegory: None |</div><div class="news-element news-date">Date: <%= "#{news.created_at.day}/#{news.created_at.month}/#{news.created_at.year}" %></div></div>
+					</div>
+					<% cont = news.content.split("\n") %>
+					<div style="margin-left: 15px; padding-top: 10px; font-size:12pt"><%= cont[0].slice(0, 200) %>....</div>
+					<span class = "news-span" style="font-size:12pt"><%= link_to 'read more...',  news_path(news.enc_id), class: 'read-more', style:'color:#FF6600;' %></span>
+				</div>
+			</div>
+			<hr class = "hr">
             <% end %> <!-- End Loop -->
+			
         </div>
     </div>
 </div>

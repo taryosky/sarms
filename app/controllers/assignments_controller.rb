@@ -81,8 +81,8 @@ class AssignmentsController < ApplicationController
 			#date = Time.strftime(end_date)
 			created_file.write(file.read)
 			created_file.close
-			Assignment.create(lecturer_id: lecture_id, course_id:  ccode_id, submission_date: end_date, topic: topic, session: session, assignment_path: stu_path, file: path)
-			flash[:success] = "#{end_date} Assignment Successfully created!"
+			ass = Assignment.create(lecturer_id: lecture_id, course_id:  ccode_id, submission_date: end_date, topic: topic, session: session, assignment_path: stu_path, file: path)
+			flash[:success] = "#{ass.course.ccode} Assignment Successfully created!"
 			redirect_to assignments_path
 		end
 	end

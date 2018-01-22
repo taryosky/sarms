@@ -32,6 +32,23 @@
 				<% end %>
 
 	        </div>
+			<% @semester.each do|key, sem| %>
+				 <% sem.each do|f| %>
+				 <div>
+					<%= f.semester %>
+				</div>
+				<% end %>
+			<% end %>
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#stud-results").addClass("active-user-menu");
+	});
+</script>

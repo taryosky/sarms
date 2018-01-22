@@ -60,6 +60,7 @@ class CoursesController < ApplicationController
 		File.destroy(@file_path)
 	end
   def create
+	@largestId = nil
 	@course = Course.new 
 	@course_code = params[:code]
 	@course_title = params[:title]
@@ -78,6 +79,7 @@ class CoursesController < ApplicationController
 		course.level = @course_level["level#{num}"]
 		course.status = @course_status["status#{num}"]
 		@courses["index#{num}"] = course
+		@largestId = num
 	end
 	
 	@invalid_courses = Hash.new

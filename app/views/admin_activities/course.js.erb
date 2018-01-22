@@ -5,6 +5,12 @@ $("#page-inner").append("<%= j render "course_operations_old" %>");
 $("#table_for_courses").html(generateCoursesTable());
 trig_course_edit();
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#cos").addClass("active-user-menu");
+
 var modalHolder = $('.my-modal');
 	var createModal = $('#create_course');
 	var editModal = $('#edit_modal');

@@ -3,6 +3,11 @@ $("#page-inner").append("<%= j render "lecturer_operations" %>");
 $("#table_for_lecturers").html(generateLecturersTable());
 trig_lecturer_edit();
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#lect").addClass("active-user-menu");
 
 $("#edit_lecturer_form_fields").click(function(){
 	$(this).css("display", "none");

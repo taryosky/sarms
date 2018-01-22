@@ -232,3 +232,9 @@ ul[id="under-graduate-sub-list"] {
     background-color:white;
     opacity:0.7;
 }
+
+.active-user-menu{
+	background-color: white;
+	color: white;
+	box-shadow: 0px 0px 7px 1px black;
+}

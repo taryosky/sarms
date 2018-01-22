@@ -3,6 +3,11 @@ $("#page-inner").append("<%= j render "news_operations" %>");
 $("#table_for_news").html(generateNewsTable());
 trig_news_edit();
 
+$(".adminli").each(function(){
+	$(this).removeClass("active-user-menu");
+});
+
+$("#new").addClass("active-user-menu");
 
 
 $("#edit_news_form_fields").click(function(){

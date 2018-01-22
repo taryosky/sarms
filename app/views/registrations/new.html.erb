@@ -26,7 +26,7 @@
 								<% if !@fscc.nil? %>
 									<% @fscc.each do|course| %>
 								<tr class="reg-dta">
-								   <td><%= @counter %></td><td><%= course.ccode %></td><td><%= course.ctitle %></td><td>C</td><td><%= course.units %></td><td><input type="hidden" onclick="validateEnrollment($('.first_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="first_semester" checked><input type="checkbox" checked disabled /></td>
+								   <td><%= @counter %></td><td><%= course.ccode %></td><td><%= course.ctitle %></td><td>C</td><td><%= course.units %></td><td><input type="hidden" onclick="validateEnrollment($('.first_semester'), 0, this);" name="<%= "course[#{course.ccode}]" %>" data-unit="<%= course.units %>" value="<%= "#{course.id}" %>" class="first_semester" checked><input type="checkbox" checked disabled /></td>
 								</tr>
 									<% @counter = @counter+1 %>
 									<% end %>
@@ -34,7 +34,7 @@
 								<% if !@first_semester_courses.nil? %>
 									<% @first_semester_courses.each do|course| %>
 								<tr class="reg-dta">
-								   <td><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td><%= course.units %></td><td class=""><input type="checkbox" onclick="validateEnrollment($('.first_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="first_semester" /></td>
+								   <td><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td><%= course.units %></td><td class=""><input type="checkbox" onclick="validateEnrollment($('.first_semester'), 0, this);" name="<%= "course[#{course.ccode}]" %>" data-unit="<%= course.units %>" value="<%= "#{course.id}" %>" class="first_semester" /></td>
 								</tr>
 									<% @counter = @counter+1 %>
 									<% end %>
@@ -60,7 +60,7 @@
 								<% if !@sscc.nil? %>
 									<% @sscc.each do|course| %>
 								<tr>
-								   <td class="sn "><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td ><%= course.units %></td><td class=""><input type="hidden" onclick="validateEnrollment($('.second_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="second_semester" checked><input type="checkbox" checked disabled /></td>
+								   <td class="sn "><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td ><%= course.units %></td><td class=""><input type="hidden" onclick="validateEnrollment($('.second_semester'), 1, this);" name="<%= "course[#{course.ccode}]" %>" data-unit="<%= course.units %>" value="<%= "#{course.id}" %>" class="second_semester" checked><input type="checkbox" checked disabled /></td>
 								</tr>
 									<% @counter = @counter + 1 %>
 									<% end %>
@@ -68,7 +68,7 @@
 								<% if !@second_semester_courses.nil? %>
 									<% @second_semester_courses.each do|course| %>
 								<tr>
-								   <td class="sn "><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td ><%= course.units %></td><td class=""><input type="checkbox" onclick="validateEnrollment($('.second_semester'), 1);" name="<%= "course[#{course.ccode}]" %>" data-unit="3" value="<%= "#{course.id}" %>" class="second_semester" /></td>
+								   <td class="sn "><%= @counter %></td><td ><%= course.ccode %></td><td ><%= course.ctitle %></td><td >C</td><td ><%= course.units %></td><td class=""><input type="checkbox" onclick="validateEnrollment($('.second_semester'), 1, this);" name="<%= "course[#{course.ccode}]" %>" data-unit="<%= course.units %>" value="<%= "#{course.id}" %>" class="second_semester" /></td>
 								</tr>
 									<% @counter = @counter + 1 %>
 									<% end %>
@@ -127,13 +127,25 @@
         return num;
     }
 
-    function displayTotalUnits(courses, sem){
-        if(sem == 1){
+    function displayTotalUnits(courses, elem, sem){
+        if(sem == 0){
+			var units = totalNumberOfUnits(courses, 0);
+			if (units > 24){
+				alert("Sorry, You cant register more than " + 24 +" units");
+				elem.checked = false;
+				return;
+			}
             document.getElementById("first-semester-units").innerHTML = totalNumberOfUnits(courses);
             document.getElementById("fs-total-units").innerHTML = totalNumberOfUnits(courses);
             document.getElementById("fs-total-courses").innerHTML = totalCourseRegistered(courses);
         }
         else{
+			var units = totalNumberOfUnits(courses, 0);
+			if (units > 24){
+				alert("Sorry, You cant register more than " + 24 +" units");
+				elem.checked = false;
+				return;
+			}
             document.getElementById("second-semester-units").innerHTML = totalNumberOfUnits(courses);
             document.getElementById("ss-total-units").innerHTML = totalNumberOfUnits(courses);
             document.getElementById("ss-total-courses").innerHTML = totalCourseRegistered(courses);
@@ -145,8 +157,18 @@
 
    
 
-    function validateEnrollment(courses, sem, extraUnits=0){
-        totalNumberOfUnits(courses, extraUnits);
-        displayTotalUnits(courses, sem);
+    function validateEnrollment(courses, sem, elem, extraUnits=0){
+		totalNumberOfUnits(courses, extraUnits);
+			displayTotalUnits(courses, elem, sem);
     }
+</script>
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#cos-reg").addClass("active-user-menu");
+	});
 </script>

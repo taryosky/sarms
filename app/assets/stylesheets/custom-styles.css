@@ -595,13 +595,7 @@ font-size: 13px;
 line-height: 21px;
 padding-top: 4px;
 }
-.active-menu, .active-menu i {
-    background-color: #1B1B1B !important;
-    color: #F09B22 !important;
-}
-.active-menu i{
-  color: #F09B22 !important;
-}
+
 .arrow {
     float: right;
 margin-bottom: -1px;

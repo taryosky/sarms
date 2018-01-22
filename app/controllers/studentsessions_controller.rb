@@ -29,19 +29,27 @@ class StudentsessionsController < ApplicationController
 		@notifications = Hash.new
 		temp_notice = Hash.new
 		
+		#gather assignment notification if any notification on assingment is available
 		assignments = ""
-		
 		submissions = AssignmentSubmission.where("student_id = ?", current_student.id)
 		ass = Array.new
 		submissions.each do|as_id|
 			ass.push as_id.assignment_id
 		end
-		assignments = Assignment.where.not(id: ass).where("submission_date > ?", Time.now).size
+		assign = Assignment.where.not(id: ass).where("submission_date > ?", Time.now)
+		assignments = assign.size
+		reg = Array.new
+		assign.each do|ass|
+			regist = Registration.where("session = ? AND student_id = ? AND course_id = ?", current_session, current_student.id, ass.id);
+			reg.push(regist) if !regist.empty?
+		end
 		if assignments !=0
 			temp_notice["assign"] = assignments
 		end
+		
+		#set notification hash
 		temp_notice.each do|key, val|
-			if !val.blank? || !val.nil? || !val
+			if (!val.blank? || !val.nil? || !val) && !reg.empty?
 				@notifications[key] = val
 			end
 		end

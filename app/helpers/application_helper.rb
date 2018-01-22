@@ -22,7 +22,7 @@ module ApplicationHelper
 		new_file_name = file_name.to_s+File.extname(uploaded_io.original_filename)
 		user_passport = user.passport
 		if user_passport.blank?
-			File.open( Rails.root.join('profile_images', new_file_name), 'wb') do | file | 
+			File.open( Rails.root.join('app/assets/images/profile_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end
 			user.passport = new_file_name
@@ -30,7 +30,7 @@ module ApplicationHelper
 			
 		else
 			delete_passport user
-			File.open( Rails.root.join('profile_images', new_file_name), 'wb') do | file | 
+			File.open( Rails.root.join('app/assets/images/profile_images', new_file_name), 'wb') do | file | 
 				file.write( uploaded_io.read)
 			end
 			user.passport = new_file_name
@@ -41,12 +41,12 @@ module ApplicationHelper
 	def delete_passport(user)
 		if user.user_type == 0
 			if user.passport
-				file = Rails.root.join("profile_images/"+user.passport)
+				file = Rails.root.join("app/assets/images/profile_images/"+user.passport)
 				File::delete(file)
 			end
 		else
 			if user.passport
-				file = Rails.root.join("profile_images/"+user.passport)
+				file = Rails.root.join("app/assets/images/profile_images/"+user.passport)
 				File::delete(file)
 			end
 		end

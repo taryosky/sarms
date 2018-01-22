@@ -8,5 +8,5 @@
 	Util.create(name: "site_visits", value: 0)
 	Util.create(name: "session", value: "0000/0000")
 	Util.create(name: "registration", value: 0)
-	Admin.create(id: 1, name:"samuel")
-	LoginDetail.create(user_name: "samuel", user_id: 1, user_type: 2, activation: 1, password: "samuel")
+	Admin.create(id: 1, name:"clement")
+	LoginDetail.create(user_name: "clement", user_id: 1, user_type: 2, activation: 3, password: "clement")

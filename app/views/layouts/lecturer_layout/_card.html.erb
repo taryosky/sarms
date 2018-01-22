@@ -4,13 +4,13 @@
             <div class="sidebar-collapse">
                 <div id = "navs" class="admin-nav">
                     <ul class="na">
-                        <li class = "adminli adminli-modified" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Notifications", lecturer_notifications_path %></li>
-                        <li class = "adminli adminli-modified" id = "lect"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Upload Assignment", assignments_path%></li>
-                        <li class = "adminli adminli-modified" id = "stud"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Get Assignments", all_assign_courses_path%></li>
-                        <li class = "adminli adminli-modified" id = "cos"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Submit Result", submit_results_path %></li>
+                        <li class = "adminli adminli-modified active-user-menu" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Notifications", lecturer_notifications_path %></li>
+                        <li class = "adminli adminli-modified" id = "up-ass"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Upload Assignment", assignments_path%></li>
+                        <li class = "adminli adminli-modified" id = "get-ass"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Get Assignments", all_assign_courses_path%></li>
+                        <li class = "adminli adminli-modified" id = "sub-res"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Submit Result", submit_results_path %></li>
                         <li class = "adminli adminli-modified" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Upload Materials", ""%></li>
                         <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Lecture Timetable", ""%> </li>
-                        <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Print Attendance", "/course_attendance" %> </li>
+                        <li class = "adminli adminli-modified" id = "attendance"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Print Attendance", "/course_attendance" %> </li>
                         <li class = "adminli adminli-modified" id = "session_act"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Send Message", ""%> </li>
                     </ul>
                 </div>

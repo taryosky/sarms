@@ -1,6 +1,8 @@
 <div class="myrow">
-    <div class="col-t-4 col-d-4"><button id="new_course_menu_item" data-ref="create_course_option" class = "tis">Create</button></div>
-    <div class="col-t-4 col-d-4"><%= link_to "create from file", url: '', html: {id: "activate_student_multiple"}%></div>
+
+    <div class="col-t-3 col-d-3"><button id="new_course_menu_item" data-ref="create_course_option" class = "tis admin-menu-btn">Create</button></div>
+	<div class="col-t-4 col-d-4"><%= link_to "create from file", url: '', html: {id: "activate_student_multiple", class:"admin-menu-btn"}%></div>
+
 </div>
 <div class="myrow">
 
@@ -79,20 +81,20 @@
                                     <div id="edit_error" data-class="notice" class = "edit_error msg"></div>
                             <%= form_for :edit_course, remote:true, html:{id:"edit_course_form"} do|f| %>
 							<%= f.hidden_field :id, id:"edit_id_field" %>
-                            <%= f.label "course_code",  id: 'edit_ccode' %>
-                            <%= f.text_field :ccode, id: 'edit_ccode_field', class:"edit_course_fields" %><br/>
-                            <%= f.label "Course_title",  id: 'edit_ctitle' %>
-                            <%= f.text_field :ctitle,  id: 'edit_ctitle_field', class:"edit_course_fields" %><br/>
-                            <%= f.label :"Units",  id: 'edit_units' %>
-                            <%= f.text_field :units,  id: 'edit_units_field', class:"edit_course_fields" %><br/>
-                            <%= f.label :"Level",  id: 'edit_level' %>
-                            <%= f.text_field :level,  id: 'edit_level_field', class:"edit_course_fields" %><br/>
-                            <%= f.label :semester,  id: 'semester' %>
-                            <%= f.text_field :semester,  id: 'edit_semester_field',class:"edit_course_fields" %><br/>                         
-                            <%= f.submit :finish, id: "edit_course_button" %>
-							<div id="edit_course_form_fields" class="button">Edit</div>
-							<%= f.submit :delete, id:"delete_course_form_fields", class:"button" %>
-							<div id="cancel_edit_course_form" class="button" data-class="cancel_ref" data-ref="edit_cont1">Cancel</div>
+                            <%= f.label "course_code",  id: 'edit_ccode', class:"info-label" %>
+                            <%= f.text_field :ccode, id: 'edit_ccode_field', class:"edit_course_fields info-field" %><br/>
+                            <%= f.label "Course_title",  id: 'edit_ctitle', class:"info-label" %>
+                            <%= f.text_field :ctitle,  id: 'edit_ctitle_field', class:"edit_course_fields info-field" %><br/>
+                            <%= f.label :"Units",  id: 'edit_units', class:"info-label" %>
+                            <%= f.text_field :units,  id: 'edit_units_field', class:"edit_course_fields info-field" %><br/>
+                            <%= f.label :"Level",  id: 'edit_level', class:"info-label" %>
+                            <%= f.text_field :level,  id: 'edit_level_field', class:"edit_course_fields info-field" %><br/>
+                            <%= f.label :semester,  id: 'semester', class:"info-label" %>
+                            <%= f.text_field :semester,  id: 'edit_semester_field',class:"edit_course_fields info-field" %><br/>                         
+                            <%= f.submit :finish, id: "edit_course_button", class:"admin-cont-btn" %>
+							<div id="edit_course_form_fields" class="button admin-cont-btn">Edit</div>
+							<%= f.submit :delete, id:"delete_course_form_fields", class:"button admin-cont-btn" %>
+							<div id="cancel_edit_course_form" class="button admin-cont-btn" data-class="cancel_ref" data-ref="edit_cont1">Cancel</div>
 						
                         <% end %>
                             </div>

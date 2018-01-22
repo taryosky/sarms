@@ -63,7 +63,7 @@
 	
 					</div>
 					<div class="col-d-5">
-						<img src="<%= "#{Rails.root.join('profile_images', current_lecturer.passport)}" %>" id="stud-passport" />
+						<%= image_tag "profile_images/#{current_lecturer.passport}", id:"stud-passport" %>
 						<div>Current Passport </div>
 					</div>
 					<div>
