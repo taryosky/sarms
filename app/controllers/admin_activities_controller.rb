@@ -224,7 +224,7 @@ class AdminActivitiesController < ApplicationController
           status = true
           if ttable.size > 0
             ttable.each do |time_table|
-              if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
+              if (time_table.day==day && time_table.period.to_s == per) && ((Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level) || (time_table.hall==hall))
                   status = false
               end
             end
