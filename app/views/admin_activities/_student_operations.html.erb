@@ -1,20 +1,22 @@
 <div class="myrow">
-
     <div class="col-t-3 col-d-3"><button id="activate_create_student_modal" class="admin-menu-btn" onclick="createUser();">Create Single</button></div>
-    <div class="col-t-3 col-d-3"><%= link_to "Create From File", url:"", class:"admin-menu-btn" %></div>
+    <div class="col-t-3 col-d-3"><button  id="activate_student_multiple" class="admin-menu-btn">Create From File</button></div>
 	<div class="col-t-3 col-d-3"><%= link_to "Generated Passwords", print_student_password_path, target:"_blank", class:"admin-menu-btn" %></div>
-
 
 </div>
 
-<ul id="tabs" class="nav-list tabs">
-	<li class="tab-title" style="background-color:white" id="100-level-tab-title" onclick="activateTab(this)">100 Level</li>
-	<li class="tab-title" id="200-level-tab-title" id="200-level-tab-title" onclick="activateTab(this)">200 Level</li>
-	<li class="tab-title" id="300-level-tab-title" id="300-level-tab-title" onclick="activateTab(this)">300 Level</li>
-	<li class="tab-title" id="400-level-tab-title" id="400-level-tab-title" onclick="activateTab(this)">400 Level</li>
-	<li class="tab-title" id="500-level-tab-title" id="500-level-tab-title" onclick="activateTab(this)">500 Level</li>
-	<li class="tab-title" id="spillover-tab-title"  id="spillover-tab-title" onclick="activateTab(this)">Spillover</li>
-</ul>
+<div class="myrow">
+	<div class="col-t-12 col-d-12" style="margin-bottom:0px; padding-bottom:0px">
+		<ul id="tabs" class="nav-list tabs">
+			<li class="tab-title" style="background-color:white" id="100-level-tab-title" onclick="activateTab(this)">100 Level</li>
+			<li class="tab-title" id="200-level-tab-title" id="200-level-tab-title" onclick="activateTab(this)">200 Level</li>
+			<li class="tab-title" id="300-level-tab-title" id="300-level-tab-title" onclick="activateTab(this)">300 Level</li>
+			<li class="tab-title" id="400-level-tab-title" id="400-level-tab-title" onclick="activateTab(this)">400 Level</li>
+			<li class="tab-title" id="500-level-tab-title" id="500-level-tab-title" onclick="activateTab(this)">500 Level</li>
+			<li class="tab-title" id="spillover-tab-title"  id="spillover-tab-title" onclick="activateTab(this)">Spillover</li>
+		</ul>
+	</div>
+</div>
 
 <!--CREATE OPERATIONS -->
 <div class="myrow">	
@@ -86,7 +88,7 @@
    	
     <!-- Table for courses is placed in this div -->
 	<div class="myrow">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-t-12 col-d-12" style="margin-top: 0px; padding-top: 0px;">
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -166,10 +168,10 @@
     <!--END OF EDIT OPERATIONS -->	
 
     
-	<div id="create_from_file" class="">		
+	<div id="create-cont1" class="my-modal">		
 	  <div id = "edit_odal" class="my-modal-content">
         <div class="my-modal-header">
-         <span id="cancel_create_from_file" class="cancel_button" data-class="cancel_ref" data-ref = "create_cont">&times;</span>
+         <span id="cancel_create_from_file" class="cancel_button" data-class="cancel_ref" data-ref = "create-cont1">&times;</span>
           <h2>FILE UPLOAD</h2>
         </div>
         <h6>FORMAT OF THE CSV FILE</h6>
@@ -185,7 +187,7 @@
 								<span id="new-student-error0" class='error'></span>
 								<%= f.label "Upload file"%>
 								<%= f.file_field :Upload_file %>
-								<%= f.submit :upload, id: 'create_student' %>
+								<%= f.submit :upload, id: 'create_student', class:"login-button" %>
 	                    	</div>
 	                    	<% end %>
 		           		</div>
