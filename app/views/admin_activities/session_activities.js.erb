@@ -218,6 +218,8 @@ function set_time_table(element, past_val, value, day, period, row, hall){
 			success: function (data, status, xhr) {
 				if(data){
 					element.val("");
+				}else if(data=1){
+					element.val(past_val)
 				}
 			}// success callback function
 	});

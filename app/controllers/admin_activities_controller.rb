@@ -263,20 +263,20 @@ class AdminActivitiesController < ApplicationController
 
           past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
 
-          status = false
+          status = true
           
           if ttable.size > 0
             ttable.each do |time_table|
-              if (time_table.day==day && time_table.period.to_s == per) && (Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level || time_table.hall==hall)
-                  status = true
+              if (time_table.day==day && time_table.period.to_s == per) && ((Course.find_by(id: time_table.course_id).level == Course.find_by(id: id).level) || (time_table.hall==hall))
+                  status = false
               end
             end
             if status
               past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
               value = pres_val
             else
-              value = ""
-              empty_content = true
+              value = past_val
+              empty_content = 1
             end
           else
             past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
