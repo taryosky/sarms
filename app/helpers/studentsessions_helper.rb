@@ -30,6 +30,7 @@ module StudentsessionsHelper
     			redirect_to signin_path
     		end
     	end
+		
 
 # LEVEL IMPLEMENTATION SHOULD BE CHECKED IF THE LEVEL BE INCREMENTED EVERY SESSION OF AFTER EACH REGISTRATION PER/SESSION
 	def student_level(stud)

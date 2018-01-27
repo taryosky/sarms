@@ -19,7 +19,7 @@
 					<div class="col-d-6">
 							<%= form_for :edit_lecturer, url: lecturer_info_update_path do|f| %>
 								<fieldset>
-								<%= f.label "Matric. No:", class:"info-label" %>
+								<%= f.label "Staff ID:", class:"info-label" %>
 								<%= f.text_field :matno, value: "#{current_lecturer.staff_id}".upcase,  id: "info-matno-field", readonly:true %><br/>
 								
 								<%= f.label "Surname:", class:"info-label" %>
@@ -127,3 +127,4 @@
 		margin-left: 20px;
 	}
 </style>
+

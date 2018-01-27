@@ -27,7 +27,7 @@
 							</div>
 							<%= form_for :edit_lecturer, url: lecturer_info_update_path do|f| %>
 								<fieldset>
-								<%= f.label "Matric. No:", class:"info-label" %>
+								<%= f.label "Staff ID:", class:"info-label" %>
 								<%= f.text_field :staff_id, value: "#{current_lecturer.staff_id}", class: "info-field", id: "info-staff_id-field" %><br/>
 								
 								<%= f.label "Surname:", class:"info-label" %>
@@ -117,3 +117,11 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$(".lecturer-menu-item").click(function(event){
+			event.preventDefault();
+		});
+	});
+</script>

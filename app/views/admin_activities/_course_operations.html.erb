@@ -1,14 +1,14 @@
 <div class="myrow">
 
     <div class="col-t-3 col-d-3"><button id="new_course_menu_item" data-ref="create_course_option" class = "tis admin-menu-btn">Create</button></div>
-	<div class="col-t-4 col-d-4"><%= link_to "create from file", url: '', html: {id: "activate_student_multiple", class:"admin-menu-btn"}%></div>
+	<div class="col-t-4 col-d-4"><button id="activate-course-multiple" class="admin-menu-btn">Create From File</button></div>
 
 </div>
 <div class="myrow">
 
     <!-- Table for courses is placed in this div -->
 	<div class="myrow">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-t-12 col-d-12">
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -32,10 +32,10 @@
 	
 	<!-- Course creation form -->
 
-    <div id="create_from_file" class="">        
+    <div id="create-cont1" class="my-modal">        
       <div id = "edit_odal" class="my-modal-content">
         <div class="my-modal-header">
-         <span id="cancel_create_from_file" class="cancel_button" data-class="cancel_ref" data-ref = "create_cont">&times;</span>
+         <span id="cancel_create_from_file" class="cancel_button" data-class="cancel_ref" data-ref = "create-cont1">&times;</span>
           <h2>FILE UPLOAD</h2>
         </div>
         <h6>FORMAT OF THE CSV FILE</h6>
@@ -51,7 +51,7 @@
                                 <span id="new-student-error0" class='error'></span>
                                 <%= f.label "Upload file"%>
                                 <%= f.file_field :Upload_file %>
-                                <%= f.submit :upload, id: 'create_student' %>
+                                <%= f.submit "Upload", id: 'create_student', class:"login-button" %>
                             </div>
                             <% end %>
                         </div>
