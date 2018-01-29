@@ -106,6 +106,51 @@ class LecturersController < ApplicationController
 		end
 	end
 
+	def view_time_table
+		@mon = Array.new(5,"")
+		@tue = Array.new(5,"")
+		@wed = Array.new(5,"")
+		@thu = Array.new(5,"")
+		@fri = Array.new(5,"")
+
+		@c_arr = Array.new
+		@tt_arr = Array.new
+		@stu_arr = Array.new
+
+		all_course = Course.all
+
+		@lecturer_course = current_lecturer.courses
+		@lecturer_course.each do |c|
+			@c_arr.push(c.id)
+		end
+
+		@time_table = TimeTable.all.order(:period)
+		@time_table.each do |tt|
+			if @c_arr.include?(tt.course_id)
+				if tt.day=="mon"
+					course=all_course.find_by(id: tt.course_id)
+					@mon[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="tue"
+					course=all_course.find_by(id: tt.course_id)
+					@tue[tt.period-1] +=  course.ccode+"-"+tt.hall
+				end
+				if tt.day=="wed"
+					course=all_course.find_by(id: tt.course_id)
+					@wed[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="thu"
+					course=all_course.find_by(id: tt.course_id)
+					@thu[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+				if tt.day=="fri"
+					course=all_course.find_by(id: tt.course_id)
+					@fri[tt.period-1] += course.ccode+"-"+tt.hall
+				end
+			end
+		end
+	end
+
 	def create_lecturer_from_file
 		count = 0
 		stud = ""

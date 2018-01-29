@@ -16,9 +16,9 @@ class AdminActivitiesController < ApplicationController
 	file = File.open( Rails.root.join('log', "login.log"), 'r')
 	@title_signin = file.readlines.first
 	file = File.open( Rails.root.join('log', "login.log"), 'r')
-	d = file.readlines[3].to_s.split(" ")
-	date = d[1].split("-")
-	time = d[2].split(":")
+	dc = file.readlines[3].to_s.split(" ")
+	date = dc[1].split("-")
+	time = dc[2].split(":")
 	@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
 	file.close
 	
@@ -46,14 +46,19 @@ class AdminActivitiesController < ApplicationController
 			@lecturer_ids.push alloc.lecturer_id
 		end
 		
-		file = File.open( Rails.root.join('log', "login.log"), 'r')
-		@title_signin = file.readlines.first.chop
-		file = File.open( Rails.root.join('log', "login.log"), 'r')
-		d = file.readlines[3].to_s.split(" ")
-		date = d[1].split("-")
-		time = d[2].split(":")
-		@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
-		file.close
+    if File::zero?( Rails.root.join('log', "login.log"))
+      @title_signin = "No login activity"
+      @time_signin = Time.now
+    else
+  		file = File.open( Rails.root.join('log', "login.log"), 'r')
+  		@title_signin = file.readlines.first.chop
+  		file = File.open( Rails.root.join('log', "login.log"), 'r')
+  		d = file.readlines[3].to_s.split(" ")
+  		date = d[1].split("-")
+  		time = d[2].split(":")
+  		@time_signin = Time.local(date[0].to_d, date[1].to_d,date[2].to_d, time[0].to_d, time[1].to_d, time[2].to_d)
+  		file.close
+    end
 		
   if File::zero?( Rails.root.join('log', "create_new.log"))
     @title_create = "No creation activity has been done"
@@ -262,7 +267,9 @@ class AdminActivitiesController < ApplicationController
           id2 = course2.id if course2
 
           past_course = TimeTable.find_by(course_id: id2, period: per, day: day, hall: past_hall)
+          past_course.destroy
 
+          ttable = TimeTable.all
           status = true
           
           if ttable.size > 0
@@ -272,14 +279,14 @@ class AdminActivitiesController < ApplicationController
               end
             end
             if status
-              past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+              Course.create(course_id: id, period: per, day: day, row: row, hall: hall)
               value = pres_val
             else
-              value = past_val
-              empty_content = 1
+              value = ""
+              empty_content = true
             end
           else
-            past_course.update(course_id: id, period: per, day: day, row: row, hall: hall)
+            Course.create(course_id: id, period: per, day: day, row: row, hall: hall)
             value = pres_val
           end
         end

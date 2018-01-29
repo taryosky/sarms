@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/preview_news', to: 'news#preview'
   
   #routes for lecturers
+  get '/lecturer_timetable', to: 'lecturers#view_time_table'
   post '/create_lecturer_from_file', to: 'lecturers#create_lecturer_from_file'
   post '/lecturer_creation_file', to: 'lecturers#lecturer_creation_file'
   post '/create_lecturer', to: 'lecturers#create'

@@ -116,10 +116,10 @@ header{
   font-size: 88%;
 }
 #stu_time_table_head{
-  font-size: 52%;
+  font-size: 70%;
 }
 #stu_courses_body > tr > th, #stu_courses_body > tr > td{
-  font-size: 53% !important;
+  font-size: 80% !important;
   text-align: center !important;
 }
 #courses_body > tr > th[rowspan="5"]{

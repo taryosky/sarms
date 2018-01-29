@@ -20,3 +20,13 @@ $("#dash").addClass("active-user-menu");
 	$("#300-level-bar").css("height", ""+level300students/totalstudents*100+"%");
 	$("#400-level-bar").css("height", ""+level400students/totalstudents*100+"%");
 	$("#500-level-bar").css("height", ""+level500students/totalstudents*100+"%");
+	
+	$("a.dropdown-toggle").click(function(){
+		$("ul.dropdown-menu.dropdown-user").css("display","block");
+	});
+
+	$("ul.dropdown-menu.dropdown-user").hover(function(){
+		$(this).css("display","block");
+	}, function(){
+		$(this).css("display","none");
+	});
