@@ -1,0 +1,174 @@
+
+<div class="myrow">
+	<div class="col-12">
+	<% if get_user.user_type == 0 %>
+		<%= render 'layouts/student_layout/card' %>
+	<% else %>
+			<%= render 'layouts/lecturer_layout/card' %>
+	<% end %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Message Inbox
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %>
+					<% end %>
+				</h3>
+				<hr/>
+				<% if @messages.empty? %>
+					<% if get_user.user_type == 1 %>
+						<button id="change_pass" class="login-button" style="margin-top:0px;">Compose Message</button>
+					<% end %>
+					<h3 class="empty-q">You have no messages</h3>
+				<% else %>
+					<%= form_for :delete_message, url: delete_messages_path do|f| %>
+						<%= f.submit "Delete Selected Messages", id:"delete-messages-button", disabled:true, class: "login-button", style:'margin-top: 0px' %>
+						<% if get_user.user_type == 1 %>
+							<button id="change_pass" class="login-button" style="margin-top:0px;">Compose Message</button>
+						<% end %>
+
+						<ul id="message-ul">
+							<% @messages.each do|message| %>
+								
+									
+								
+								<li class="message-li">
+									<span class="select-message"><%= f.check_box message.id, class:"selected-message" %></span>
+									<a href="/message?utf8=✓&message=<%= message.id.to_s + SecureRandom.hex(10) %>" class="message-detail-link">
+										<% login = LoginDetail.find_by(user_name: message.message.sender_id) %>
+										<% if login.user_type == 0 %>
+										<% sender_obj = Student.find_by(matno: login.user_name) %>
+										<% sender = "#{sender_obj.fname} #{sender_obj.sname}" %>
+										<% elsif login.user_type == 1 %>
+										<% sender_obj = Lecturer.find_by(staff_id: login.user_name) %>
+										<% sender = "#{sender_obj.title} #{sender_obj.fname.slice(0)}. #{sender_obj.sname}" %>
+										<% else %>
+										<% sender = "Admin" %>
+										<% end %>
+										<% if message.read_status == 0 %>
+											<span class="message-holder message-label">
+												<span class="message-label sender-detail" style="font-weight: bold">
+													<%= sender %>
+												</span>
+												<span class="message-label message-title" style="font-weight: bold">
+													<%= message.message.title %>
+												</span>  &nbsp-&nbsp<%= message.message.content %>
+											</span>
+											<span class="message-label message-date">
+												<%= message.message.date.strftime("%d %b %Y") %>
+											</span>
+										<% else %>
+											<span class="message-holder message-label">
+												<span class="message-label sender-detail">
+													<%= sender %>
+												</span>
+												<span class="message-label message-title">
+													<%= message.message.title %>
+												</span>&nbsp-&nbsp<%= message.message.content %>
+											</span>
+											<span class="message-label message-date">
+												<%= message.message.date.strftime("%d %b %Y") %>
+											</span>
+										<% end %>
+									</a>
+								</li>
+								<hr class="message-hr">
+								
+							<% end %>
+						</ul>
+					<% end %>
+				<% end %>
+
+	        </div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<% if get_user.user_type == 1 %>
+	<div id="pass-modal" class="my-modal">
+		<div id="myrow myfade">
+			<div class="col-d-3"></div>
+			<div class="col-d-6 zoom-in mod-cont">
+				<div>
+				<h3>New Message <span class="error-message e-me" id="error-message-field"></span><span id="close-pass-change" style="float:right">&times</span></h3>
+				</div>
+				<hr style="margin-bottom: 0px; clear:both">
+				<div id="modal">
+					<%= form_for :message, url: new_message_path do|f| %>
+						<%= f.label "Message Title:", class:"info-label" %>
+						<%= f.text_field :title, class: "info-field-p", id: "message-title-field" %><br/>
+
+						<%= f.label "Receiver:", class:"info-label" %>
+						<%= f.select :receiver, @receiver, {}, {class: "info-field-p", id: "message-receiver-field"} %><br/>
+						
+						<%= f.label "Related Course:", class:"info-label" %>
+						<%= f.select :course, @courses, {}, {class: "info-field-p", id: "message-course-field"} %><br/>
+						
+						<%= f.label "Message:", class:"info-label" %>
+						<%= f.text_area :message, class: "info-field-p", id: "message-field" %><br/>
+
+						<%= f.submit "Send", class:'login-button', id:"send-message", style:"margin-left:82%; margin-buttom: 0px;"%>
+					<% end %>
+				</div>
+			</div>
+			<div class="col-d-3"></div>
+		<div>
+	</div>
+<% end %>
+<style>
+	input{
+
+	}
+</style>
+
+
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#inbox").addClass("active-user-menu");
+	});
+	
+	$("input[type=checkbox]").click(function(){
+		var i = 0;
+		var boxes = document.getElementsByClassName("selected-message");
+		for(i=0; i<boxes.length; i++){
+			if(boxes[i].checked){
+				document.getElementById("delete-messages-button").disabled = false;
+				break;
+			}
+			else{
+				document.getElementById("delete-messages-button").disabled = true;
+			}
+		}
+	});
+	
+	$("#change_pass").click(function(e){
+		e.preventDefault();
+	});
+	
+	$("#send-message").click(function(e){
+		if(($("#message-title-field").val() == "") || ($("#message-field").val() == "")){
+			e.preventDefault();
+			$("#error-message-field").html("All fields must be filled")
+		}
+	});
+	
+	$("#message-receiver-field").change(function(e){
+		if(  ($(this).val() != "0")  ){
+			$("#message-course-field").remove();
+		}
+	});
+	
+	
+</script>

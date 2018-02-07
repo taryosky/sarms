@@ -22,6 +22,12 @@
 							  <strong>Assignment(s): &nbsp</strong> You have <%= note %> unsubmitted assignment(s). click <%= link_to "here", assignment_submissions_path %> to submit
 							</div>
 						<% end %>
+						
+						<% if key == "message" %>
+							<div class="alert alert-success">
+							  <strong>Message(s): &nbsp</strong> You have <%= note %> unread message(s). click <%= link_to "here", inbox_path %> to view
+							</div>
+						<% end %>
 					<% end %>
 				<% end %>
 	        </div>

@@ -47,6 +47,13 @@ class StudentsessionsController < ApplicationController
 			temp_notice["assign"] = assignments
 		end
 		
+		#get messages notifications for unread messages
+		
+		message_rec = MessageReceiver.where("receiver_id = ? AND read_status = ?", current_student.matno, 0).size
+		if message_rec > 0
+			temp_notice["message"] = message_rec
+		end
+		
 		#set notification hash
 		temp_notice.each do|key, val|
 			if (!val.blank? || !val.nil? || !val) && !reg.empty?

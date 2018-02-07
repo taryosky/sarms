@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111192951) do
+ActiveRecord::Schema.define(version: 20180130041239) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name", default: "elect_elect_admin_name"
@@ -87,6 +87,20 @@ ActiveRecord::Schema.define(version: 20180111192951) do
     t.string  "password"
     t.index ["user_id"], name: "index_login_details_on_user_id"
     t.index ["user_name"], name: "index_login_details_on_user_name"
+  end
+
+  create_table "message_receivers", force: :cascade do |t|
+    t.integer "message_id"
+    t.string  "receiver_id"
+    t.integer "read_status"
+    t.index ["message_id"], name: "index_message_receivers_on_message_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.string "sender_id"
+    t.date   "date"
   end
 
   create_table "news", force: :cascade do |t|

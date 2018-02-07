@@ -1,0 +1,77 @@
+// Place all the styles related to the messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.message-detail-link{
+	color: black;
+	display: inline-block;
+	width: 95%;
+	margin:0px;
+	padding: 0px;
+	&:hover{
+		color: black;
+	}
+}
+
+.message-label{
+	font-size: 10pt;
+}
+
+#message-ul{
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+.sender-detail{
+	display: inline-block;
+	width: 140px;
+	color: black;
+}
+
+.message-title{
+	color: black;
+}
+
+.select-message{
+	display: inline-block;
+	width: 20px;
+}
+
+.message-title-head{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#message-field{
+	height: 200px;
+}
+
+.message-li{
+	display: inline-block;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.message-ul{
+	margin: 0px;
+	padding: 0px;
+}
+
+.message-hr{
+	margin: 3px 0px 0px 0px;
+	padding: 0px;
+}
+
+.message-date{
+	float: right;
+}
+
+.message-holder{
+	font-size: 10pt;
+	display: inline-block;
+	width: 90%;
+	overflow: hidden;
+	height: 17px;
+	color: rgba(0,0,0,0.4);
+}

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   
+  #routes for messages
+  post '/new_message', to: 'messages#create'
+  get '/inbox', to: 'messages#inbox'
+  get '/message', to: 'messages#message'
+  post '/delete_messages', to: 'messages#delete'
+  
   #routes for news
   post '/create_news', to: 'news#create'
   post '/search_news', to: 'news#search'
