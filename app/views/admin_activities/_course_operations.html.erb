@@ -1,7 +1,11 @@
 <div class="myrow">
 
-    <div class="col-t-3 col-d-3"><button id="new_course_menu_item" data-ref="create_course_option" class = "tis admin-menu-btn">Create</button></div>
-	<div class="col-t-4 col-d-4"><button id="activate-course-multiple" class="admin-menu-btn">Create From File</button></div>
+    <div class="col-t-3 col-d-3">
+        <button id = "new_course_menu_item" data-ref="create_course_option" class = "tis admin-menu-btn">Create</button>
+    </div>
+	<div class="col-t-4 col-d-4">
+        <button id="activate-course-multiple" class="admin-menu-btn">Create From File</button>
+    </div>
 
 </div>
 <div class="myrow">
@@ -9,7 +13,6 @@
     <!-- Table for courses is placed in this div -->
 	<div class="myrow">
                     <div class="col-t-12 col-d-12">
-
                         <div class="panel panel-default">
                             <div class="panel-heading">
 								<%= form_for :search, remote: true, url:search_course_path, html:{id:"search_form"} do|f| %>
@@ -39,7 +42,7 @@
           <h2>FILE UPLOAD</h2>
         </div>
         <h6>FORMAT OF THE CSV FILE</h6>
-        <div><%=image_tag('cvs_file_format.JPG')%></div>
+        <div><%=image_tag('course_file.JPG')%></div>
         <div id = "create_modal_body" class="my-modal-body">
             <div id = "find_course_option" class="course_option" data-class="display">
                 <div class = "myrow">

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   get '/view_time_table', to: 'students#view_time_table'
 
   #routes for courses
-  post '/create_course_from_file', to: 'courses#create_courses_from_file'
+  post '/create_course_from_file', to: 'courses#create_course_from_file'
   post '/course_creation_file', to: 'courses#course_creation_file'
   post '/search_course', to: 'courses#search'
   post '/create_course', to: 'courses#create'

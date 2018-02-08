@@ -33,32 +33,31 @@ class CoursesController < ApplicationController
 	@lecturers = Lecturer.all
   end
 
-	def course_creation_file
-		uploaded_file = params[:create_course][:Upload_file]
-		if uploaded_file
-			@file_path = "#{Rails.root}/public/temp/course_creation_file.xls"
-			file = File.new(@file_path, "wb")
-			file.write(uploaded_file.read)
-			file.close
-			render 'create_option'
-		end
-	end
-
-	def create_course_from_file
-		count = 0
-		stud = ""
+def course_creation_file
+	uploaded_file = params[:create_course][:Upload_file]
+	if uploaded_file
 		@file_path = "#{Rails.root}/public/temp/course_creation_file.csv"
-
-		CSV.foreach(@file_path, headers: true) do |row|
-			nams = row["NAME"].split(' ')
-			lecturer = Course.create(matno: row["ID"], sname: nams[0], fname: nams[1])
-			if lecturer.persisted?
-				lecturer.gen_login_password
-				count +=1
-			end
-		end
-		File.destroy(@file_path)
+		file = File.new(@file_path, "wb")
+		file.write(uploaded_file.read)
+		file.close
 	end
+end
+
+def create_course_from_file
+	@count = 0
+	stud = ""
+	@file_path = "#{Rails.root}/public/temp/course_creation_file.csv"
+
+	CSV.foreach(@file_path) do |row|
+		ccode, ctitle, units, level, status, semester = row
+		course = Course.create(ccode: ccode, ctitle: ctitle, units: units.to_i, level: level.to_i, status: status.to_i, semester: semester.to_i)
+		if course.persisted?
+			@count +=1
+		end
+	end
+	File.delete(@file_path)
+end
+
   def create
 	@largestId = nil
 	@course = Course.new 
@@ -77,7 +76,7 @@ class CoursesController < ApplicationController
 		course.units = @course_unit["units#{num}"]
 		course.semester = @course_semest["semester#{num}"]
 		course.level = @course_level["level#{num}"]
-		course.status = @course_status["status#{num}"]
+		course.status = @course_status["status#{num}"].to_i
 		@courses["index#{num}"] = course
 		@largestId = num
 	end
