@@ -5,13 +5,13 @@
                 <div id = "navs" class="admin-nav">
                     <ul class="na">
                         <li class = "adminli adminli-modified" id = "dash"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Notifications", lecturer_notifications_path, class:"lecturer-menu-item" %></li>
+                        <li class = "adminli adminli-modified" id = "inbox"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Messages #{unread_messages}", inbox_path, class:"student-menu-item" %></li>
                         <li class = "adminli adminli-modified" id = "up-ass"><%= image_tag('navs/lecturer.svg', class: 'icon icon-img')%><%= link_to "Upload Assignment", assignments_path, class:"lecturer-menu-item" %></li>
                         <li class = "adminli adminli-modified" id = "get-ass"><%= image_tag('navs/student.svg', class: 'icon icon-img')%><%= link_to "Get Assignments", all_assign_courses_path, class:"lecturer-menu-item" %></li>
                         <li class = "adminli adminli-modified" id = "sub-res"><%= image_tag('navs/course.svg', class: 'icon icon-img')%><%= link_to "Submit Result", submit_results_path, class:"lecturer-menu-item" %></li>
                         <li class = "adminli adminli-modified" id = "new"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Upload Materials", "", class:"lecturer-menu-item" %></li>
                         <li class = "adminli adminli-modified" id = ""><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Lecture Timetable", "/lecturer_timetable", class:"lecturer-menu-item" %> </li>
                         <li class = "adminli adminli-modified" id = "attendance"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Print Attendance", "/course_attendance", class:"lecturer-menu-item" %> </li>
-                        <li class = "adminli adminli-modified" id = "session_act"><%= image_tag('navs/news.svg', class: 'icon icon-img')%><%= link_to "Send Message", "", class:"lecturer-menu-item" %> </li>
                     </ul>
                 </div>
             </div>

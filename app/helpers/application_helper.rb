@@ -64,4 +64,16 @@ module ApplicationHelper
 		end
 	end
 	
+	def unread_messages
+		user = get_user
+		if user.user_type == 0
+			mess = MessageReceiver.where("receiver_id = ? AND read_status = ?", current_student.matno, 0).size
+			return "(#{mess})"
+		elsif user.user_type == 1
+			mess = MessageReceiver.where("receiver_id = ? AND read_status = ?", current_lecturer.staff_id, 0).size
+			return "(#{mess})"
+		else
+		end
+	end
+	
 end

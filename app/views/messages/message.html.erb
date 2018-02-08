@@ -1,0 +1,38 @@
+<div class="myrow">
+	<div class="col-12">
+	<% if get_user.user_type == 0 %>
+		<%= render 'layouts/student_layout/card' %>
+	<% else %>
+			<%= render 'layouts/lecturer_layout/card' %>
+	<% end %>
+		<div class="col-d-9">
+	        <div class="dashboard">
+				<h3 class="dashboard-header">Message: <span class="message-title-head"><%= @message.title.titlecase %></head>
+					<% if flash[:success] %>
+						<span class="success-message s-me"><%= flash[:success] %>
+					<% end %>
+					<% if flash[:error] %>
+						<span class="error-message e-me"><%= flash[:error] %>
+					<% end %>
+				</h3>
+				<hr/>
+				<div class="info-label">Sender:</div>
+				<div class="info-label"><%= @sender %></div><br>
+				<div class="info-label">Dated:</div>
+				<div class="info-label"><%= @message.date.strftime("%d %b %Y") %></div><br><br>
+				<div style="text-align: justify"><%= @message.content %></div>
+	        </div>
+
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$(".adminli").each(function(){
+			$(this).removeClass("active-user-menu");
+		});
+		
+		$("#inbox").addClass("active-user-menu");
+	});
+</script>

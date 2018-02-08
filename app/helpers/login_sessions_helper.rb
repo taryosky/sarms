@@ -75,4 +75,14 @@ module LoginSessionsHelper
 			redirect_to user_login_path
 		end
 	end
+	
+	def get_user
+		if session[:student_id]
+			return current_student
+		elsif session[:staff_id]
+			return current_lecturer
+		else
+			return Admin.find_by(id: session[:admin_id])
+		end
+	end
 end
