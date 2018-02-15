@@ -220,7 +220,7 @@ class AdminActivitiesController < ApplicationController
       #if both the present value and the past are empty
       if(pres_val.empty? && past_val.empty?)
         value = ""
-      #if both the present value id not empty and the past is empty
+      #if the present value isn't empty and the past is empty
       elsif(!pres_val.empty? && past_val.empty?)
         if course_on_time_table
           value = ""
@@ -279,14 +279,14 @@ class AdminActivitiesController < ApplicationController
               end
             end
             if status
-              Course.create(course_id: id, period: per, day: day, row: row, hall: hall)
+              TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
               value = pres_val
             else
               value = ""
               empty_content = true
             end
           else
-            Course.create(course_id: id, period: per, day: day, row: row, hall: hall)
+            TimeTable.create(course_id: id, period: per, day: day, row: row, hall: hall)
             value = pres_val
           end
         end
