@@ -1,3 +1,4 @@
+<h1>HELLO WORLD</h1>
 <div id="create_course" class="my-modal" style="display: block;">
     <div id="create_modal" class="my-modal-content">
         <div class="my-modal-header">
@@ -29,7 +30,7 @@
                                         <th>SEMESTER</th>
                                     </tr>
                                     <%i=0%>
-                                    <% CSV.foreach(@file_path) do |row|%>
+                                    <% CSV.foreach(@file_path) do |row| %>
                                         <% ccode, ctitle, units, level, status, semester = row %>
                                         <span id="new-course-error0" class ='error'></span>
                                         <tr>
