@@ -39,6 +39,7 @@ class ResultsController < ApplicationController
 		
 		registration = Registration.where('status > ?',1).where('year_of_study = ? AND student_id = ?', @level, current_student.id)
 		
+		
 		@semester_reg = []
 		registration.each do|reg|
 			if reg.course.semester.to_i == @semester.to_i

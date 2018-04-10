@@ -277,6 +277,9 @@ ul[id= "year"]>li{
 [class*="col-"] {
     width: 100%;
 }
+.img-center{
+	text-align:center;
+}
 
     /* For tablets: */
 @media only screen and (min-width: 600px) {
@@ -418,7 +421,7 @@ display: inline-block;
 background-color: white;
 box-shadow: 0px 0px 33px grey;
 border-radius: 10px;
-height: 325px;
+height: 348px;
 width: 80%;
 }
 footer{
